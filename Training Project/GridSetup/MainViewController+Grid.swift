@@ -40,7 +40,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     // MARK: makes items square, 2 per row
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalSpacing = spacing * (itemsPerRow + 1) 
+        let totalSpacing = spacing * (itemsPerRow + 1)
         let availableWidth = collectionView.bounds.width - totalSpacing
         let itemWidth = availableWidth / itemsPerRow
         return CGSize(width: itemWidth, height: itemWidth)
@@ -48,7 +48,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .systemBlue
+        cell.backgroundColor = .systemGray2
         cell.layer.cornerRadius = 8
         return cell
     }
