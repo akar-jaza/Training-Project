@@ -7,14 +7,23 @@
 
 import UIKit
 class ProductsScreen: UIViewController, ViewCode {
+    weak var coordinator: MainCoordinator?
     
     func setupHierarchy() {
         //
     }
 
     func setupConstraints() {
-        // 
+        //
     }
 
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationItem.title = "Products"
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+
+
+        buildViewCode()
+    }
 }

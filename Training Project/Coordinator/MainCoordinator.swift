@@ -21,10 +21,10 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(mainVC, animated: false)
     }
 
-//    func showAPIScreen() {
-//        let apiVC = APIViewController()
-//        navigationController.pushViewController(apiVC, animated: true)
-//    }
+    func showProductsScreen() {
+        let productsScreen = ProductsScreen()
+        navigationController.pushViewController(productsScreen, animated: true)
+    }
     
     /*
      func showDetail(for title: String) {
