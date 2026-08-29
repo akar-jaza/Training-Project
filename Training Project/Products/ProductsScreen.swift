@@ -20,7 +20,7 @@ class ProductsScreen: UIViewController, ViewCode {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.title = "Products"
+        title = "Products"
 //        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
 
 

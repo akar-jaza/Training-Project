@@ -9,7 +9,6 @@ import UIKit
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    
     func setupHierarchy() {
         view.addSubview(collectionView)
     }
