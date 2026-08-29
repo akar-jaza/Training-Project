@@ -9,6 +9,7 @@ import UIKit
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    
     func setupHierarchy() {
         view.addSubview(collectionView)
     }
@@ -30,12 +31,16 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView
+            .register(
+                SquareCell.self,
+                forCellWithReuseIdentifier: SquareCell.reuseID
+            )
     }
     
     // MARK: Data Source
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return buttonTitles.count
     }
     
     // MARK: makes items square, 2 per row
@@ -47,9 +52,20 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .systemGray2
-        cell.layer.cornerRadius = 8
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SquareCell.reuseID,
+            for: indexPath
+        ) as? SquareCell else {
+            return UICollectionViewCell()
+        }
+        
+        let title = buttonTitles[indexPath.item]
+        cell.configure(text: title)
+        
+        cell.onTap = {
+            print("Tapped item \(indexPath.item)")
+        }
         return cell
     }
 }
