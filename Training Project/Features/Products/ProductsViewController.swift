@@ -6,24 +6,45 @@
 //
 
 import UIKit
-class ProductsViewController: UIViewController, ViewCode {
+
+class ProductsViewController: UIViewController {
     weak var coordinator: MainCoordinator?
+    private let viewModel = ProductsViewModel()
+    private let productsView = ProductsView()
     
-    func setupHierarchy() {
-        //
+    override func loadView() {
+        view = productsView
     }
-
-    func setupConstraints() {
-        //
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         title = "Products"
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+        productsView.tableView.dataSource = self
+        productsView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProductCell")
+        
+        viewModel.onProductsUpdated = { [weak self] in
+            self?.productsView.tableView.reloadData()
+        }
+        
+        viewModel.onError = { error in
+            print("Failed to fetch products: \(error)")
+        }
+        
+        viewModel.fetchProducts()
+    }
+}
 
-
-        buildViewCode()
+extension ProductsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.products.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
+        let product = viewModel.products[indexPath.row]
+        cell.textLabel?.text = product.title
+        cell.detailTextLabel?.text = "$\(product.price)"
+        return cell
     }
 }
