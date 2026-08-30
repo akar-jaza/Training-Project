@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class ProductsScreen: UIViewController, ViewCode {
+class ProductsViewController: UIViewController, ViewCode {
     weak var coordinator: MainCoordinator?
     
     func setupHierarchy() {

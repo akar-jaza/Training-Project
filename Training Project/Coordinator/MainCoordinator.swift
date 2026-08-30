@@ -16,13 +16,17 @@ class MainCoordinator: Coordinator {
     }
 
     func start() {
-        let mainVC = MainViewController()
-        mainVC.coordinator = self
-        navigationController.pushViewController(mainVC, animated: false)
+//        let mainVC = MainViewController()
+//        mainVC.coordinator = self
+//        navigationController.pushViewController(mainVC, animated: false)
+        
+        let productVC = ProductsViewController()
+        productVC.coordinator = self
+        navigationController.pushViewController(productVC, animated: false)
     }
 
     func showProductsScreen() {
-        let productsScreen = ProductsScreen()
+        let productsScreen = ProductsViewController()
         navigationController.pushViewController(productsScreen, animated: true)
     }
     
