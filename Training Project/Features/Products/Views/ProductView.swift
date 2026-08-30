@@ -8,6 +8,7 @@
 import UIKit
 
 class ProductsView: UIView {
+    
     let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false

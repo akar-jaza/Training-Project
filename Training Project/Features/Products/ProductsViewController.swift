@@ -42,9 +42,16 @@ extension ProductsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
+        
+        var content = cell.defaultContentConfiguration()
         let product = viewModel.products[indexPath.row]
-        cell.textLabel?.text = product.title
-        cell.detailTextLabel?.text = "$\(product.price)"
+        
+        content.text = product.title
+        content.secondaryText = product.description
+        content.image = UIImage(systemName: "bell")
+        
+        cell.contentConfiguration = content
+        
         return cell
     }
 }
