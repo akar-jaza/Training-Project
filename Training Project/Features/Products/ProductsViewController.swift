@@ -48,9 +48,19 @@ extension ProductsViewController: UITableViewDataSource {
         
         content.text = product.title
         content.secondaryText = product.description
-        content.image = UIImage(systemName: "bell")
-        
+        content.image = UIImage(systemName: "shippingbox.fill")
         cell.contentConfiguration = content
+        
+        ImageLoader.shared
+            .loadImage(from: product.thumbnail) { [weak cell] image in
+                
+                var updatedContent = cell?.defaultContentConfiguration()
+                updatedContent?.text = product.title
+                updatedContent?.secondaryText = product.description
+                updatedContent?.image = image
+                updatedContent?.imageProperties.maximumSize = CGSize(width: 50, height: 50)
+                cell?.contentConfiguration = updatedContent
+            }
         
         return cell
     }
