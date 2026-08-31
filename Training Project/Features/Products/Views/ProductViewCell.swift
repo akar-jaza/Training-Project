@@ -34,6 +34,7 @@ class ProductViewCell: UITableViewCell, ViewCode {
     let chevron: UIImageView = {
         let image = UIImage(systemName: "chevron.right")
         let imageView = UIImageView(image: image)
+        imageView.tintColor = .black
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
