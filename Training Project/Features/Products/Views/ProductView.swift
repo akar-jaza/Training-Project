@@ -31,6 +31,8 @@ class ProductsView: UIView {
     }
     
     private func setupConstraints() {
+
+      // Table View Constraints
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),

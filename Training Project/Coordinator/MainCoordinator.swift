@@ -23,11 +23,22 @@ class MainCoordinator: Coordinator {
         let productVC = ProductsViewController()
         productVC.coordinator = self
         navigationController.pushViewController(productVC, animated: false)
+        
+//        let productVI = ProductViewItem()
+//        productVI.coordinator = self
+//        navigationController.pushViewController(productVI, animated: false)
     }
 
     func showProductsScreen() {
         let productsScreen = ProductsViewController()
         navigationController.pushViewController(productsScreen, animated: true)
+    }
+    
+    func goToProductItemView(with product: Product) {
+        let productView = ProductViewItem()
+        productView.coordinator = self
+        productView.configProductView(Product: product)
+        navigationController.pushViewController(productView, animated: true)
     }
     
     /*
