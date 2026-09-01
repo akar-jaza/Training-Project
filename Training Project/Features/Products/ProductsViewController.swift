@@ -40,6 +40,15 @@ class ProductsViewController: UIViewController {
         
         viewModel.fetchProducts()
     }
+    
+    // remove the gray highlight from the cell when we go back to the prev screen
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectedIndexPath = productsView.tableView.indexPathForSelectedRow {
+            productsView.tableView.deselectRow(at: selectedIndexPath, animated: true)
+        }
+    }
 }
 
 extension ProductsViewController: UITableViewDataSource {
