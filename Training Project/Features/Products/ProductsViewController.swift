@@ -7,12 +7,23 @@
 
 import UIKit
 
+//MARK: - ProductsViewController
 class ProductsViewController: UIViewController {
+
     weak var coordinator: MainCoordinator?
     private let viewModel = ProductsViewModel()
-    private let productViewItem = ProductViewItem()
+    private let productDetailView = ProductDetailView()
     private let productsView = ProductsView()
     
+    private func setupNavigationBar() {
+        let addButton = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(didTapAdd)
+        )
+        
+        navigationItem.rightBarButtonItem = addButton
+    }
     
     override func loadView() {
         view = productsView
@@ -21,6 +32,8 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Products"
+        
+        setupNavigationBar()
         
         productsView.tableView.dataSource = self
         productsView.tableView.delegate = self
@@ -49,8 +62,11 @@ class ProductsViewController: UIViewController {
             productsView.tableView.deselectRow(at: selectedIndexPath, animated: true)
         }
     }
+    
+    
 }
 
+// MARK: - UITableViewDataSource
 extension ProductsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.products.count
@@ -62,8 +78,14 @@ extension ProductsViewController: UITableViewDataSource {
         }
         
         let product = viewModel.products[indexPath.row]
-        cell.configure(title: product.title, description: product.description, image: UIImage(systemName: "shippingbox.fill"))
+        cell
+            .configure(
+                title: product.title,
+                description: product.description,
+                image: UIImage(systemName: "shippingbox.fill")
+            )
         
+        cell.productImage.tintColor = .systemGray
         
         ImageLoader.shared
             .loadImage(from: product.thumbnail) { [weak cell] image in
@@ -75,10 +97,18 @@ extension ProductsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ProductsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let product = viewModel.products[indexPath.row]
-        coordinator?.goToProductItemView(with: product)
+        coordinator?.showProductDetail(with: product)
+    }
+}
+
+
+// MARK: - Button Actions
+extension ProductsViewController {
+    @objc private func didTapAdd() {
+        print("Add product tapped")
     }
 }

@@ -24,9 +24,6 @@ class MainCoordinator: Coordinator {
         productVC.coordinator = self
         navigationController.pushViewController(productVC, animated: false)
         
-//        let productVI = ProductViewItem()
-//        productVI.coordinator = self
-//        navigationController.pushViewController(productVI, animated: false)
     }
 
     func showProductsScreen() {
@@ -34,11 +31,11 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(productsScreen, animated: true)
     }
     
-    func goToProductItemView(with product: Product) {
-        let productView = ProductViewItem()
-        productView.coordinator = self
-        productView.configProductView(Product: product)
-        navigationController.pushViewController(productView, animated: true)
+    func showProductDetail(with product: Product) {
+        let productDetailVC = ProductDetailViewController()
+        productDetailVC.product = product
+        navigationController
+            .pushViewController(productDetailVC, animated: true)
     }
     
     /*
