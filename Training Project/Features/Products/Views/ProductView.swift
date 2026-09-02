@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductsView: UIView {
+class ProductsView: UIView, ViewCode {
     
     let tableView: UITableView = {
         let table = UITableView()
@@ -18,8 +18,7 @@ class ProductsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        setupHierarchy()
-        setupConstraints()
+        buildViewCode()
     }
     
     
@@ -28,11 +27,11 @@ class ProductsView: UIView {
     }
     
     
-    private func setupHierarchy() {
+    func setupHierarchy() {
         addSubview(tableView)
     }
     
-    private func setupConstraints() {
+    func setupConstraints() {
 
       // Table View Constraints
         NSLayoutConstraint.activate([

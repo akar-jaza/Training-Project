@@ -109,6 +109,6 @@ extension ProductsViewController: UITableViewDelegate {
 // MARK: - Button Actions
 extension ProductsViewController {
     @objc private func didTapAdd() {
-        print("Add product tapped")
+        coordinator?.presentCreateProduct(from: self)
     }
 }
