@@ -36,4 +36,9 @@ class ProductsViewModel {
             }
         }.resume()
     }
+    
+    func addProduct(_ product: Product) {
+        products.insert(product, at: 0)
+        onProductsUpdated?() 
+    }
 }

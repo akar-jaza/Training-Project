@@ -10,9 +10,11 @@ import UIKit
 class CreateProductViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
-        
-    private let createProductView = CreateProductView()
     
+    private let createProductView = CreateProductView()
+    private let viewModel = CreateProductsViewModel()
+    
+    var onProductCreated: ((Product) -> Void)?
     
     override func loadView() {
         view = createProductView
@@ -36,6 +38,23 @@ class CreateProductViewController: UIViewController {
         
         navigationItem.rightBarButtonItem?.style = .prominent
         
+        viewModel.onProductCreated = { [weak self] product in
+            self?.onProductCreated?(product)
+            self?.dismiss(animated: true)
+        }
+        
+        viewModel.onError = { error in
+            print("Failed to create product: \(error)")
+        }
+        
+        createProductView.titleField.delegate = self
+        createProductView.descriptionField.delegate = self
+        createProductView.priceField.delegate = self
+        
+        // dismissing the keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
     }
 }
 
@@ -47,6 +66,35 @@ extension CreateProductViewController {
     }
     
     @objc private func addProductTapped() {
-        // 
+        let title = createProductView.titleField.text ?? ""
+        let description = createProductView.descriptionField.text ?? ""
+        let priceText = createProductView.priceField.text ?? ""
+        
+        guard !title.isEmpty, !description.isEmpty, let price = Double(priceText) else {
+            print("Missing or invalid fields")
+            return
+        }
+        
+//        print("New product: \(title), \(description), $\(price)")
+        viewModel.createProduct(title: title, description: description, price: price)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
+
+extension CreateProductViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case createProductView.titleField:
+            createProductView.descriptionField.becomeFirstResponder()
+        case createProductView.descriptionField:
+            createProductView.priceField.becomeFirstResponder()
+        default:
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+}
+

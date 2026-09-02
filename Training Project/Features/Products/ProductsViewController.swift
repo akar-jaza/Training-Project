@@ -109,6 +109,8 @@ extension ProductsViewController: UITableViewDelegate {
 // MARK: - Button Actions
 extension ProductsViewController {
     @objc private func didTapAdd() {
-        coordinator?.presentCreateProduct(from: self)
+        coordinator?.presentCreateProduct(from: self) { [weak self] newProduct in
+            self?.viewModel.addProduct(newProduct)
+        }
     }
 }

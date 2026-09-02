@@ -38,17 +38,17 @@ class MainCoordinator: Coordinator {
             .pushViewController(productDetailVC, animated: true)
     }
     
-    func presentCreateProduct(from viewController: UIViewController) {
+    func presentCreateProduct(from viewController: UIViewController, onProductCreated: @escaping (Product) -> Void) {
+        
         let createProductVC = CreateProductViewController()
         createProductVC.coordinator = self
+        createProductVC.onProductCreated = onProductCreated
         
         let navWrapper = UINavigationController(rootViewController: createProductVC)
-        
         if let sheet = navWrapper.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
         }
-        
         navigationController.present(navWrapper, animated: true)
     }
     
