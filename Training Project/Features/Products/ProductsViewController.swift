@@ -11,7 +11,7 @@ import UIKit
 class ProductsViewController: UIViewController {
 
     weak var coordinator: MainCoordinator?
-    private let viewModel = ProductsViewModel()
+    private let productsViewModel = ProductsViewModel()
     private let productDetailView = ProductDetailView()
     private let productsView = ProductsView()
     
@@ -43,15 +43,15 @@ class ProductsViewController: UIViewController {
                 forCellReuseIdentifier: ProductViewCell.reuseID
             )
         
-        viewModel.onProductsUpdated = { [weak self] in
+        productsViewModel.onProductsUpdated = { [weak self] in
             self?.productsView.tableView.reloadData()
         }
         
-        viewModel.onError = { error in
+        productsViewModel.onError = { error in
             print("Failed to fetch products: \(error)")
         }
         
-        viewModel.fetchProducts()
+        productsViewModel.fetchProducts()
     }
     
     // remove the gray highlight from the cell when we go back to the prev screen
@@ -69,7 +69,7 @@ class ProductsViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension ProductsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.products.count
+        productsViewModel.products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,7 +77,7 @@ extension ProductsViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let product = viewModel.products[indexPath.row]
+        let product = productsViewModel.products[indexPath.row]
         cell
             .configure(
                 title: product.title,
@@ -100,7 +100,7 @@ extension ProductsViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ProductsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let product = viewModel.products[indexPath.row]
+        let product = productsViewModel.products[indexPath.row]
         coordinator?.showProductDetail(with: product)
     }
 }
@@ -109,8 +109,49 @@ extension ProductsViewController: UITableViewDelegate {
 // MARK: - Button Actions
 extension ProductsViewController {
     @objc private func didTapAdd() {
-        coordinator?.presentCreateProduct(from: self) { [weak self] newProduct in
-            self?.viewModel.addProduct(newProduct)
+        coordinator?
+            .presentCreateProduct(from: self) { [weak self] newProduct in
+            self?.productsViewModel.addProduct(newProduct)
         }
+    }
+}
+
+// MARK: - Context menu on long press
+extension ProductsViewController {
+    
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        let identifier = indexPath as NSIndexPath
+        
+        return UIContextMenuConfiguration(
+            identifier: identifier,
+            previewProvider: {
+                return nil
+            },
+            actionProvider: { _ in
+                let editAction = UIAction(
+                    title: "Edit",
+                    image: UIImage(systemName: "pencil"),
+                    identifier: UIAction.Identifier("edit"),
+                    handler: { _ in
+                        print("Edit item at \(indexPath)")
+                    }
+                )
+                
+                let deleteAction = UIAction(
+                    title: "Delete",
+                    image: UIImage(systemName: "trash"),
+                    identifier: UIAction.Identifier("delete"),
+                    attributes: .destructive,
+                    handler: { _ in
+                        print("Delete item at \(indexPath)")
+                    }
+                )
+                
+                return UIMenu(title: "", children: [editAction, deleteAction])
+            }
+        )
     }
 }
