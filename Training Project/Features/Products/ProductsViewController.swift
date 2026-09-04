@@ -145,8 +145,10 @@ extension ProductsViewController {
                     image: UIImage(systemName: "trash"),
                     identifier: UIAction.Identifier("delete"),
                     attributes: .destructive,
-                    handler: { _ in
-                        print("Delete item at \(indexPath)")
+                    handler: { [weak self] _ in
+                        guard let self = self else { return }
+                        let product = self.productsViewModel.products[indexPath.row]
+                        self.productsViewModel.deleteProduct(product, at: indexPath.row)
                     }
                 )
                 

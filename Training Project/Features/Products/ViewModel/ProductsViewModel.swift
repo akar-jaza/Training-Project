@@ -37,6 +37,30 @@ class ProductsViewModel {
         }.resume()
     }
     
+    func deleteProduct(_ product: Product, at index: Int) {
+        guard let url = URL(string: "https://dummyjson.com/products/\(product.id)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            
+            if let error = error {
+                DispatchQueue.main.async { self?.onError?(error) }
+                return
+            }
+            
+            // Dummy json won't delete it on their server because DummyJson server doesn't exist, we remove it locally either way. THis func is just for learning purposes
+            DispatchQueue.main.async {
+                guard self?.products.indices.contains(index) == true else { return }
+                self?.products.remove(at: index)
+                self?.onProductsUpdated?()
+            }
+            
+        }.resume()
+    }
+
+    
     func addProduct(_ product: Product) {
         products.insert(product, at: 0)
         onProductsUpdated?() 

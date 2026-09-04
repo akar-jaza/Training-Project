@@ -61,4 +61,5 @@ class CreateProductsViewModel {
         }.resume()
         
     }
+    
 }
