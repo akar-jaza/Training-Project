@@ -65,4 +65,10 @@ class ProductsViewModel {
         products.insert(product, at: 0)
         onProductsUpdated?() 
     }
+    
+    func replaceProduct(_ product: Product, at index: Int) {
+        guard products.indices.contains(index) else { return }
+        products[index] = product
+        onProductsUpdated?()
+    }
 }

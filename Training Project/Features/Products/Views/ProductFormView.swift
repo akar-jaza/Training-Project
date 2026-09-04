@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateProductView: UIView, ViewCode {
+class ProductFormView: UIView, ViewCode {
     
     let titleField: UITextField = {
         let field = UITextField()

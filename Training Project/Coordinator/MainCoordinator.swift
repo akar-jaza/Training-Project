@@ -16,13 +16,13 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-                let mainVC = MainViewController()
-                mainVC.coordinator = self
-                navigationController.pushViewController(mainVC, animated: false)
+//                let mainVC = MainViewController()
+//                mainVC.coordinator = self
+//                navigationController.pushViewController(mainVC, animated: false)
         
-//        let productVC = ProductsViewController()
-//        productVC.coordinator = self
-//        navigationController.pushViewController(productVC, animated: false)
+        let productVC = ProductsViewController()
+        productVC.coordinator = self
+        navigationController.pushViewController(productVC, animated: false)
         
     }
     
@@ -38,26 +38,25 @@ class MainCoordinator: Coordinator {
             .pushViewController(productDetailVC, animated: true)
     }
     
-    func presentCreateProduct(from viewController: UIViewController, onProductCreated: @escaping (Product) -> Void) {
+    func presentCreateProduct(from viewController: UIViewController, onSave: @escaping (Product) -> Void) {
+        presentProductForm(mode: .create, onSave: onSave)
+    }
+    
+    func presentEditProduct(_ product: Product, onSave: @escaping (Product) -> Void) {
+        presentProductForm(mode: .edit(product), onSave: onSave)
+    }
+    
+    private func presentProductForm(mode: ProductFormViewController.Mode, onSave: @escaping (Product) -> Void) {
+        let formVC = ProductFormViewController(mode: mode)
+        formVC.coordinator = self
+        formVC.onSave = onSave
         
-        let createProductVC = CreateProductViewController()
-        createProductVC.coordinator = self
-        createProductVC.onProductCreated = onProductCreated
-        
-        let navWrapper = UINavigationController(rootViewController: createProductVC)
+        let navWrapper = UINavigationController(rootViewController: formVC)
         if let sheet = navWrapper.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
         }
         navigationController.present(navWrapper, animated: true)
     }
-    
-    /*
-     func showDetail(for title: String) {
-     let detailVC = DetailViewController()
-     detailVC.title = title
-     navigationController.pushViewController(detailVC, animated: true)
-     }
-     */
     
 }

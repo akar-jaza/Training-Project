@@ -68,7 +68,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             case "Products":
                 self.coordinator?.showProductsScreen()
             default: break
-                //
             }
         }
         return cell

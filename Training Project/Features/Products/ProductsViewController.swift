@@ -135,8 +135,13 @@ extension ProductsViewController {
                     title: "Edit",
                     image: UIImage(systemName: "pencil"),
                     identifier: UIAction.Identifier("edit"),
-                    handler: { _ in
-                        print("Edit item at \(indexPath)")
+                    handler: { [weak self] _ in
+                        guard let self = self else { return }
+                        let product = self.productsViewModel.products[indexPath.row]
+                        
+                        self.coordinator?.presentEditProduct(product) { [weak self] updatedProduct in
+                            self?.productsViewModel.replaceProduct(updatedProduct, at: indexPath.row)
+                        }
                     }
                 )
                 
