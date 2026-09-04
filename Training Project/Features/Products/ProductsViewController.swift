@@ -7,7 +7,6 @@
 
 import UIKit
 
-//MARK: - ProductsViewController
 class ProductsViewController: UIViewController {
 
     weak var coordinator: MainCoordinator?

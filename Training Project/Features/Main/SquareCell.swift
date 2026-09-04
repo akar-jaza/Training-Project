@@ -7,7 +7,8 @@
 
 import UIKit
 
-class SquareCell: UICollectionViewCell {
+class SquareCell: UICollectionViewCell, ViewCode {
+    
     static let reuseID = "SquareCell"
     var onTap: (() -> Void)?
     
@@ -20,22 +21,19 @@ class SquareCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupCell()
-        
+        buildViewCode()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupCell() {
-        
-        cellActionButton.layer.cornerRadius = 8
-        cellActionButton.clipsToBounds = true
-        
-        cellActionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
+    
+    func setupHierarchy() {
         contentView.addSubview(cellActionButton)
+    }
+
+    func setupConstraints() {
         
         NSLayoutConstraint.activate([
             cellActionButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -46,6 +44,14 @@ class SquareCell: UICollectionViewCell {
                 .constraint(equalTo: contentView.widthAnchor),
         ])
     }
+    
+    func setupAdditionalConfiguration() {
+        cellActionButton.layer.cornerRadius = 8
+        cellActionButton.clipsToBounds = true
+        
+        cellActionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
     
     func configure(text: String, indexPath: IndexPath) {
         cellActionButton.setTitle(text, for: .normal)
