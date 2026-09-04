@@ -29,10 +29,11 @@ class SquareCell: UICollectionViewCell {
     }
     
     private func setupCell() {
-        backgroundColor = .black
-        layer.cornerRadius = 8
+        
+        cellActionButton.layer.cornerRadius = 8
+        cellActionButton.clipsToBounds = true
+        
         cellActionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
         
         contentView.addSubview(cellActionButton)
         
@@ -46,8 +47,16 @@ class SquareCell: UICollectionViewCell {
         ])
     }
     
-    func configure(text: String) {
+    func configure(text: String, indexPath: IndexPath) {
         cellActionButton.setTitle(text, for: .normal)
+        
+        switch indexPath.item {
+        case 0:
+            cellActionButton.backgroundColor = .black
+        default:
+            cellActionButton.backgroundColor = .systemGray
+        }
+        
     }
     
     @objc

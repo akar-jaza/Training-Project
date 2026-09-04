@@ -60,15 +60,15 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         let title = buttonTitles[indexPath.item]
-        cell.configure(text: title)
+        cell.configure(text: title, indexPath: indexPath)
         
         
         cell.onTap = {
             switch title {
             case "Products":
                 self.coordinator?.showProductsScreen()
-            default:
-                self.coordinator?.showProductsScreen()
+            default: break
+                //
             }
         }
         return cell
