@@ -16,9 +16,9 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let mainVC = MainViewController()
-        mainVC.coordinator = self
-        navigationController.pushViewController(mainVC, animated: false)
+        let homeVC = HomeViewController()
+        homeVC.coordinator = self
+        navigationController.pushViewController(homeVC, animated: false)
     }
 }
 
