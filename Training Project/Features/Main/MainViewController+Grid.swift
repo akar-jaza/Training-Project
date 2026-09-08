@@ -62,7 +62,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let title = buttonTitles[indexPath.item]
         cell.configure(text: title, indexPath: indexPath)
         
-        
         cell.onTap = {
             switch title {
             case "Products":

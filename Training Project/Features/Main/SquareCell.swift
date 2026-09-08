@@ -9,12 +9,14 @@ import UIKit
 
 class SquareCell: UICollectionViewCell, ViewCode {
     
+    
     static let reuseID = "SquareCell"
     var onTap: (() -> Void)?
     
     let cellActionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -57,7 +59,7 @@ class SquareCell: UICollectionViewCell, ViewCode {
         cellActionButton.setTitle(text, for: .normal)
         
         switch indexPath.item {
-        case 0:
+        case 0, 1:
             cellActionButton.backgroundColor = .black
         default:
             cellActionButton.backgroundColor = .systemGray
