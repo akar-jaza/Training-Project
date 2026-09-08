@@ -79,3 +79,12 @@ extension MainCoordinator {
         navigationController.present(navWrapper, animated: true)
     }
 }
+// MARK: - RxSwift Screen Navigation
+
+extension MainCoordinator {
+    func showRxSwiftPage() {
+        let rxSwiftScreen = RxProductViewController()
+        rxSwiftScreen.coordinator = self
+        navigationController.pushViewController(rxSwiftScreen, animated: true)
+    }
+}

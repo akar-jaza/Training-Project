@@ -1,0 +1,28 @@
+//
+//  RxProductViewModel.swift
+//  Training Project
+//
+//  Created by Akar jaza on 9/8/26.
+//
+
+import Foundation
+import RxSwift
+import RxCocoa
+
+class RxProductViewModel {
+    var items = PublishSubject<[RxProduct]>()
+    
+    func fetchItems() {
+        let
+        products = [
+            RxProduct(imageName: "house", title: "Home"),
+            RxProduct(imageName: "gear", title: "Settings"),
+            RxProduct(imageName: "person circle", title: "Profile"),
+            RxProduct(imageName: "airplane", title: "Flights"),
+            RxProduct(imageName: "bell", title: "Activity"),
+        ]
+        
+        items.onNext(products)
+        items.onCompleted()
+    }
+}
