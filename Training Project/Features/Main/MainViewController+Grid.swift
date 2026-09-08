@@ -66,6 +66,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             switch title {
             case "Products":
                 self.coordinator?.showProductsScreen()
+            case "RxSwift":
+                self.coordinator?.showRxSwiftPage()
             default: break
             }
         }
