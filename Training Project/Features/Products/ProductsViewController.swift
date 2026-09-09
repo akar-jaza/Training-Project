@@ -22,6 +22,8 @@ class ProductsViewController: UIViewController {
         )
         
         navigationItem.rightBarButtonItem = addButton
+        navigationItem.rightBarButtonItem?.style = .prominent
+        navigationItem.rightBarButtonItem?.tintColor = AppColors.primaryColor
     }
     
     override func loadView() {

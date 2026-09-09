@@ -1,5 +1,5 @@
 //
-//  MainViewController+Grid.swift
+//  HomeViewController+Grid.swift
 //  Training Project
 //
 //  Created by Akar jaza on 8/28/26.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func setupHierarchy() {
         view.addSubview(collectionView)

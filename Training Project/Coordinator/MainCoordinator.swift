@@ -9,16 +9,27 @@ import UIKit
 
 class MainCoordinator: Coordinator {
     
-    var navigationController: UINavigationController
+    var navigationController: UINavigationController {
+        tabBarController.selectedViewController as! UINavigationController
+    }
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    let tabBarController: UITabBarController
+    
+    init(tabBarController: UITabBarController) {
+        self.tabBarController = tabBarController
     }
     
     func start() {
-        let mainVC = MainViewController()
-        mainVC.coordinator = self
-        navigationController.pushViewController(mainVC, animated: false)
+        guard let navControllers = tabBarController.viewControllers as? [UINavigationController] else { return }
+        
+        for nav in navControllers {
+            if let homeVC = nav.viewControllers.first as? HomeViewController {
+                homeVC.coordinator = self
+            }
+            if let profileVC = nav.viewControllers.first as? ProfileViewController {
+                profileVC.coordinator = self
+            }
+        }
     }
 }
 

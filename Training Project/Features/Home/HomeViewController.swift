@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  Training Project
 //
 //  Created by Akar jaza on 8/28/26.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, ViewCode {
+class HomeViewController: UIViewController, ViewCode {
     weak var coordinator: MainCoordinator?
     
     let uiCollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -24,7 +24,7 @@ class MainViewController: UIViewController, ViewCode {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Main"
+        navigationItem.title = "Home"
         buildViewCode()
     }
 }
