@@ -24,6 +24,7 @@ class SquareCell: UICollectionViewCell, ViewCode {
     let darkOverlayView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.35)
+        view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -31,7 +32,7 @@ class SquareCell: UICollectionViewCell, ViewCode {
     let cellActionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
-        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
