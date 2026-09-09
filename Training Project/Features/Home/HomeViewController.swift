@@ -24,7 +24,7 @@ class HomeViewController: UIViewController, ViewCode {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Home"
+        navigationItem.title = "Home"
         buildViewCode()
     }
 }

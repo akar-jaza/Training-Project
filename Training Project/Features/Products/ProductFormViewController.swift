@@ -74,6 +74,7 @@ class ProductFormViewController: UIViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .add, target: self, action: #selector(saveTapped)
             )
+            
         case .edit(let product):
             title = "Edit Product"
             navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -88,7 +89,9 @@ class ProductFormViewController: UIViewController {
             productFormView.descriptionField.text = product.description
             productFormView.priceField.text = "\(product.price)"
         }
+
         navigationItem.rightBarButtonItem?.style = .prominent
+        navigationItem.rightBarButtonItem?.tintColor = AppColors.primaryColor
     }
 }
 

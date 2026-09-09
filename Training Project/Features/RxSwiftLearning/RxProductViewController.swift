@@ -41,6 +41,7 @@ class RxProductViewController: UIViewController {
         ) { row, model, cell in
             cell.textLabel?.text = model.title
             cell.imageView?.image = UIImage(systemName: model.imageName)
+            cell.imageView?.tintColor = AppColors.primaryColor
         }.disposed(by: bag)
         
         // second, bind a model selected handler
