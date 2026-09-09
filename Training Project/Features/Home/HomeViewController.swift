@@ -13,7 +13,7 @@ class HomeViewController: UIViewController, ViewCode {
     let uiCollectionViewFlowLayout = UICollectionViewFlowLayout()
     let itemsPerRow: CGFloat = 2
     let spacing: CGFloat = 10
-    let buttonTitles = ["Products", "RxSwift", "Item 3", "Item 4"]
+    let buttonTitles = ["Products", "RxSwift", "Recipes", "Item 4"]
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: uiCollectionViewFlowLayout)

@@ -99,3 +99,12 @@ extension MainCoordinator {
         navigationController.pushViewController(rxSwiftScreen, animated: true)
     }
 }
+// MARK: - Recipe Navigation
+
+extension MainCoordinator {
+    func showRecipePage() {
+        let recipeScreen = RecipeViewController()
+        recipeScreen.coordinator = self
+        navigationController.pushViewController(recipeScreen, animated: true)
+    }
+}
