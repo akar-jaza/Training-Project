@@ -94,7 +94,7 @@ class SquareCell: UICollectionViewCell, ViewCode {
         case 1:
             backgroundImageView.image = UIImage(named: "rxswiftLogo")
         case 2:
-            backgroundImageView.image = UIImage(named: "recipes")
+            backgroundImageView.image = UIImage(named: "recipesBackground")
             cellActionButton.titleLabel?.textColor = .black
         default:
             cellActionButton.backgroundColor = .systemGray
