@@ -6,13 +6,65 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class RecipeViewController: UIViewController {
+class RecipeViewController: UIViewController, ViewCode {
+    
     weak var coordinator: MainCoordinator?
+    
+    private let viewModel = RecipeViewModel()
+    private let bag = DisposeBag()
+    private let collectionView = RecipeCollectionView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "Recipes"
+        
+        buildViewCode()
+        bindCollectionView()
+        viewModel.fetchRecipes()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateItemSize()
+    }
+    
+    func setupHierarchy() {
+        collectionView
+            .register(
+                RecipeCardCell.self,
+                forCellWithReuseIdentifier: RecipeCardCell.reuseID
+            )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func updateItemSize() {
+        let spacing: CGFloat = 12
+        let itemWidth = (collectionView.bounds.width - spacing * 3) / 2
+        collectionView.layout.itemSize = CGSize(width: itemWidth, height: 90)
+    }
+    
+    private func bindCollectionView() {
+        viewModel.items.bind(to: collectionView.rx.items(
+            cellIdentifier: RecipeCardCell.reuseID,
+            cellType: RecipeCardCell.self
+        )) { row, recipe, cell in
+            cell.configure(title: recipe.name,
+            description: "\(recipe.cuisine) • \(recipe.difficulty)")
+        }
+        .disposed(by: bag)
     }
 }
