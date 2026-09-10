@@ -73,9 +73,14 @@ class RecipeViewController: UIViewController, ViewCode {
             
             cell.configure(
                 title: recipe.name,
-                description: "\(recipe.cuisine) • \(recipe.difficulty)",
-                image: UIImage(systemName: "fork.knife")
+                description: "\(recipe.cuisine) • \(recipe.difficulty)"
             )
+            
+            ImageLoader.shared.loadImage(from: recipe.image) { [weak cell] image in
+                if let image = image {
+                    cell?.reciepeImage.image = image
+                }
+            }
         }
         .disposed(by: bag)
     }
