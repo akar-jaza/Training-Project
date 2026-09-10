@@ -10,6 +10,15 @@ import UIKit
 class RecipeCardCell: UICollectionViewCell, ViewCode {
     static let reuseID = "RecipeCardCell"
     
+    let reciepeImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.tintColor = .secondaryLabel
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 15)
@@ -46,6 +55,7 @@ class RecipeCardCell: UICollectionViewCell, ViewCode {
     }
     
     func setupHierarchy() {
+        stack.addArrangedSubview(reciepeImage)
         stack.addArrangedSubview(titleLabel)
         stack.addArrangedSubview(descriptionLabel)
         contentView.addSubview(stack)
@@ -55,7 +65,14 @@ class RecipeCardCell: UICollectionViewCell, ViewCode {
         NSLayoutConstraint.activate([
             stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12)
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            
+            reciepeImage.topAnchor.constraint(equalTo: stack.topAnchor),
+            reciepeImage.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            reciepeImage.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            reciepeImage.widthAnchor.constraint(equalTo: stack.widthAnchor),
+            reciepeImage.heightAnchor.constraint(equalToConstant: 100),
+            
         ])
     }
     
@@ -64,9 +81,10 @@ class RecipeCardCell: UICollectionViewCell, ViewCode {
         contentView.layer.cornerRadius = 12
     }
     
-    func configure(title: String, description: String) {
+    func configure(title: String, description: String, image: UIImage? = UIImage(systemName: "fork.knife")) {
         titleLabel.text = title
         descriptionLabel.text = description
+        reciepeImage.image = image
     }
     
     

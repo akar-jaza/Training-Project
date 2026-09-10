@@ -53,17 +53,29 @@ class RecipeViewController: UIViewController, ViewCode {
     
     private func updateItemSize() {
         let spacing: CGFloat = 12
-        let itemWidth = (collectionView.bounds.width - spacing * 3) / 2
-        collectionView.layout.itemSize = CGSize(width: itemWidth, height: 90)
+        let itemsPerRow: CGFloat = 2
+        
+        let totalSpacing = spacing * (itemsPerRow + 1)
+        let availableWidth = collectionView.bounds.width - totalSpacing
+        let itemWidth = availableWidth / itemsPerRow
+        return collectionView.layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        
+//        let itemWidth = (collectionView.bounds.width - spacing * 3) / 2
+//        collectionView.layout.itemSize = CGSize(width: itemWidth, height: 90)
     }
     
     private func bindCollectionView() {
+        
         viewModel.items.bind(to: collectionView.rx.items(
             cellIdentifier: RecipeCardCell.reuseID,
             cellType: RecipeCardCell.self
         )) { row, recipe, cell in
-            cell.configure(title: recipe.name,
-            description: "\(recipe.cuisine) • \(recipe.difficulty)")
+            
+            cell.configure(
+                title: recipe.name,
+                description: "\(recipe.cuisine) • \(recipe.difficulty)",
+                image: UIImage(systemName: "fork.knife")
+            )
         }
         .disposed(by: bag)
     }
