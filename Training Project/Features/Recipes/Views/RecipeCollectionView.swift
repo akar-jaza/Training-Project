@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class RecipeCollectionView: UICollectionView{
+class RecipeCollectionView: UICollectionView {
     
     let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -16,7 +16,6 @@ class RecipeCollectionView: UICollectionView{
         
         return layout
     }()
-    
     
     init() {
         super.init(frame: .zero, collectionViewLayout: layout)
