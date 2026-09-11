@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class RecipeCollectionView: UICollectionView, ViewCode {
+class RecipeCollectionView: UICollectionView{
     
     let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -17,17 +17,9 @@ class RecipeCollectionView: UICollectionView, ViewCode {
         return layout
     }()
     
-    func setupHierarchy() {
-        //
-    }
-    
-    func setupConstraints() {
-        //
-    }
     
     init() {
         super.init(frame: .zero, collectionViewLayout: layout)
-        buildViewCode()
     }
     
     required init?(coder: NSCoder) {
