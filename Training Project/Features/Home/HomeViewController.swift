@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController, ViewCode {
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: AppCoordinator?
     
     let uiCollectionViewFlowLayout = UICollectionViewFlowLayout()
     let itemsPerRow: CGFloat = 2
@@ -21,10 +21,42 @@ class HomeViewController: UIViewController, ViewCode {
         return cv
     }()
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        label.text = "Home"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.title = "Home"
+        setupNavigationBarItem()
+        
         buildViewCode()
+    }
+    
+    private func setupNavigationBarItem() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.leftBarButtonItem?.style = .plain
+        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.hidesSharedBackground = true
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "iphone.and.arrow.right.outward"),
+            style: .plain,
+            target: self,
+            action: #selector(logoutTapped)
+        )
+        navigationItem.rightBarButtonItem?.tintColor = .systemRed
+        
+    }
+}
+
+// MARK: - Action Buttons
+extension HomeViewController {
+    @objc func logoutTapped() {
+        coordinator?.showLoginPage()
     }
 }

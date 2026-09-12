@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainCoordinator: Coordinator {
+class AppCoordinator: Coordinator {
     
     var navigationController: UINavigationController {
         tabBarController.selectedViewController as! UINavigationController
@@ -35,7 +35,7 @@ class MainCoordinator: Coordinator {
 
 // MARK: - Products Navigation
 
-extension MainCoordinator {
+extension AppCoordinator {
     
     func showProductsScreen() {
         let productsScreen = ProductsViewController()
@@ -56,7 +56,7 @@ extension MainCoordinator {
 
 // MARK: - Product Form Navigation
 
-extension MainCoordinator {
+extension AppCoordinator {
     
     func presentCreateProduct(
         from viewController: UIViewController,
@@ -92,7 +92,7 @@ extension MainCoordinator {
 }
 // MARK: - RxSwift Screen Navigation
 
-extension MainCoordinator {
+extension AppCoordinator {
     func showRxSwiftPage() {
         let rxSwiftScreen = RxProductViewController()
         rxSwiftScreen.coordinator = self
@@ -101,10 +101,19 @@ extension MainCoordinator {
 }
 // MARK: - Recipe Navigation
 
-extension MainCoordinator {
+extension AppCoordinator {
     func showRecipePage() {
         let recipeScreen = RecipeViewController()
         recipeScreen.coordinator = self
         navigationController.pushViewController(recipeScreen, animated: true)
+    }
+}
+// MARK: - Login Screen
+
+extension AppCoordinator {
+    func showLoginPage() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+        sceneDelegate.switchToLogin()
     }
 }

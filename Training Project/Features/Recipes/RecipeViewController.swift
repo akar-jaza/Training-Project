@@ -11,7 +11,7 @@ import RxCocoa
 
 class RecipeViewController: UIViewController, ViewCode {
     
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: AppCoordinator?
     
     private let viewModel = RecipeViewModel()
     private let bag = DisposeBag()

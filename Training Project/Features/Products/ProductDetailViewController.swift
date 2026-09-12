@@ -9,7 +9,7 @@ import UIKit
 
 class ProductDetailViewController: UIViewController {
 
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: AppCoordinator?
 
     private let productDetailView = ProductDetailView()
 

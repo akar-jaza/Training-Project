@@ -11,18 +11,46 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    var coordinator: MainCoordinator?
+    var coordinator: AppCoordinator?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        window = UIWindow(windowScene: windowScene)
+        switchToLogin() 
+        window?.makeKeyAndVisible()
+    }
+    
+    func switchToMain() {
         let tabBarController = MainTabBarController()
-        coordinator = MainCoordinator(tabBarController: tabBarController)
+        coordinator = AppCoordinator(tabBarController: tabBarController)
         coordinator?.start()
         
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
+        setRootViewController(tabBarController)
+    }
+    
+    func switchToLogin() {
+        let loginVC = LoginViewController()
+        let navController = UINavigationController(rootViewController: loginVC)
+        
+        setRootViewController(navController)
+    }
+    
+    private func setRootViewController(_ viewController: UIViewController) {
+        guard let window = window else { return }
+        
+        if window.rootViewController != nil {
+            UIView.transition(
+                with: window,
+                duration: 0.35,
+                options: .transitionCrossDissolve,
+                animations: {
+                    window.rootViewController = viewController
+                }
+            )
+        } else {
+            window.rootViewController = viewController
+        }
     }
 }

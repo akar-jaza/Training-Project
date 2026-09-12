@@ -8,7 +8,7 @@
 import UIKit
 
 class ProductDetailView: UIView, ViewCode {
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: AppCoordinator?
     
     let productImage: UIImageView = {
         let image = UIImage(systemName: "shippingbox.fill")
