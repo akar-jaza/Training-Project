@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         setupLoginButtonBinding()
+        fillTheLoginFields()
     }
     
 }
@@ -26,6 +27,7 @@ extension LoginViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
 }
 
 // MARK: - Bindings
@@ -51,5 +53,14 @@ extension LoginViewController {
                     }
             }).disposed(by: disposeBag)
         
+    }
+    
+    private func fillTheLoginFields() {
+        loginView.hintButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            
+            loginView.usernameTextField.text = "emilys"
+            loginView.passwordTextField.text = "emilyspass"
+        }).disposed(by: disposeBag)
     }
 }

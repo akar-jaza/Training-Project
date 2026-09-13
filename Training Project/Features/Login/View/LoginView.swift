@@ -56,6 +56,40 @@ final class LoginView: UIView, ViewCode {
         return button
     }()
     
+    let hintButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let fullText = "psst... use username: emilys and password: emilyspass or touch me to fill the fields"
+        let clickableText = "touch me"
+        
+        let defaultAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.darkGray,
+            .font: UIFont.systemFont(ofSize: 14)
+        ]
+        
+        let attributedString = NSMutableAttributedString(string: fullText, attributes: defaultAttributes)
+        
+        let range = (fullText as NSString).range(of: clickableText)
+        
+        let clickableAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemBlue,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: UIFont.italicSystemFont(ofSize: 14)
+        ]
+        
+        attributedString.addAttributes(clickableAttributes, range: range)
+        
+        button.setAttributedTitle(attributedString, for: .normal)
+        
+        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.textAlignment = .center
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,6 +106,7 @@ final class LoginView: UIView, ViewCode {
         addSubview(usernameTextField)
         addSubview(passwordTextField)
         addSubview(loginButton)
+        addSubview(hintButton)
     }
     
     func setupConstraints() {
@@ -100,6 +135,11 @@ final class LoginView: UIView, ViewCode {
                 passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
                 passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
                 passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+                
+                // hint button
+                hintButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
+                hintButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+                hintButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
                 
                 // button
                 loginButton.bottomAnchor
