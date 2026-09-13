@@ -108,12 +108,21 @@ extension AppCoordinator {
         navigationController.pushViewController(recipeScreen, animated: true)
     }
 }
-// MARK: - Login Screen
+// MARK: - Switch to Login Screen
 
 extension AppCoordinator {
-    func showLoginPage() {
+    func showLoginScreen() {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = scene.delegate as? SceneDelegate else { return }
         sceneDelegate.switchToLogin()
+    }
+}
+// MARK: - Switch to Home Screen
+
+extension AppCoordinator {
+    func showHomeScreen() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+        sceneDelegate.switchToMain()
     }
 }

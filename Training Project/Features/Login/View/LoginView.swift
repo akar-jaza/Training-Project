@@ -2,14 +2,14 @@ import UIKit
 
 final class LoginView: UIView, ViewCode {
     
-    lazy var welcomeImage: UIImageView = {
+    let welcomeImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "welcome"))
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-    lazy var usernameTextField: UITextField = {
+    let usernameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Username"
         textField.backgroundColor = UIColor(named: "loginBgColor")
@@ -28,7 +28,7 @@ final class LoginView: UIView, ViewCode {
         return textField
     }()
     
-    lazy var passwordTextField: UITextField = {
+    let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
         textField.backgroundColor = UIColor(named: "loginBgColor")
@@ -45,14 +45,13 @@ final class LoginView: UIView, ViewCode {
         return textField
     }()
     
-    lazy var loginButton: UIButton = {
+    let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 12
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

@@ -57,6 +57,6 @@ class HomeViewController: UIViewController, ViewCode {
 // MARK: - Action Buttons
 extension HomeViewController {
     @objc func logoutTapped() {
-        coordinator?.showLoginPage()
+        coordinator?.showLoginScreen()
     }
 }
