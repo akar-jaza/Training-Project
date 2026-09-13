@@ -45,8 +45,9 @@ final class LoginView: UIView, ViewCode {
         return textField
     }()
     
-    let loginButton: UIButton = {
-        let button = UIButton(type: .system)
+    
+    let loginButton: LoadingButton = {
+        let button = LoadingButton(frame: .zero)
         button.setTitle("Login", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black

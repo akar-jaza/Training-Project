@@ -20,6 +20,8 @@ class LoginViewModel {
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
+//                self.isLoading.onNext(false)
+                
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                     print("Success")
                     completion(true)
