@@ -13,6 +13,7 @@ enum NetworkError: Error {
     case noData
     case decodingFailed(Error)
     case requestFailed(Error)
+    case serverError(Int, Data)
 }
 
 protocol NetworkServiceProtocol {
@@ -64,14 +65,26 @@ class NetworkService: NetworkServiceProtocol {
                 }
             }
             
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                
+                
                 if let error = error {
                     observer.onError(NetworkError.requestFailed(error))
                     return
                 }
                 
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    observer.onError(NetworkError.noData)
+                    return
+                }
+                
                 guard let data = data else {
                     observer.onError(NetworkError.noData)
+                    return
+                }
+                
+                guard (200...299).contains(httpResponse.statusCode) else {
+                    observer.onError(NetworkError.serverError(httpResponse.statusCode, data))
                     return
                 }
                 

@@ -46,8 +46,9 @@ class ProductFormViewModel {
             "description": description,
             "price": price
         ]
+        // The response is a CreateProductResponse, but throw it away; I don't need it.
         networkService.request(url: url, method: .put, body: body)
-            .subscribe(onNext: { [weak self] (response: CreateProductResponse) in
+            .subscribe(onNext: { [weak self] (_: CreateProductResponse) in
                 let updatedProduct = Product(
                     id: id,
                     title: title,

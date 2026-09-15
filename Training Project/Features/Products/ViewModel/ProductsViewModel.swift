@@ -10,7 +10,7 @@ import RxSwift
 
 class ProductsViewModel {
     private(set) var products: [Product] = []
-    var networkService: NetworkServiceProtocol = NetworkService.shared
+    var networkService: NetworkService = NetworkService.shared
     
     var onProductsUpdated: (() -> Void)?
     var onError: ((Error) -> Void)?
@@ -19,7 +19,7 @@ class ProductsViewModel {
     func fetchProducts() {
         guard let url = URL(string: "https://dummyjson.com/products") else { return }
         
-        networkService.request(url: url, method: .get, body: nil)
+        networkService.request(url: url, method: .get)
             .subscribe(onNext: { [weak self] (response: ProductsResponse) in
                 self?.products = response.products
                 self?.onProductsUpdated?()
@@ -27,6 +27,8 @@ class ProductsViewModel {
                 self?.onError?(error)
             })
             .disposed(by: disposeBag)
+        
+        
     }
     
     func deleteProduct(_ product: Product, at index: Int) {

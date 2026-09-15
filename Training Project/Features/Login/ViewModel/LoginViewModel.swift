@@ -1,6 +1,9 @@
 import Foundation
+import RxSwift
 
 class LoginViewModel {
+    var networkService: NetworkServiceProtocol = NetworkService.shared
+    var disposeBag = DisposeBag()
     
     func authenticateUser(username: String, password: String, completion: @escaping (Bool) -> Void) {
         guard let url = URL(string: "https://dummyjson.com/auth/login") else {
@@ -8,29 +11,21 @@ class LoginViewModel {
             return
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         let body: [String: String] = [
             "username": username,
             "password": password
         ]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        networkService
+            .request(url: url, method: .post, body: body)
+            .subscribe(onNext: { (_: User) in
+//                print("success \(user)")
+                completion(true)
+            }, onError: {error in
+                print(error)
+                completion(false)
+            })
+            .disposed(by: disposeBag)
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-//                self.isLoading.onNext(false)
-                
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    print("Success")
-                    completion(true)
-                } else {
-                    print("Failure")
-                    completion(false)
-                }
-            }
-        }.resume()
     }
-    
 }
+
