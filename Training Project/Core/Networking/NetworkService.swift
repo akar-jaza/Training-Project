@@ -22,15 +22,21 @@ protocol NetworkServiceProtocol {
     func requestData(url: URL, method: HTTPMethod) -> Observable<Data>
 }
 
+extension NetworkServiceProtocol {
+    func request<T: Decodable>(url: URL, method: HTTPMethod) -> Observable<T> {
+        request(url: url, method: method, body: nil)
+    }
+}
+
 class NetworkService: NetworkServiceProtocol {
-    
+
     static let shared = NetworkService()
     private init() {}
     
     func request<T: Decodable>(
         url: URL,
         method: HTTPMethod,
-        body: [String : Any]? = nil
+        body: [String : Any]?
     ) -> RxSwift.Observable<T> {
         requestData(url: url, method: method, body: body) .map { data in
             do {
@@ -38,7 +44,6 @@ class NetworkService: NetworkServiceProtocol {
             } catch {
                 throw NetworkError.decodingFailed(error)
             }
-
         }
     }
     
@@ -103,3 +108,5 @@ class NetworkService: NetworkServiceProtocol {
 
     
 }
+
+

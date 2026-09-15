@@ -10,7 +10,7 @@ import RxSwift
 
 class ProductsViewModel {
     private(set) var products: [Product] = []
-    var networkService: NetworkService = NetworkService.shared
+    var networkService: NetworkServiceProtocol = NetworkService.shared
     
     var onProductsUpdated: (() -> Void)?
     var onError: ((Error) -> Void)?
