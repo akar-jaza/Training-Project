@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -18,7 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        switchToLogin() 
+        if UserSessionService.shared.isLoggedIn {
+            switchToMain()
+        } else {
+            switchToLogin()
+        }
         window?.makeKeyAndVisible()
     }
     

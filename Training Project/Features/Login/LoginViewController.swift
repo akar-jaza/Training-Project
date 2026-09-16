@@ -80,6 +80,7 @@ extension LoginViewController: LoginViewModelDelegate {
         isLoading.onNext(false)
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+        UserSessionService.shared.save(user)
         sceneDelegate.switchToMain()
     }
     
