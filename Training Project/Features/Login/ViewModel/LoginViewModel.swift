@@ -1,13 +1,20 @@
 import Foundation
 import RxSwift
 
+protocol LoginViewModelDelegate: AnyObject {
+    func didAuthenticateSuccessfully(user: User)
+    func didFailToAuthenticate(with error: Error)
+}
+
 class LoginViewModel {
+    
+    weak var delegate: LoginViewModelDelegate?
     var networkService: NetworkServiceProtocol = NetworkService.shared
     var disposeBag = DisposeBag()
     
-    func authenticateUser(username: String, password: String, completion: @escaping (Bool) -> Void) {
+    func authenticateUser(username: String, password: String) {
         guard let url = URL(string: "https://dummyjson.com/auth/login") else {
-            completion(false)
+            delegate?.didFailToAuthenticate(with: NetworkError.invalidURL)
             return
         }
         
@@ -17,15 +24,12 @@ class LoginViewModel {
         ]
         networkService
             .request(url: url, method: .post, body: body)
-            .subscribe(onNext: { (_: User) in
-//                print("success \(user)")
-                completion(true)
-            }, onError: {error in
-                print(error)
-                completion(false)
+            .subscribe(onNext: { (user: User) in
+                self.delegate?.didAuthenticateSuccessfully(user: user)
+            }, onError: { [weak self] error in
+                self?.delegate?.didFailToAuthenticate(with: error)
             })
             .disposed(by: disposeBag)
-        
     }
 }
 

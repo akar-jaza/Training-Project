@@ -7,14 +7,17 @@ class LoginViewController: UIViewController {
     let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     private let isLoading = BehaviorSubject<Bool>(value: false)
-
+    
     
     override func loadView() {
         view = loginView
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
@@ -29,7 +32,6 @@ extension LoginViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
 }
 
 // MARK: - Bindings
@@ -49,21 +51,25 @@ extension LoginViewController {
                 let username = loginView.usernameTextField.text ?? ""
                 let password = loginView.passwordTextField.text ?? ""
                 
-                guard !username.isEmpty, !password.isEmpty else { return }
+                guard !username.isEmpty, !password.isEmpty else {
+                    return showAlert(title: "Missing Fields", message: "Please enter username and password.")
+                }
                 
                 isLoading.onNext(true)
                 
-                viewModel
-                    .authenticateUser(username: username, password: password) { success in
-                        self.isLoading.onNext(false)
-                        if success {
-                            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                                  let sceneDelegate = scene.delegate as? SceneDelegate else { return }
-                            sceneDelegate.switchToMain()
-                        } else {
-                            self.showAlert(title: "Login Failed", message: "Incorrect username or password. Try 'emilys' and 'emilyspass'.")
-                        }
-                    }
+                viewModel.authenticateUser(username: username, password: password)
+                
+                //                viewModel
+                //                    .authenticateUser(username: username, password: password) { success in
+                //                        self.isLoading.onNext(false)
+                //                        if success {
+                //                            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                //                                  let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+                //                            sceneDelegate.switchToMain()
+                //                        } else {
+                //                            self.showAlert(title: "Login Failed", message: "Incorrect username or password. Try 'emilys' and 'emilyspass'.")
+                //                        }
+                //                    }
             }).disposed(by: disposeBag)
         
     }
@@ -75,5 +81,21 @@ extension LoginViewController {
             loginView.usernameTextField.text = "emilys"
             loginView.passwordTextField.text = "emilyspass"
         }).disposed(by: disposeBag)
+    }
+}
+
+// MARK: - LoginViewModelDelegate
+
+extension LoginViewController: LoginViewModelDelegate {
+    func didAuthenticateSuccessfully(user: User) {
+        isLoading.onNext(false)
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+        sceneDelegate.switchToMain()
+    }
+    
+    func didFailToAuthenticate(with error: any Error) {
+        isLoading.onNext(false)
+        showAlert(title: "Login Failed", message: "Incorrect username or password. Try 'emilys' and 'emilyspass'.")
     }
 }
