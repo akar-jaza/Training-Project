@@ -59,17 +59,6 @@ extension LoginViewController {
                 
                 viewModel.authenticateUser(username: username, password: password)
                 
-                //                viewModel
-                //                    .authenticateUser(username: username, password: password) { success in
-                //                        self.isLoading.onNext(false)
-                //                        if success {
-                //                            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                //                                  let sceneDelegate = scene.delegate as? SceneDelegate else { return }
-                //                            sceneDelegate.switchToMain()
-                //                        } else {
-                //                            self.showAlert(title: "Login Failed", message: "Incorrect username or password. Try 'emilys' and 'emilyspass'.")
-                //                        }
-                //                    }
             }).disposed(by: disposeBag)
         
     }
