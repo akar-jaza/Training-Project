@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class LoadingButton: UIButton, ViewCode {
+final class LoadingButton: UIButton, ViewCode {
 
     private let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)

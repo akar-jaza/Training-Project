@@ -8,10 +8,11 @@
 import UIKit
 import RxSwift
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var coordinator: AppCoordinator?
+    var loginCoordinator: LoginCoordinator?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
@@ -35,8 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func switchToLogin() {
-        let loginVC = LoginViewController()
-        let navController = UINavigationController(rootViewController: loginVC)
+        let navController = UINavigationController()
+        let loginCoordinator = LoginCoordinator(navigationController: navController)
+        self.loginCoordinator = loginCoordinator
+        loginCoordinator.start()
         
         setRootViewController(navController)
     }

@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class RecipeViewModel {
+final class RecipeViewModel {
     var networkService: NetworkServiceProtocol = NetworkService.shared
     var disposeBag = DisposeBag()
     

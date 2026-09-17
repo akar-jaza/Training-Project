@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RxProductView: UIView, ViewCode {
+final class RxProductView: UIView, ViewCode {
     let tableView: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")

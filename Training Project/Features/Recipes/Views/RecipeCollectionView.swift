@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class RecipeCollectionView: UICollectionView {
+final class RecipeCollectionView: UICollectionView {
     
     let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()

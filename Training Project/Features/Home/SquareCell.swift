@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SquareCell: UICollectionViewCell, ViewCode {
+final class SquareCell: UICollectionViewCell, ViewCode {
     
     static let reuseID = "SquareCell"
     var onTap: (() -> Void)?

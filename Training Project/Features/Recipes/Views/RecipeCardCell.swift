@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecipeCardCell: UICollectionViewCell, ViewCode {
+final class RecipeCardCell: UICollectionViewCell, ViewCode {
     static let reuseID = "RecipeCardCell"
     
     let reciepeImage: UIImageView = {

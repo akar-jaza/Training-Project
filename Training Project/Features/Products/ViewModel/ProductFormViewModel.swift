@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class ProductFormViewModel {
+final class ProductFormViewModel {
     var onSuccess: ((Product) -> Void)?
     var onError: ((Error) -> Void)?
     var networkService: NetworkServiceProtocol = NetworkService.shared

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ViewCode {
+final class ProfileViewController: UIViewController, ViewCode {
     weak var coordinator: AppCoordinator?
     
     let label: UILabel = {

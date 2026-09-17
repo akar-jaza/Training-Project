@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RecipeViewController: UIViewController, ViewCode {
+final class RecipeViewController: UIViewController, ViewCode {
     
     weak var coordinator: AppCoordinator?
     

@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class RxProductViewModel {
+final class RxProductViewModel {
     var items = PublishSubject<[RxProduct]>()
     
     func fetchItems() {

@@ -7,8 +7,8 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, ViewCode {
-    weak var coordinator: AppCoordinator?
+final class HomeViewController: UIViewController, ViewCode {
+    weak var coordinator: HomeCoordinatorProtocol?
     
     let uiCollectionViewFlowLayout = UICollectionViewFlowLayout()
     let itemsPerRow: CGFloat = 2

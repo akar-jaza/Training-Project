@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductFormViewController: UIViewController {
+final class ProductFormViewController: UIViewController {
     
     enum Mode {
         case create

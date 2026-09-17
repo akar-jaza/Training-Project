@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductsView: UIView, ViewCode {
+final class ProductsView: UIView, ViewCode {
     
     let tableView: UITableView = {
         let table = UITableView()

@@ -2,9 +2,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     let loginView = LoginView()
     let viewModel = LoginViewModel()
+    weak var coordinator: LoginCoordinator?
     private let disposeBag = DisposeBag()
     private let isLoading = BehaviorSubject<Bool>(value: false)
     
@@ -78,10 +79,9 @@ extension LoginViewController {
 extension LoginViewController: LoginViewModelDelegate {
     func didAuthenticateSuccessfully(user: User) {
         isLoading.onNext(false)
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+        isLoading.onNext(false)
         UserSessionService.shared.save(user)
-        sceneDelegate.switchToMain()
+        coordinator?.finishLogin()
     }
     
     func didFailToAuthenticate(with error: any Error) {

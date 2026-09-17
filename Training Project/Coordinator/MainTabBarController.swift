@@ -1,13 +1,11 @@
-//
-//  MainTabBarController.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/8/26.
-//
-
 import UIKit
 
 final class MainTabBarController: UITabBarController {
+    
+    let homeNavigationController = UINavigationController()
+    let profileNavigationController = UINavigationController(rootViewController: ProfileViewController())
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
@@ -31,9 +29,7 @@ final class MainTabBarController: UITabBarController {
         
         UITabBar.appearance().tintColor = AppColors.primaryColor
         
-        viewControllers = [
-            UINavigationController(rootViewController: homeViewController),
-            UINavigationController(rootViewController: profileViewController)
-        ]
+        viewControllers = [homeNavigationController, profileNavigationController]
+
     }
 }

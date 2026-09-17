@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class ProductsViewModel {
+final class ProductsViewModel {
     private(set) var products: [Product] = []
     var networkService: NetworkServiceProtocol = NetworkService.shared
     

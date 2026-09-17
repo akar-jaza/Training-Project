@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductDetailView: UIView, ViewCode {
+final class ProductDetailView: UIView, ViewCode {
     weak var coordinator: AppCoordinator?
     
     let productImage: UIImageView = {

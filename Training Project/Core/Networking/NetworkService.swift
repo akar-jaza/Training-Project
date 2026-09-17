@@ -28,7 +28,7 @@ extension NetworkServiceProtocol {
     }
 }
 
-class NetworkService: NetworkServiceProtocol {
+final class NetworkService: NetworkServiceProtocol {
 
     static let shared = NetworkService()
     private init() {}

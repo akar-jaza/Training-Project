@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductDetailViewController: UIViewController {
+final class ProductDetailViewController: UIViewController {
 
     weak var coordinator: AppCoordinator?
 

@@ -6,7 +6,7 @@ protocol LoginViewModelDelegate: AnyObject {
     func didFailToAuthenticate(with error: Error)
 }
 
-class LoginViewModel {
+final class LoginViewModel {
     
     weak var delegate: LoginViewModelDelegate?
     var networkService: NetworkServiceProtocol = NetworkService.shared
