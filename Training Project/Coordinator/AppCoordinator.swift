@@ -34,50 +34,50 @@ final class AppCoordinator: Coordinator {
 
 extension AppCoordinator {
     
-    func showProductDetail(with product: Product) {
-        let productDetailVC = ProductDetailViewController()
-        productDetailVC.product = product
-        
-        navigationController.pushViewController(
-            productDetailVC,
-            animated: true
-        )
-    }
+//    func showProductDetail(with product: Product) {
+//        let productDetailVC = ProductDetailViewController()
+//        productDetailVC.product = product
+//        
+//        navigationController.pushViewController(
+//            productDetailVC,
+//            animated: true
+//        )
+//    }
 }
 
 // MARK: - Product Form Navigation
 
 extension AppCoordinator {
     
-    func presentCreateProduct(
-        from viewController: UIViewController,
-        onSave: @escaping (Product) -> Void
-    ) {
-        presentProductForm(mode: .create, onSave: onSave)
-    }
-    
-    func presentEditProduct(
-        _ product: Product,
-        onSave: @escaping (Product) -> Void
-    ) {
-        presentProductForm(mode: .edit(product), onSave: onSave)
-    }
-    
-    private func presentProductForm(
-        mode: ProductFormViewController.Mode,
-        onSave: @escaping (Product) -> Void
-    ) {
-        let formVC = ProductFormViewController(mode: mode)
-        formVC.coordinator = self
-        formVC.onSave = onSave
-        
-        let navWrapper = UINavigationController(rootViewController: formVC)
-        
-        if let sheet = navWrapper.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-        }
-        
-        navigationController.present(navWrapper, animated: true)
-    }
+//    func presentCreateProduct(
+//        from viewController: UIViewController,
+//        onSave: @escaping (Product) -> Void
+//    ) {
+//        presentProductForm(mode: .create, onSave: onSave)
+//    }
+//    
+//    func presentEditProduct(
+//        _ product: Product,
+//        onSave: @escaping (Product) -> Void
+//    ) {
+//        presentProductForm(mode: .edit(product), onSave: onSave)
+//    }
+//    
+//    private func presentProductForm(
+//        mode: ProductFormViewController.Mode,
+//        onSave: @escaping (Product) -> Void
+//    ) {
+//        let formVC = ProductFormViewController(mode: mode)
+//        formVC.coordinator = self
+//        formVC.onSave = onSave
+//        
+//        let navWrapper = UINavigationController(rootViewController: formVC)
+//        
+//        if let sheet = navWrapper.sheetPresentationController {
+//            sheet.detents = [.medium(), .large()]
+//            sheet.prefersGrabberVisible = true
+//        }
+//        
+//        navigationController.present(navWrapper, animated: true)
+//    }
 }

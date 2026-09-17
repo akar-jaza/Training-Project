@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class RxProductViewController: UIViewController {
-    weak var coordinator: AppCoordinator?
+    weak var coordinator: RxSwiftCoordinator?
     
     // MARK: - Computed property to access our custom view
 

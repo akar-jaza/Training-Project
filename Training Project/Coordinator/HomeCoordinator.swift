@@ -12,6 +12,8 @@ final class HomeCoordinator: Coordinator {
     let navigationController: UINavigationController
     private let appCoordinator: AppCoordinator
     private var recipeCoordinator: RecipeCoordinator?
+    private var rxSwiftCoordinator: RxSwiftCoordinator?
+    private var productsCoordinator: ProductCoordinator?
 
     init(navigationController: UINavigationController, appCoordinator: AppCoordinator) {
         self.navigationController = navigationController
@@ -28,15 +30,19 @@ final class HomeCoordinator: Coordinator {
 
 extension HomeCoordinator: HomeCoordinatorProtocol {
     func showProductsScreen() {
-        let productsScreen = ProductsViewController()
-        productsScreen.coordinator = appCoordinator
-        navigationController.pushViewController(productsScreen, animated: true)
+        let coordinator = ProductCoordinator(
+            navigationController: navigationController
+        )
+        self.productsCoordinator = coordinator
+        coordinator.start()
     }
     
     func showRxSwiftPage() {
-        let rxSwiftScreen = RxProductViewController()
-        rxSwiftScreen.coordinator = appCoordinator
-        navigationController.pushViewController(rxSwiftScreen, animated: true)
+        let coordinator = RxSwiftCoordinator(
+            navigationController: navigationController
+        )
+        self.rxSwiftCoordinator = coordinator
+        coordinator.start()
     }
     
     func showRecipesScreen() {

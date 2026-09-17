@@ -14,7 +14,7 @@ final class ProductFormViewController: UIViewController {
         case edit(Product)
     }
     
-    weak var coordinator: AppCoordinator?
+    weak var coordinator: ProductCoordinator?
     
     private let productFormView = ProductFormView()
     private let viewModel = ProductFormViewModel()
