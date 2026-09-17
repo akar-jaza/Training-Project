@@ -42,7 +42,7 @@ extension HomeCoordinator: HomeCoordinatorProtocol {
     func showRecipesScreen() {
         let coordinator = RecipeCoordinator(navigationController: navigationController)
         self.recipeCoordinator = coordinator
-        coordinator.showRecipePage()
+        coordinator.start()
     }
     
     func showLoginScreen() {

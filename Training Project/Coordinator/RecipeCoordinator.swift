@@ -8,12 +8,6 @@ final class RecipeCoordinator: Coordinator {
     }
     
     func start() {
-        let reciepeVC = RecipeViewController()
-        reciepeVC.coordinator = self
-        navigationController.viewControllers = [reciepeVC]
-    }
-
-    func showRecipePage() {
         let recipeVC = RecipeViewController()
         recipeVC.coordinator = self
         navigationController.pushViewController(recipeVC, animated: true)
