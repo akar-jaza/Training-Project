@@ -12,16 +12,14 @@ final class MainTabBarController: UITabBarController {
     }
     
     private func setupTabs() {
-        let homeViewController = HomeViewController()
-        let profileViewController = ProfileViewController()
         
-        homeViewController.tabBarItem = UITabBarItem(
+        homeNavigationController.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(systemName: "house"),
             tag: 0
         )
         
-        profileViewController.tabBarItem = UITabBarItem(
+        profileNavigationController.tabBarItem = UITabBarItem(
             title: "Profile",
             image: UIImage(systemName: "person.crop.circle.fill"),
             tag: 1
