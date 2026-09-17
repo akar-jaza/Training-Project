@@ -3,7 +3,7 @@ import UIKit
 protocol HomeCoordinatorProtocol: AnyObject {
     func showProductsScreen()
     func showRxSwiftPage()
-    func showRecipePage()
+    func showRecipesScreen()
     func showLoginScreen()
 }
 
@@ -11,6 +11,7 @@ protocol HomeCoordinatorProtocol: AnyObject {
 final class HomeCoordinator: Coordinator {
     let navigationController: UINavigationController
     private let appCoordinator: AppCoordinator
+    private var recipeCoordinator: RecipeCoordinator?
 
     init(navigationController: UINavigationController, appCoordinator: AppCoordinator) {
         self.navigationController = navigationController
@@ -38,10 +39,10 @@ extension HomeCoordinator: HomeCoordinatorProtocol {
         navigationController.pushViewController(rxSwiftScreen, animated: true)
     }
     
-    func showRecipePage() {
-        let recipeScreen = RecipeViewController()
-        recipeScreen.coordinator = appCoordinator
-        navigationController.pushViewController(recipeScreen, animated: true)
+    func showRecipesScreen() {
+        let coordinator = RecipeCoordinator(navigationController: navigationController)
+        self.recipeCoordinator = coordinator
+        coordinator.showRecipePage()
     }
     
     func showLoginScreen() {

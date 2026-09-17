@@ -70,7 +70,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             case "RxSwift":
                 self.coordinator?.showRxSwiftPage()
             case "Recipes":
-                self.coordinator?.showRecipePage()
+                self.coordinator?.showRecipesScreen()
             default: break
             }
         }
