@@ -96,8 +96,11 @@ extension ProductsViewController: ProductsViewModelDelegate {
 }
 
 // MARK: - ProductFormViewControllerDelegate
-extension ProductsViewController: ProductFormViewControllerDelegate {
-    func productFormViewController(didCreate product: Product) {
+extension ProductsViewController: ProductFormDelegate {
+    func productForm(didUpdate product: Product) {
+        viewModel.updateProduct(product)
+    }
+    func productForm(didCreate product: Product) {
         viewModel.addProduct(product)
     }
 }
@@ -106,6 +109,7 @@ extension ProductsViewController: ProductFormViewControllerDelegate {
 // MARK: - Action Buttons
 extension ProductsViewController {
     @objc private func didTapAdd() {
+        // here's who to tell when you're done (me)
         coordinator?.presentCreateProduct(delegate: self)
     }
 }
@@ -134,9 +138,7 @@ extension ProductsViewController: UITableViewDelegate {
                         guard let self = self else { return }
                         let product = viewModel.currentProducts[indexPath.row]
                         
-//                        self.coordinator?.presentEditProduct(product) { [weak self] updatedProduct in
-//                            self?.productsViewModel.replaceProduct(updatedProduct, at: indexPath.row)
-//                        }
+                        self.coordinator?.presentEditProduct(product, delegate: self)
                     }
                 )
                 

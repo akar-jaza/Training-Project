@@ -71,4 +71,11 @@ final class ProductViewModel {
         pr.insert(product, at: 0)
         productsRelay.accept(pr)
     }
+    
+    func updateProduct(_ product: Product) {
+        var pr = productsRelay.value
+        guard let index = pr.firstIndex(where: { $0.id == product.id }) else { return } 
+        pr[index] = product
+        productsRelay.accept(pr)
+    }
 }

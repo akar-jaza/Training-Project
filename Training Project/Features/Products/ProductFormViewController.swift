@@ -6,8 +6,9 @@
 //
 
 import UIKit
-protocol ProductFormViewControllerDelegate: AnyObject {
-    func productFormViewController(didCreate product: Product)
+protocol ProductFormDelegate: AnyObject {
+    func productForm(didCreate product: Product)
+    func productForm(didUpdate product: Product)
 }
 
 final class ProductFormViewController: UIViewController {
@@ -19,11 +20,11 @@ final class ProductFormViewController: UIViewController {
     }
     
     weak var coordinator: ProductCoordinator?
-    weak var delegate: ProductFormViewControllerDelegate?
+    weak var delegate: ProductFormDelegate?
     
     private let productFormView = ProductFormView()
     private let viewModel = ProductFormViewModel()
-    
+        
     private let mode: Mode
     
     
@@ -93,8 +94,14 @@ final class ProductFormViewController: UIViewController {
 // MARK: - ProductFormViewModelDelegate
 
 extension ProductFormViewController: ProductFormViewModelDelegate {
+
     func didSaveProduct(_ product: Product) {
-        delegate?.productFormViewController(didCreate: product)
+        delegate?.productForm(didCreate: product)
+        dismiss(animated: true)
+    }
+    
+    func didUpdateProduct(_ product: Product) {
+        delegate?.productForm(didUpdate: product)
         dismiss(animated: true)
     }
     
