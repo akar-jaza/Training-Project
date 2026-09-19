@@ -3,6 +3,7 @@ import UIKit
 final class ProductViewCell: UITableViewCell, ViewCode {
     
     static let reuseID = "ProductCell"
+    private var currentImageURLString: String?
     
     let productImage: UIImageView = {
         let imageView = UIImageView()
@@ -76,5 +77,27 @@ final class ProductViewCell: UITableViewCell, ViewCode {
         productTitle.text = title
         productDescription.text = description
         productImage.image = image
+    }
+}
+
+extension ProductViewCell: ImageLoaderDelegate {
+    func didErrorOccured(with error: any Error) {
+        print("There was a problem loading product cell images: \(error)")
+    }
+
+    func loadImage(from urlString: String) {
+        currentImageURLString = urlString
+        ImageLoader.shared.loadImage(from: urlString, delegate: self)
+    }
+    
+    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String) {
+        guard urlString == currentImageURLString else { return }
+        productImage.image = image
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        currentImageURLString = nil
+        productImage.image = UIImage(systemName: "shippingbox.fill")
     }
 }

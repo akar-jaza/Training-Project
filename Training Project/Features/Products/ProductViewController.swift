@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class ProductsViewController: UIViewController {
+final class ProductViewController: UIViewController {
     
     weak var coordinator: ProductCoordinator?
     private let viewModel = ProductViewModel()
@@ -68,10 +68,7 @@ final class ProductsViewController: UIViewController {
                 )
                 cell.productImage.tintColor = .systemGray
         
-                
-                ImageLoader.shared.loadImage(from: product.thumbnail) { [weak cell] image in
-                    cell?.productImage.image = image
-                }
+                cell.loadImage(from: product.thumbnail)
                 
             }
             .disposed(by: disposeBag)
@@ -88,7 +85,7 @@ final class ProductsViewController: UIViewController {
 
 
 // MARK: - ProductsViewModelDelegate
-extension ProductsViewController: ProductsViewModelDelegate {
+extension ProductViewController: ProductsViewModelDelegate {
     func didErrorOccurred(error: Error) {
         showAlert(title: "Error", message: "Something went wrong loading products.")
         print("error: \(error)")
@@ -96,7 +93,7 @@ extension ProductsViewController: ProductsViewModelDelegate {
 }
 
 // MARK: - ProductFormViewControllerDelegate
-extension ProductsViewController: ProductFormDelegate {
+extension ProductViewController: ProductFormDelegate {
     func productForm(didUpdate product: Product) {
         viewModel.updateProduct(product)
     }
@@ -107,7 +104,7 @@ extension ProductsViewController: ProductFormDelegate {
 
 
 // MARK: - Action Buttons
-extension ProductsViewController {
+extension ProductViewController {
     @objc private func didTapAdd() {
         // here's who to tell when you're done (me)
         coordinator?.presentCreateProduct(delegate: self)
@@ -115,7 +112,7 @@ extension ProductsViewController {
 }
 
 // MARK: - Context menu on long press
-extension ProductsViewController: UITableViewDelegate {
+extension ProductViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    contextMenuConfigurationForRowAt indexPath: IndexPath,

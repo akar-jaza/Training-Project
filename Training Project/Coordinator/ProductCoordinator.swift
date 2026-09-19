@@ -8,7 +8,7 @@ class ProductCoordinator: Coordinator {
     }
     
     func start() {
-        let productVC = ProductsViewController()
+        let productVC = ProductViewController()
         productVC.coordinator = self
         navigationController.pushViewController(productVC, animated: true)
     }

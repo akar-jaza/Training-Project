@@ -117,10 +117,6 @@ final class ProductDetailView: UIView, ViewCode {
         productTitle.text = product.title
         productDescription.text = product.description
         price.text = "$\(product.price)"
-        
-        ImageLoader.shared.loadImage(from: product.thumbnail) { image in
-            self.productImage.image = image
-        }
     }
 
 }
