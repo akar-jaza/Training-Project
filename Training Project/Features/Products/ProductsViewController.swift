@@ -1,10 +1,3 @@
-//
-//  ProductsScreen.swift
-//  Training Project
-//
-//  Created by Akar jaza on 8/29/26.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa
@@ -98,18 +91,22 @@ final class ProductsViewController: UIViewController {
 extension ProductsViewController: ProductsViewModelDelegate {
     func didErrorOccurred(error: Error) {
         showAlert(title: "Error", message: "Something went wrong loading products.")
+        print("error: \(error)")
+    }
+}
+
+// MARK: - ProductFormViewControllerDelegate
+extension ProductsViewController: ProductFormViewControllerDelegate {
+    func productFormViewController(didCreate product: Product) {
+        viewModel.addProduct(product)
     }
 }
 
 
-
-// MARK: - Button Actions
+// MARK: - Action Buttons
 extension ProductsViewController {
     @objc private func didTapAdd() {
-        //        coordinator?
-        //            .presentCreateProduct(from: self) { [weak self] newProduct in
-        //            self?.productsViewModel.addProduct(newProduct)
-        //        }
+        coordinator?.presentCreateProduct(delegate: self)
     }
 }
 

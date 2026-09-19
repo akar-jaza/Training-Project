@@ -66,5 +66,9 @@ final class ProductViewModel {
         }).disposed(by: disposeBag)
     }
     
-    
+    func addProduct(_ product: Product) {
+        var pr = productsRelay.value
+        pr.insert(product, at: 0)
+        productsRelay.accept(pr)
+    }
 }

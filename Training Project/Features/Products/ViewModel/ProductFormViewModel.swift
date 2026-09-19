@@ -8,10 +8,16 @@
 import Foundation
 import RxSwift
 
+protocol ProductFormViewModelDelegate: AnyObject {
+    func didSaveProduct(_ product: Product)
+    func didErrorOccured(error: Error)
+}
+
 final class ProductFormViewModel {
-    var onSuccess: ((Product) -> Void)?
-    var onError: ((Error) -> Void)?
+
     var networkService: NetworkServiceProtocol = NetworkService.shared
+    weak var delegate: ProductFormViewModelDelegate?
+
     var disposeBag = DisposeBag()
     
     func createProduct(title: String, description: String, price: Double) {
@@ -31,10 +37,10 @@ final class ProductFormViewModel {
                     thumbnail: ""
                 )
                 DispatchQueue.main.async {
-                    self?.onSuccess?(newProduct)
+                    self?.delegate?.didSaveProduct(newProduct)
                 }
             }, onError: { [weak self] error in
-                DispatchQueue.main.async { self?.onError?(error) }
+                self?.delegate?.didErrorOccured(error: error)
             })
             .disposed(by: disposeBag)
     }
@@ -58,10 +64,10 @@ final class ProductFormViewModel {
                 )
                 
                 DispatchQueue.main.async {
-                    self?.onSuccess?(updatedProduct)
+//                    self?.delegate?.didSaveProduct(newProduct)
                 }
             }, onError: { [weak self] error in
-                DispatchQueue.main.async { self?.onError?(error) }
+//                DispatchQueue.main.async { self?.onError?(error) }
             })
             .disposed(by: disposeBag)
     }

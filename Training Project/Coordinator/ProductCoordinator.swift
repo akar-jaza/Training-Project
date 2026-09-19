@@ -24,26 +24,26 @@ class ProductCoordinator: Coordinator {
     }
     
     func presentCreateProduct(
-        from viewController: UIViewController,
-        onSave: @escaping (Product) -> Void
+//        from viewController: UIViewController,
+        delegate: ProductFormViewControllerDelegate
     ) {
-        presentProductForm(mode: .create, onSave: onSave)
+        presentProductForm(mode: .create, delegate: delegate)
     }
     
-    func presentEditProduct(
-        _ product: Product,
-        onSave: @escaping (Product) -> Void
-    ) {
-        presentProductForm(mode: .edit(product), onSave: onSave)
-    }
+//    func presentEditProduct(
+//        _ product: Product,
+//        onSave: @escaping (Product) -> Void
+//    ) {
+//        presentProductForm(mode: .edit(product), onSave: onSave)
+//    }
     
     private func presentProductForm(
         mode: ProductFormViewController.Mode,
-        onSave: @escaping (Product) -> Void
+        delegate: ProductFormViewControllerDelegate
     ) {
         let formVC = ProductFormViewController(mode: mode)
         formVC.coordinator = self
-        formVC.onSave = onSave
+        formVC.delegate = delegate
         
         let navWrapper = UINavigationController(rootViewController: formVC)
         

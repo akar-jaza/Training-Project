@@ -6,22 +6,26 @@
 //
 
 import UIKit
+protocol ProductFormViewControllerDelegate: AnyObject {
+    func productFormViewController(didCreate product: Product)
+}
 
 final class ProductFormViewController: UIViewController {
-    
+
+
     enum Mode {
         case create
         case edit(Product)
     }
     
     weak var coordinator: ProductCoordinator?
+    weak var delegate: ProductFormViewControllerDelegate?
     
     private let productFormView = ProductFormView()
     private let viewModel = ProductFormViewModel()
     
     private let mode: Mode
     
-    var onSave: ((Product) -> Void)?
     
     init(mode: Mode) {
         self.mode = mode
@@ -38,7 +42,8 @@ final class ProductFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.delegate = self
+
         configureForMode()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -46,17 +51,7 @@ final class ProductFormViewController: UIViewController {
             target: self,
             action: #selector(cancelTapped)
         )
-        
-        
-        viewModel.onSuccess = { [weak self] product in
-            self?.onSave?(product)
-            self?.dismiss(animated: true)
-        }
-        
-        viewModel.onError = { error in
-            print("Failed to create product: \(error)")
-        }
-        
+
         productFormView.titleField.delegate = self
         productFormView.descriptionField.delegate = self
         productFormView.priceField.delegate = self
@@ -95,8 +90,21 @@ final class ProductFormViewController: UIViewController {
     }
 }
 
+// MARK: - ProductFormViewModelDelegate
+
+extension ProductFormViewController: ProductFormViewModelDelegate {
+    func didSaveProduct(_ product: Product) {
+        delegate?.productFormViewController(didCreate: product)
+        dismiss(animated: true)
+    }
+    
+    func didErrorOccured(error: Error) {
+        showAlert(title: "Error", message: "Something went wrong saving the product.")
+    }
+}
 
 // MARK: - Action Buttons
+
 extension ProductFormViewController {
     @objc private func cancelTapped() {
         dismiss(animated: true)
