@@ -40,6 +40,8 @@ final class ProductsViewController: UIViewController {
         setupNavigationBar()
         
         viewModel.delegate = self
+        productsView.tableView.delegate = self
+        
         productsView.tableView
             .register(
                 ProductViewCell.self,
@@ -61,8 +63,6 @@ final class ProductsViewController: UIViewController {
     
     // MARK: - Bindings
     private func bindTableView() {
-        let tableView = productsView.tableView
-        
         viewModel.products
             .bind(to: productsView.tableView.rx.items(
                 cellIdentifier: ProductViewCell.reuseID,
@@ -114,7 +114,7 @@ extension ProductsViewController {
 }
 
 // MARK: - Context menu on long press
-extension ProductsViewController {
+extension ProductsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    contextMenuConfigurationForRowAt indexPath: IndexPath,
@@ -134,12 +134,12 @@ extension ProductsViewController {
                     identifier: UIAction.Identifier("edit"),
                     handler: {
                         [weak self] _ in
-                        //                        guard let self = self else { return }
-                        //                        let product = self.productsViewModel.products[indexPath.row]
-                        //
-                        //                        self.coordinator?.presentEditProduct(product) { [weak self] updatedProduct in
-                        //                            self?.productsViewModel.replaceProduct(updatedProduct, at: indexPath.row)
-                        //                        }
+                        guard let self = self else { return }
+                        let product = viewModel.currentProducts[indexPath.row]
+                        
+//                        self.coordinator?.presentEditProduct(product) { [weak self] updatedProduct in
+//                            self?.productsViewModel.replaceProduct(updatedProduct, at: indexPath.row)
+//                        }
                     }
                 )
                 
@@ -150,9 +150,10 @@ extension ProductsViewController {
                     attributes: .destructive,
                     handler: {
                         [weak self] _ in
-                        //                        guard let self = self else { return }
-                        //                        let product = self.productsViewModel.products[indexPath.row]
-                        //                        self.productsViewModel.deleteProduct(product, at: indexPath.row)
+                        guard let self = self else { return }
+//                        let product = self.productsViewModel.products[indexPath.row]
+                        let product = viewModel.currentProducts[indexPath.row]
+                        viewModel.deleteProduct(product, at: indexPath.row)
                     }
                 )
                 

@@ -36,7 +36,7 @@ final class ProductViewModel {
         networkService.request(url: url, method: .get)
             .subscribe(onNext: { [weak self] (response: ProductsResponse) in
                 self?.productsRelay.accept(response.products)
-
+                
             }, onError: { [weak self] error in
                 self?.delegate?.didErrorOccurred(error: error)
             })
@@ -48,18 +48,23 @@ final class ProductViewModel {
     func deleteProduct(_ product: Product, at index: Int) {
         guard let url = URL(string: "https://dummyjson.com/products/\(product.id)") else { return }
         
-        networkService.requestData(url: url, method: .delete).subscribe(onNext: { [weak self] data in
+        networkService.requestData(url: url, method: .delete).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-//                guard self?.products.indices.contains(index) == true else { return }
-//                self?.products.remove(at: index)
-//                self?.onProductsUpdated?()
+                guard self.currentProducts.indices.contains(index) else {
+                    return
+                }
+                var updatedProducts = self.productsRelay.value
+                updatedProducts.remove(at: index)
+                
+                self.productsRelay.accept(updatedProducts)
             }
-        }, onError: { [weak self] error in
+        }, onError: { error in
             DispatchQueue.main.async {
-//                self?.onError?(error)
+                self.delegate?.didErrorOccurred(error: error)
             }
         }).disposed(by: disposeBag)
     }
-        
-
+    
+    
 }
