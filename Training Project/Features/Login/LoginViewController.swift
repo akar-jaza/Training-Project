@@ -79,7 +79,6 @@ extension LoginViewController {
 extension LoginViewController: LoginViewModelDelegate {
     func didAuthenticateSuccessfully(user: User) {
         isLoading.onNext(false)
-        isLoading.onNext(false)
         UserSessionService.shared.save(user)
         coordinator?.finishLogin()
     }

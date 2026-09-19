@@ -7,13 +7,27 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
-final class ProductsViewModel {
-    private(set) var products: [Product] = []
-    var networkService: NetworkServiceProtocol = NetworkService.shared
+protocol ProductsViewModelDelegate: AnyObject {
+    func didErrorOccurred(error: Error)
+}
+
+final class ProductViewModel {
     
-    var onProductsUpdated: (() -> Void)?
-    var onError: ((Error) -> Void)?
+    // Only this VM can put new values in. Everyone else just watches/reads.
+    private let productsRelay = BehaviorRelay<[Product]>(value: [])
+    var products: Observable<[Product]> {
+        productsRelay.asObservable()
+    }
+    
+    // For places that need the list rn, like when tapping or deleting smth.
+    var currentProducts: [Product] {
+        productsRelay.value
+    }
+    
+    weak var delegate: ProductsViewModelDelegate?
+    var networkService: NetworkServiceProtocol = NetworkService.shared
     var disposeBag = DisposeBag()
     
     func fetchProducts() {
@@ -21,10 +35,10 @@ final class ProductsViewModel {
         
         networkService.request(url: url, method: .get)
             .subscribe(onNext: { [weak self] (response: ProductsResponse) in
-                self?.products = response.products
-                self?.onProductsUpdated?()
+                self?.productsRelay.accept(response.products)
+
             }, onError: { [weak self] error in
-                self?.onError?(error)
+                self?.delegate?.didErrorOccurred(error: error)
             })
             .disposed(by: disposeBag)
         
@@ -36,25 +50,16 @@ final class ProductsViewModel {
         
         networkService.requestData(url: url, method: .delete).subscribe(onNext: { [weak self] data in
             DispatchQueue.main.async {
-                guard self?.products.indices.contains(index) == true else { return }
-                self?.products.remove(at: index)
-                self?.onProductsUpdated?()
+//                guard self?.products.indices.contains(index) == true else { return }
+//                self?.products.remove(at: index)
+//                self?.onProductsUpdated?()
             }
         }, onError: { [weak self] error in
             DispatchQueue.main.async {
-                self?.onError?(error)
+//                self?.onError?(error)
             }
         }).disposed(by: disposeBag)
     }
         
-    func addProduct(_ product: Product) {
-        products.insert(product, at: 0)
-        onProductsUpdated?()
-    }
-    
-    func replaceProduct(_ product: Product, at index: Int) {
-        guard products.indices.contains(index) else { return }
-        products[index] = product
-        onProductsUpdated?()
-    }
+
 }

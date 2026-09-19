@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class ProductsViewController: UIViewController {
-
+    
     weak var coordinator: ProductCoordinator?
-    private let productsViewModel = ProductsViewModel()
+    private let viewModel = ProductViewModel()
     private let productDetailView = ProductDetailView()
     private let productsView = ProductsView()
+    private let disposeBag = DisposeBag()
     
     private func setupNavigationBar() {
         let addButton = UIBarButtonItem(
@@ -36,23 +39,15 @@ final class ProductsViewController: UIViewController {
         
         setupNavigationBar()
         
-        productsView.tableView.dataSource = self
-        productsView.tableView.delegate = self
+        viewModel.delegate = self
         productsView.tableView
             .register(
                 ProductViewCell.self,
                 forCellReuseIdentifier: ProductViewCell.reuseID
             )
+        bindTableView()
         
-        productsViewModel.onProductsUpdated = { [weak self] in
-            self?.productsView.tableView.reloadData()
-        }
-        
-        productsViewModel.onError = { error in
-            print("Failed to fetch products: \(error)")
-        }
-        
-        productsViewModel.fetchProducts()
+        viewModel.fetchProducts()
     }
     
     // remove the gray highlight from the cell when we go back to the prev screen
@@ -64,56 +59,57 @@ final class ProductsViewController: UIViewController {
         }
     }
     
-    
-}
-
-// MARK: - UITableViewDataSource
-extension ProductsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        productsViewModel.products.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductViewCell.reuseID, for: indexPath) as? ProductViewCell else {
-            return UITableViewCell()
-        }
+    // MARK: - Bindings
+    private func bindTableView() {
+        let tableView = productsView.tableView
         
-        let product = productsViewModel.products[indexPath.row]
-        cell
-            .configure(
-                title: product.title,
-                description: product.description,
-                image: UIImage(systemName: "shippingbox.fill")
-            )
+        viewModel.products
+            .bind(to: productsView.tableView.rx.items(
+                cellIdentifier: ProductViewCell.reuseID,
+                cellType: ProductViewCell.self
+            )) { _, product, cell in
+                cell.configure(
+                    title: product.title,
+                    description: product.description,
+                    image: UIImage(systemName: "shippingbox.fill")
+                )
+                cell.productImage.tintColor = .systemGray
         
-        cell.productImage.tintColor = .systemGray
-        
-        ImageLoader.shared
-            .loadImage(from: product.thumbnail) { [weak cell] image in
                 
-                cell?.productImage.image = image
+                ImageLoader.shared.loadImage(from: product.thumbnail) { [weak cell] image in
+                    cell?.productImage.image = image
+                }
+                
             }
+            .disposed(by: disposeBag)
         
-        return cell
+        productsView.tableView.rx
+            .modelSelected(Product.self)
+            .subscribe(onNext: { [weak self] product in
+                self?.coordinator?.showProductDetail(with: product)
+            })
+            .disposed(by: disposeBag)
+    }
+
+}
+
+
+// MARK: - ProductsViewModelDelegate
+extension ProductsViewController: ProductsViewModelDelegate {
+    func didErrorOccurred(error: Error) {
+        showAlert(title: "Error", message: "Something went wrong loading products.")
     }
 }
 
-// MARK: - UITableViewDelegate
-extension ProductsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let product = productsViewModel.products[indexPath.row]
-        coordinator?.showProductDetail(with: product)
-    }
-}
 
 
 // MARK: - Button Actions
 extension ProductsViewController {
     @objc private func didTapAdd() {
-        coordinator?
-            .presentCreateProduct(from: self) { [weak self] newProduct in
-            self?.productsViewModel.addProduct(newProduct)
-        }
+        //        coordinator?
+        //            .presentCreateProduct(from: self) { [weak self] newProduct in
+        //            self?.productsViewModel.addProduct(newProduct)
+        //        }
     }
 }
 
@@ -136,13 +132,14 @@ extension ProductsViewController {
                     title: "Edit",
                     image: UIImage(systemName: "pencil"),
                     identifier: UIAction.Identifier("edit"),
-                    handler: { [weak self] _ in
-                        guard let self = self else { return }
-                        let product = self.productsViewModel.products[indexPath.row]
-                        
-                        self.coordinator?.presentEditProduct(product) { [weak self] updatedProduct in
-                            self?.productsViewModel.replaceProduct(updatedProduct, at: indexPath.row)
-                        }
+                    handler: {
+                        [weak self] _ in
+                        //                        guard let self = self else { return }
+                        //                        let product = self.productsViewModel.products[indexPath.row]
+                        //
+                        //                        self.coordinator?.presentEditProduct(product) { [weak self] updatedProduct in
+                        //                            self?.productsViewModel.replaceProduct(updatedProduct, at: indexPath.row)
+                        //                        }
                     }
                 )
                 
@@ -151,10 +148,11 @@ extension ProductsViewController {
                     image: UIImage(systemName: "trash"),
                     identifier: UIAction.Identifier("delete"),
                     attributes: .destructive,
-                    handler: { [weak self] _ in
-                        guard let self = self else { return }
-                        let product = self.productsViewModel.products[indexPath.row]
-                        self.productsViewModel.deleteProduct(product, at: indexPath.row)
+                    handler: {
+                        [weak self] _ in
+                        //                        guard let self = self else { return }
+                        //                        let product = self.productsViewModel.products[indexPath.row]
+                        //                        self.productsViewModel.deleteProduct(product, at: indexPath.row)
                     }
                 )
                 
