@@ -1,10 +1,3 @@
-//
-//  RecipeCardCell.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/10/26.
-//
-
 import UIKit
 
 final class RecipeCardCell: UICollectionViewCell, ViewCode {

@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  Training Project
-//
-//  Created by Akar jaza on 8/28/26.
-//
-
 import UIKit
 import RxSwift
 

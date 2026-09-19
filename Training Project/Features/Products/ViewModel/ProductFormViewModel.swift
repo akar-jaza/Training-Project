@@ -1,10 +1,3 @@
-//
-//  ProductFormViewModel.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/2/26.
-//
-
 import Foundation
 import RxSwift
 

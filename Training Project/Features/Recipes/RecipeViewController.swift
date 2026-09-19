@@ -1,10 +1,3 @@
-//
-//  RecipeViewController.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/9/26.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa

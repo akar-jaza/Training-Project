@@ -1,10 +1,3 @@
-//
-//  RxProductViewModel.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/8/26.
-//
-
 import Foundation
 import RxSwift
 import RxCocoa

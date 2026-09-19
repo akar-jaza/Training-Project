@@ -1,10 +1,3 @@
-//
-//  Training_Project_Tests.swift
-//  Training Project Tests
-//
-//  Created by Akar jaza on 9/15/26.
-//
-
 import Testing
 
 struct Training_Project_Tests {

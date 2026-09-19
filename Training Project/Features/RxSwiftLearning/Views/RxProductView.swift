@@ -1,11 +1,3 @@
-//
-//  RxProductView.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/8/26.
-//
-
-import Foundation
 import UIKit
 
 final class RxProductView: UIView, ViewCode {

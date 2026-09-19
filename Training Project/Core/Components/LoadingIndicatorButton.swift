@@ -37,9 +37,6 @@ final class LoadingButton: UIButton, ViewCode {
     
     
     func showLoading() {
-//        if originalTitle == nil {
-//            originalTitle = title(for: .normal)
-//        }
         originalTitle = title(for: .normal)
         setTitle("", for: .normal)
         isEnabled = false

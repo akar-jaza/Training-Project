@@ -1,10 +1,3 @@
-//
-//  Recipe.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/9/26.
-//
-
 struct Recipe: Decodable {
     let id: Int
     let name: String

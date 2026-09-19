@@ -1,10 +1,3 @@
-//
-//  ProductsView.swift
-//  Training Project
-//
-//  Created by Akar jaza on 8/30/26.
-//
-
 import UIKit
 
 final class ProductsView: UIView, ViewCode {

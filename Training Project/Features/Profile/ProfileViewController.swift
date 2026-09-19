@@ -1,10 +1,3 @@
-//
-//  ProfileViewController.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/9/26.
-//
-
 import UIKit
 
 final class ProfileViewController: UIViewController, ViewCode {

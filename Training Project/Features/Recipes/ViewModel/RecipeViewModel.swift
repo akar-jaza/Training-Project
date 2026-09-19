@@ -1,10 +1,3 @@
-//
-//  RecipeViewModel.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/10/26.
-//
-
 import Foundation
 import RxSwift
 

@@ -1,10 +1,3 @@
-//
-//  SquareCell.swift
-//  Training Project
-//
-//  Created by Akar jaza on 8/29/26.
-//
-
 import UIKit
 
 final class SquareCell: UICollectionViewCell, ViewCode {

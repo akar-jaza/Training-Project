@@ -1,10 +1,3 @@
-//
-//  ProductsViewModel.swift
-//  Training Project
-//
-//  Created by Akar jaza on 8/30/26.
-//
-
 import Foundation
 import RxSwift
 import RxCocoa
@@ -74,7 +67,7 @@ final class ProductViewModel {
     
     func updateProduct(_ product: Product) {
         var pr = productsRelay.value
-        guard let index = pr.firstIndex(where: { $0.id == product.id }) else { return } 
+        guard let index = pr.firstIndex(where: { $0.id == product.id }) else { return }  // $0.id == product.id is a closure that checks if the id of the product is equal to the id of the product in the array
         pr[index] = product
         productsRelay.accept(pr)
     }

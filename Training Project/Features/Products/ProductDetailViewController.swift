@@ -1,10 +1,3 @@
-//
-//  ProductDetailViewController.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/1/26.
-//
-
 import UIKit
 
 final class ProductDetailViewController: UIViewController {
@@ -21,8 +14,6 @@ final class ProductDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // productDetailView.coordinator = coordinator
 
         if let product = product {
             productDetailView.configProductView(Product: product)

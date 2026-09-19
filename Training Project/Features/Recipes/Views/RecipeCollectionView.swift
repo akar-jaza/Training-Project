@@ -1,10 +1,3 @@
-//
-//  RecipeCollectionView.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/10/26.
-//
-
 import UIKit
 final class RecipeCollectionView: UICollectionView {
     

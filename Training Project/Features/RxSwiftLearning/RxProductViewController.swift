@@ -1,10 +1,3 @@
-//
-//  RxProductViewController.swift
-//  Training Project
-//
-//  Created by Akar jaza on 9/8/26.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa

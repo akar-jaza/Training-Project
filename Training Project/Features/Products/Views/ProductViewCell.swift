@@ -1,10 +1,3 @@
-//
-//  ProductViewCell.swift
-//  Training Project
-//
-//  Created by Akar jaza on 8/31/26.
-//
-
 import UIKit
 
 final class ProductViewCell: UITableViewCell, ViewCode {
