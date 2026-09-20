@@ -98,7 +98,7 @@ extension ProductFormViewController: ProductFormViewModelDelegate {
         dismiss(animated: true)
     }
     
-    func didErrorOccured(error: Error) {
+    func didErrorOccur(error: Error) {
         showAlert(title: "Error", message: "Something went wrong saving the product.")
     }
 }

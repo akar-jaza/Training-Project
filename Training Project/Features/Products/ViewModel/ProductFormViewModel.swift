@@ -4,7 +4,7 @@ import RxSwift
 protocol ProductFormViewModelDelegate: AnyObject {
     func didSaveProduct(_ product: Product)
     func didUpdateProduct(_ product: Product)
-    func didErrorOccured(error: Error)
+    func didErrorOccur(error: Error)
 }
 
 final class ProductFormViewModel {
@@ -34,7 +34,7 @@ final class ProductFormViewModel {
                     self?.delegate?.didSaveProduct(newProduct)
                 }
             }, onError: { [weak self] error in
-                self?.delegate?.didErrorOccured(error: error)
+                self?.delegate?.didErrorOccur(error: error)
             })
             .disposed(by: disposeBag)
     }
@@ -62,7 +62,7 @@ final class ProductFormViewModel {
                 }
             }, onError: { [weak self] error in
                 DispatchQueue.main.async {
-                    self?.delegate?.didErrorOccured(error: error)
+                    self?.delegate?.didErrorOccur(error: error)
                 }
             })
             .disposed(by: disposeBag)
