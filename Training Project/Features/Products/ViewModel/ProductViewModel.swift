@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 
 protocol ProductsViewModelDelegate: AnyObject {
-    func didErrorOccurred(error: Error)
+    func didErrorOccurr(error: Error)
 }
 
 final class ProductViewModel {
@@ -31,7 +31,7 @@ final class ProductViewModel {
                 self?.productsRelay.accept(response.products)
                 
             }, onError: { [weak self] error in
-                self?.delegate?.didErrorOccurred(error: error)
+                self?.delegate?.didErrorOccurr(error: error)
             })
             .disposed(by: disposeBag)
         
@@ -54,7 +54,7 @@ final class ProductViewModel {
             }
         }, onError: { error in
             DispatchQueue.main.async {
-                self.delegate?.didErrorOccurred(error: error)
+                self.delegate?.didErrorOccurr(error: error)
             }
         }).disposed(by: disposeBag)
     }

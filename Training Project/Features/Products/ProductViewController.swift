@@ -86,7 +86,7 @@ final class ProductViewController: UIViewController {
 
 // MARK: - ProductsViewModelDelegate
 extension ProductViewController: ProductsViewModelDelegate {
-    func didErrorOccurred(error: Error) {
+    func didErrorOccurr(error: Error) {
         showAlert(title: "Error", message: "Something went wrong loading products.")
         print("error: \(error)")
     }
