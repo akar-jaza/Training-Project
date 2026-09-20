@@ -23,7 +23,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .white
         collectionView
             .register(
                 SquareCell.self,

@@ -24,10 +24,12 @@ final class LoginViewModel {
         ]
         networkService
             .request(url: url, method: .post, body: body)
-            .subscribe(onNext: { (user: User) in
+            .subscribe(onNext: { [weak self] (user: User) in
+                guard let self else { return }
                 self.delegate?.didAuthenticateSuccessfully(user: user)
             }, onError: { [weak self] error in
-                self?.delegate?.didFailToAuthenticate(with: error)
+                guard let self else { return }
+                self.delegate?.didFailToAuthenticate(with: error)
             })
             .disposed(by: disposeBag)
     }

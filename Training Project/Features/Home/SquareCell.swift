@@ -90,7 +90,7 @@ final class SquareCell: UICollectionViewCell, ViewCode {
             backgroundImageView.image = UIImage(named: "recipesBackground")
             cellActionButton.titleLabel?.textColor = .black
         default:
-            cellActionButton.backgroundColor = .systemGray
+            cellActionButton.backgroundColor = .gray
         }
         
     }

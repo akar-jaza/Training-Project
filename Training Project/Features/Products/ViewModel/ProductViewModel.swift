@@ -21,17 +21,26 @@ final class ProductViewModel {
     
     weak var delegate: ProductsViewModelDelegate?
     var networkService: NetworkServiceProtocol = NetworkService.shared
+    var cacheService: DataCacheServiceProtocol = DataCacheService.shared
     var disposeBag = DisposeBag()
     
+    private let cacheKey = "cached_products"
+    
     func fetchProducts() {
+        if let cached = cacheService.load([Product].self, forKey: cacheKey) {
+            productsRelay.accept(cached)
+        }
+        
         guard let url = URL(string: "https://dummyjson.com/products") else { return }
         
         networkService.request(url: url, method: .get)
             .subscribe(onNext: { [weak self] (response: ProductsResponse) in
-                self?.productsRelay.accept(response.products)
-                
-            }, onError: { [weak self] error in
-                self?.delegate?.didErrorOccurr(error: error)
+                guard let self else {return}
+                self.productsRelay.accept(response.products)
+                self.cacheService.save(response.products, forKey: self.cacheKey)
+            }, onError: {[weak self] error in
+                guard let self else {return}
+                self.delegate?.didErrorOccurr(error: error)
             })
             .disposed(by: disposeBag)
         
@@ -42,17 +51,18 @@ final class ProductViewModel {
         guard let url = URL(string: "https://dummyjson.com/products/\(product.id)") else { return }
         
         networkService.requestData(url: url, method: .delete).subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else {return}
             DispatchQueue.main.async {
                 guard self.currentProducts.indices.contains(index) else {
                     return
                 }
                 var updatedProducts = self.productsRelay.value
                 updatedProducts.remove(at: index)
-                
                 self.productsRelay.accept(updatedProducts)
+                self.cacheService.save(updatedProducts, forKey: self.cacheKey)
             }
-        }, onError: { error in
+        }, onError: { [weak self] error in
+            guard let self else {return}
             DispatchQueue.main.async {
                 self.delegate?.didErrorOccurr(error: error)
             }
@@ -63,6 +73,7 @@ final class ProductViewModel {
         var pr = productsRelay.value
         pr.insert(product, at: 0)
         productsRelay.accept(pr)
+        cacheService.save(pr, forKey: cacheKey)
     }
     
     func updateProduct(_ product: Product) {
@@ -70,5 +81,6 @@ final class ProductViewModel {
         guard let index = pr.firstIndex(where: { $0.id == product.id }) else { return }  // $0.id == product.id is a closure that checks if the id of the product is equal to the id of the product in the array
         pr[index] = product
         productsRelay.accept(pr)
+        cacheService.save(pr, forKey: cacheKey)
     }
 }

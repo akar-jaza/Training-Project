@@ -42,7 +42,7 @@ final class HomeViewController: UIViewController, ViewCode {
             target: self,
             action: #selector(logoutTapped)
         )
-        navigationItem.rightBarButtonItem?.tintColor = .systemRed
+        navigationItem.rightBarButtonItem?.tintColor = .red
         
     }
 }

@@ -66,7 +66,7 @@ final class ProductViewController: UIViewController {
                     description: product.description,
                     image: UIImage(systemName: "shippingbox.fill")
                 )
-                cell.productImage.tintColor = .systemGray
+                cell.productImage.tintColor = .gray
         
                 cell.loadImage(from: product.thumbnail)
                 
