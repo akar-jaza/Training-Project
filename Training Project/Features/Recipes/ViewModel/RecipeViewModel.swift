@@ -27,6 +27,10 @@ final class RecipeViewModel {
 //        }.resume()
 //    }
     
+    var cacheService: DataCacheServiceProtocol = DataCacheService.shared
+    private let cacheKey = "cached_recipes"
+
+    
     func searchRecipes(query: String) -> Observable<[Recipe]> {
         let encoded = query.addingPercentEncoding(
             withAllowedCharacters: .urlQueryAllowed
@@ -40,8 +44,24 @@ final class RecipeViewModel {
             return .just([])
         }
         
-        return networkService.request(url: url, method: .get, body: nil)
+        let cached: [Recipe] = cacheService.load([Recipe].self, forKey: cacheKey) ?? []
+        
+        let network = networkService.request(url: url, method: .get, body: nil)
             .map { (response: RecipesResponse) in response.recipes }
-            .catchAndReturn([])
+            .do(onNext: { [weak self] recipes in
+                guard let self = self else { return }
+                self.cacheService.save(recipes, forKey: self.cacheKey)
+            })
+            .catchAndReturn(cached)
+        
+        
+        if cached.isEmpty {
+            return network
+        } else {
+            return Observable.concat(
+                .just(cached),
+                network  // in easy terms, this is just a fallback, if the network fails, the cache will be used.
+            )
+        }
     }
 }

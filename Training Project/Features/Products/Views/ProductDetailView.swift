@@ -113,31 +113,4 @@ final class ProductDetailView: UIView, ViewCode {
         ])
         
     }
-    
-    func configProductView(Product product: Product) {
-        productTitle.text = product.title
-        productDescription.text = product.description
-        price.text = "$\(product.price)"
-        loadImage(from: product.thumbnail)
-    }
-}
-
-extension ProductDetailView: ImageLoaderDelegate {
-    
-    func loadImage(from urlString: String) {
-        currentImageURLString = urlString
-        ImageLoader.shared.loadImage(from: urlString, delegate: self)
-    }
-    
-    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String, didFailWithError : Error?) {
-        
-        if let error = didFailWithError {
-            print("there was a problem loading the image: \(error)")
-            return
-        }
-        
-        guard urlString == currentImageURLString else { return }
-        productImage.image = image
-    }
-
 }
