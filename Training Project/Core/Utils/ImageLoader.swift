@@ -2,8 +2,13 @@ import UIKit
 import RxSwift
 
 protocol ImageLoaderDelegate {
-    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String)
-    func didErrorOccured(with error: Error)
+    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String, didFailWithError: Error?)
+}
+
+enum ImageLoaderError: Error {
+    case failedToLoadImage(Error)
+    case invalidURL
+    case failedToDecodeImage
 }
 
 final class ImageLoader {
@@ -19,12 +24,24 @@ final class ImageLoader {
         let key = urlString as NSString
          
         if let cachedImage = cache.object(forKey: key) {
-            delegate.imageLoader(self, didLoad: cachedImage, for: urlString)
+            delegate
+                .imageLoader(
+                    self,
+                    didLoad: cachedImage,
+                    for: urlString,
+                    didFailWithError: nil
+                )
             return
         }
         
         guard let url = URL(string: urlString) else {
-            delegate.imageLoader(self, didLoad: nil, for: urlString)
+            delegate
+                .imageLoader(
+                    self,
+                    didLoad: nil,
+                    for: urlString,
+                    didFailWithError: ImageLoaderError.invalidURL
+                )
             return
         }
         
@@ -35,16 +52,34 @@ final class ImageLoader {
                     guard let self = self else { return }
                     
                     guard let image = UIImage(data: data) else {
-                        delegate.imageLoader(self, didLoad: nil, for: urlString)
+                        delegate
+                            .imageLoader(
+                                self,
+                                didLoad: nil,
+                                for: urlString,
+                                didFailWithError: ImageLoaderError.failedToDecodeImage
+                            )
                         return
                     }
                     
                     self.cache.setObject(image, forKey: key)
-                    delegate.imageLoader(self, didLoad: image, for: urlString)
+                    delegate
+                        .imageLoader(
+                            self,
+                            didLoad: image,
+                            for: urlString,
+                            didFailWithError: nil
+                        )
                 },
                 onError: { [weak self] error in
                     guard let self = self else { return }
-                    delegate.didErrorOccured(with: error)
+                    delegate
+                        .imageLoader(
+                            self,
+                            didLoad: nil,
+                            for: urlString,
+                            didFailWithError: ImageLoaderError.failedToLoadImage(error)
+                        )
                 }
             )
             .disposed(by: disposeBag)

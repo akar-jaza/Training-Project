@@ -2,6 +2,8 @@ import UIKit
 
 final class RecipeCardCell: UICollectionViewCell, ViewCode {
     static let reuseID = "RecipeCardCell"
+    private var currentImageURLString: String?
+
     
     let reciepeImage: UIImageView = {
         let imageView = UIImageView()
@@ -81,4 +83,29 @@ final class RecipeCardCell: UICollectionViewCell, ViewCode {
     }
     
     
+}
+
+extension RecipeCardCell: ImageLoaderDelegate {
+    
+    func loadImage(from urlString: String) {
+        currentImageURLString = urlString
+        ImageLoader.shared.loadImage(from: urlString, delegate: self)
+    }
+    
+    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String, didFailWithError : Error?) {
+        
+        if let error = didFailWithError {
+            print("there was a problem loading the image: \(error)")
+            return
+        }
+        
+        guard urlString == currentImageURLString else { return }
+        reciepeImage.image = image
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        currentImageURLString = nil
+        reciepeImage.image = UIImage(systemName: "fork.knife")
+    }
 }

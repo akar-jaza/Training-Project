@@ -2,7 +2,7 @@ import UIKit
 
 final class ProductDetailViewController: UIViewController {
 
-    weak var coordinator: AppCoordinator?
+    weak var coordinator: ProductCoordinator?
 
     private let productDetailView = ProductDetailView()
 

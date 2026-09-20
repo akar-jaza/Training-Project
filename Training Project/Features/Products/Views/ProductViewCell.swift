@@ -81,16 +81,19 @@ final class ProductViewCell: UITableViewCell, ViewCode {
 }
 
 extension ProductViewCell: ImageLoaderDelegate {
-    func didErrorOccured(with error: any Error) {
-        print("There was a problem loading product cell images: \(error)")
-    }
 
     func loadImage(from urlString: String) {
         currentImageURLString = urlString
         ImageLoader.shared.loadImage(from: urlString, delegate: self)
     }
     
-    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String) {
+    func imageLoader(_ loader: ImageLoader, didLoad image: UIImage?, for urlString: String, didFailWithError : Error?) {
+        
+        if let error = didFailWithError {
+            print("there was a problem loading the image: \(error)")
+            return
+        }
+        
         guard urlString == currentImageURLString else { return }
         productImage.image = image
     }
