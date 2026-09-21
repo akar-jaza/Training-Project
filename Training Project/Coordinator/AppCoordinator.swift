@@ -23,7 +23,6 @@ final class AppCoordinator: Coordinator {
         )
         childCoordinators.append(homeCoordinator)
         homeCoordinator.start()
-        
     }
 }
 

@@ -10,6 +10,7 @@ final class RecipeCoordinator: Coordinator {
     func start() {
         let recipeVC = RecipeViewController()
         recipeVC.coordinator = self
+        recipeVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(recipeVC, animated: true)
     }
 }

@@ -9,7 +9,8 @@ final class ProfileHostingController: UIHostingController<ProfileView> {
     init() {
         super.init(rootView: ProfileView(viewModel: viewModel, onLogout: {}))
         rootView.onLogout = { [weak self] in
-            self?.handleLogout()
+            guard let self else { return }
+            self.handleLogout()
         }
     }
     

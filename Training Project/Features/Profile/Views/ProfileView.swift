@@ -7,11 +7,11 @@ struct ProfileView: View {
     
     var body: some View {
         
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             if viewModel.isLoading && viewModel.user == nil {
                 ProgressView()
             } else if let user = viewModel.user {
-                VStack(spacing: 20) {
+                VStack(spacing: 10) {
                     Text("Profile")
                         .font(.system(size: 24))
                         .fontWeight(.bold)
@@ -41,7 +41,7 @@ struct ProfileView: View {
                             .offset(y: 15)
                         }
                 }
-                .padding()
+                .padding([.horizontal, .bottom])
                 
                 // name
                 Text("Akar")
@@ -101,6 +101,7 @@ struct ProfileView: View {
                 .buttonStyle(.glassProminent)
                 .tint(.indigo)
                 .padding(.horizontal)
+                .padding(.bottom, 30)
                 
 //                Image(systemName: "person.crop.circle.fill")
 //                    .resizable()
@@ -133,7 +134,7 @@ struct ProfileView: View {
 //            .buttonStyle(.borderedProminent)
 //            .tint(.red)
         }
-        .padding()
+        .padding([.horizontal, .bottom])
         
         .task {
             await viewModel.loadProfile()

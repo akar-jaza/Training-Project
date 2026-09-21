@@ -10,6 +10,7 @@ class ProductCoordinator: Coordinator {
     func start() {
         let productVC = ProductViewController()
         productVC.coordinator = self
+        productVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(productVC, animated: true)
     }
     

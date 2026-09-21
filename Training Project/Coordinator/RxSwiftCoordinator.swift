@@ -10,6 +10,7 @@ class RxSwiftCoordinator: Coordinator {
     func start() {
         let RxSwiftVC = RxProductViewController()
         RxSwiftVC.coordinator = self
+        RxSwiftVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(RxSwiftVC, animated: true)
     }
 }
