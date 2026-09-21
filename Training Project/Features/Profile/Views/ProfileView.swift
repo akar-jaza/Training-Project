@@ -19,28 +19,43 @@ struct ProfileView: View {
                         .tracking(1.1)
                         .padding(.bottom, 20)
                     
-                    Image("avatar")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 120, height: 120)
-                        .clipShape(Circle())
-                        .overlay(alignment: .bottom) {
-                            // (Badge)
-                            ZStack {
-                                Circle()
-                                    .fill(Color.indigo)
-                                
-                                Image(systemName: "pencil")
-                                    .font(.system(size: 16, weight: .bold))
-                                    .foregroundStyle(.white)
-                            }
-                            .frame(width: 38, height: 38)
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.white, lineWidth: 3)
-                            )
-                            .offset(y: 15)
+                    AsyncImage(url: URL(string: userProfile.image)) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        case .failure:
+                            Image(getImageProfile(userProfile.gender))
+                                .resizable()
+                                .scaledToFill()
+                        case .empty:
+                            ProgressView()
+                        @unknown default:
+                            Image(getImageProfile(userProfile.gender))
+                                .resizable()
+                                .scaledToFill()
                         }
+                    }
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+                    .overlay(alignment: .bottom) {
+                        // (Badge)
+                        ZStack {
+                            Circle()
+                                .fill(Color.indigo)
+                            
+                            Image(systemName: "pencil")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                        .frame(width: 38, height: 38)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.white, lineWidth: 3)
+                        )
+                        .offset(y: 15)
+                    }
                 }
                 .padding([.horizontal, .bottom])
                 
@@ -111,28 +126,28 @@ struct ProfileView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 30)
                 
-//                Image(systemName: "person.crop.circle.fill")
-//                    .resizable()
-//                    .frame(width: 80, height: 80)
-//                    .foregroundStyle(.gray)
-//                
-//                Text("\(user.firstName) \(user.lastName)")
-//                    .font(.title2.bold())
-//                
-//                Text(user.email)
-//                    .foregroundStyle(.secondary)
+                //                Image(systemName: "person.crop.circle.fill")
+                //                    .resizable()
+                //                    .frame(width: 80, height: 80)
+                //                    .foregroundStyle(.gray)
+                //
+                //                Text("\(user.firstName) \(user.lastName)")
+                //                    .font(.title2.bold())
+                //
+                //                Text(user.email)
+                //                    .foregroundStyle(.secondary)
             } else {
                 Text("No profile loaded")
                     .foregroundStyle(.secondary)
             }
             
-//            if let errorMessage = viewModel.errorMessage {
-//                .alert("Heads Up!", isPresented: $showAlert) {
-//                    Button("OK", role: .cancel) { }
-//                } message: {
-//                    Text("This is a simple alert message.")
-//                }
-//            }
+            //            if let errorMessage = viewModel.errorMessage {
+            //                .alert("Heads Up!", isPresented: $showAlert) {
+            //                    Button("OK", role: .cancel) { }
+            //                } message: {
+            //                    Text("This is a simple alert message.")
+            //                }
+            //            }
             
         }
         .padding([.horizontal, .bottom])
@@ -156,8 +171,10 @@ struct ProfileView: View {
     }
     
     private func eyeColor(_ eyeColor: String) -> Color {
+        print("before cleaning the eye color word: \(eyeColor)")
         let cleanColor = eyeColor.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        
+        print("after cleaning the eye color word: \(cleanColor)")
+
         switch cleanColor {
         case "green":
             return .green
@@ -171,7 +188,22 @@ struct ProfileView: View {
             return .brown
         }
     }
+    
+    private func getImageProfile(_ gender: String) -> String {
+        print("before cleaning the gender word: \(gender)")
+        let cleanGender = gender.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        print("after cleaning the gender word: \(cleanGender)")
         
+        switch cleanGender {
+        case "male":
+            return "male_avatar"
+        case "female":
+            return "female_avatar"
+        default:
+            return "male_avatar"
+        }
+    }
+    
 }
 
 
