@@ -3,7 +3,7 @@ import UIKit
 final class MainTabBarController: UITabBarController {
     
     let homeNavigationController = UINavigationController()
-    let profileNavigationController = UINavigationController(rootViewController: ProfileViewController())
+    let profileNavigationController = UINavigationController(rootViewController: ProfileHostingController())
     
     
     override func viewDidLoad() {

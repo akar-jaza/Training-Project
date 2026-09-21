@@ -24,9 +24,6 @@ final class AppCoordinator: Coordinator {
         childCoordinators.append(homeCoordinator)
         homeCoordinator.start()
         
-        if let profileVC = mainTabBarController.profileNavigationController.viewControllers.first as? ProfileViewController {
-            profileVC.coordinator = self
-        }
     }
 }
 
