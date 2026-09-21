@@ -25,7 +25,7 @@ final class ProfileHostingController: UIHostingController<ProfileView> {
     
     // we don't need the title for now but I keep it here for a reference
     private func bindNavigationTitle() {
-        viewModel.$user
+        viewModel.$profile
             .receive(on: DispatchQueue.main)
             .sink { [weak self] user in
                 guard let self else { return }

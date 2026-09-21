@@ -1,15 +1,16 @@
 import Combine
+import UIKit
 import Foundation
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-    @Published var user: User?
+    @Published var profile: Profile?
     @Published var isLoading = false
     @Published var errorMessage: String?
     
     func loadProfile() async {
         let localUser = UserSessionService.shared.getCurrentUser()
-        user = localUser
+//        user = localUser
         
         guard let localUser,
               let url = URL(string: "https://dummyjson.com/users/\(localUser.id)") else {
@@ -21,22 +22,26 @@ final class ProfileViewModel: ObservableObject {
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let details = try JSONDecoder().decode(ProfileDetailsResponse.self, from: data)
+            let details = try JSONDecoder().decode(Profile.self, from: data)
             
-            user = User(
-                id: details.id,
-                username: details.username,
-                email: details.email,
-                firstName: details.firstName,
-                lastName: details.lastName,
-                gender: details.gender,
-                image: details.image,
-                token: localUser.token,
-                refreshToken: localUser.refreshToken
-            )
+            profile = details 
+//            profile = Profile(
+//                id: details.id,
+//                username: details.username,
+//                email: details.email,
+//                firstName: details.firstName,
+//                lastName: details.lastName,
+//                gender: details.gender,
+//                image: details.image,
+//                bloodGroup: details.bloodGroup,
+//                height: details.height,
+//                weight: details.weight,
+//                eyeColor: details.eyeColor,
+//            )
         }
         catch {
-            errorMessage = "Couldn't refresh profile: \(error.localizedDescription)"
+            print("Couldn't refresh profile: \(error)")
+            errorMessage = "Couldn't refresh profile."
         }
         
         func logout() {

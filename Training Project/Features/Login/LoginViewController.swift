@@ -85,6 +85,7 @@ extension LoginViewController: LoginViewModelDelegate {
     
     func didFailToAuthenticate(with error: any Error) {
         isLoading.onNext(false)
+        print("error in sign in: \(error)")
         showAlert(title: "Login Failed", message: "Incorrect username or password. Try 'emilys' and 'emilyspass'.")
     }
 }

@@ -2,15 +2,16 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject var viewModel: ProfileViewModel
+    @State private var showAlert = false
     
     var onLogout: () -> Void
     
     var body: some View {
         
         VStack(spacing: 10) {
-            if viewModel.isLoading && viewModel.user == nil {
+            if viewModel.isLoading && viewModel.profile == nil {
                 ProgressView()
-            } else if let user = viewModel.user {
+            } else if let userProfile = viewModel.profile {
                 VStack(spacing: 10) {
                     Text("Profile")
                         .font(.system(size: 24))
@@ -24,7 +25,7 @@ struct ProfileView: View {
                         .frame(width: 120, height: 120)
                         .clipShape(Circle())
                         .overlay(alignment: .bottom) {
-                            // Lower Action Circle (Badge)
+                            // (Badge)
                             ZStack {
                                 Circle()
                                     .fill(Color.indigo)
@@ -44,13 +45,13 @@ struct ProfileView: View {
                 .padding([.horizontal, .bottom])
                 
                 // name
-                Text("Akar")
+                Text(userProfile.firstName)
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.bottom, 1)
                 
                 // MAIL
-                Text(verbatim: "akar.jaza1212@gmail.com")
+                Text(verbatim: userProfile.email)
                     .font(.body)
                     .fontWeight(.light)
                     .foregroundStyle(.gray)
@@ -59,7 +60,7 @@ struct ProfileView: View {
                 HStack(spacing: 20) {
                     ProfileInfo(
                         icon: "calendar",
-                        value: "20",
+                        value: "\(userProfile.age)",
                         title: "Age",
                         tint: .red
                     )
@@ -82,19 +83,26 @@ struct ProfileView: View {
                 .padding(.bottom, 20)
                 
                 HStack(spacing: 16) {
-                    ProfileCards(icon: "drop.fill", value: "-O", title: "Blood", tint: .red)
+                    ProfileCards(
+                        icon: "drop.fill",
+                        value: userProfile.bloodGroup,
+                        title: "Blood",
+                        tint: .red
+                    )
                     ProfileCards(
                         icon: "eye",
-                        value: "Green",
+                        value: userProfile.eyeColor,
                         title: "Eye",
-                        tint: .green
+                        tint: eyeColor(userProfile.eyeColor)
                     )
                 }
                 .padding(.horizontal)
                 
                 Spacer()
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    onLogout()
+                }, label: {
                     Text("Log Out")
                         .frame(maxWidth: .infinity, maxHeight: 40)
                 })
@@ -118,26 +126,49 @@ struct ProfileView: View {
                     .foregroundStyle(.secondary)
             }
             
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .font(.footnote)
-                    .foregroundStyle(.red)
-            }
-            
-            
-//            Button(role: .destructive) {
-//                onLogout()
-//            } label: {
-//                Text("Log Out")
-//                    .frame(maxWidth: .infinity)
+//            if let errorMessage = viewModel.errorMessage {
+//                .alert("Heads Up!", isPresented: $showAlert) {
+//                    Button("OK", role: .cancel) { }
+//                } message: {
+//                    Text("This is a simple alert message.")
+//                }
 //            }
-//            .buttonStyle(.borderedProminent)
-//            .tint(.red)
+            
         }
         .padding([.horizontal, .bottom])
         
         .task {
             await viewModel.loadProfile()
+        }
+        .onChange(of: viewModel.errorMessage) { newValue in
+            if newValue != nil {
+                showAlert = true
+            }
+        }
+        .alert("Error", isPresented: $showAlert) {
+            Button("OK", role: .cancel) {
+                // Clear the error
+                viewModel.errorMessage = nil
+            }
+        } message: {
+            Text(viewModel.errorMessage ?? "An unknown error occurred.")
+        }
+    }
+    
+    private func eyeColor(_ eyeColor: String) -> Color {
+        let cleanColor = eyeColor.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        switch cleanColor {
+        case "green":
+            return .green
+        case "brown":
+            return .brown
+        case "blue":
+            return .blue
+        case "gray", "grey":
+            return .gray
+        default:
+            return .brown
         }
     }
         
