@@ -22,11 +22,14 @@ final class ProfileHostingController: UIHostingController<ProfileView> {
         bindNavigationTitle()
     }
     
+    // we don't need the title for now but I keep it here for a reference
     private func bindNavigationTitle() {
         viewModel.$user
             .receive(on: DispatchQueue.main)
             .sink { [weak self] user in
-                self?.title = user?.firstName ?? "Profile"
+                guard let self else { return }
+//                self?.title = user?.firstName ?? "Profile"
+//                self.title = "Profile"
             }
             .store(in: &cancellables)   // Combine's version of .disposed(by: disposeBag)!!
     }
