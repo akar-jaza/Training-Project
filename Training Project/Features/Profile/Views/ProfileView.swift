@@ -8,149 +8,143 @@ struct ProfileView: View {
     
     var body: some View {
         
-        VStack(spacing: 10) {
-            if viewModel.isLoading && viewModel.profile == nil {
-                ProgressView()
-            } else if let userProfile = viewModel.profile {
-                VStack(spacing: 10) {
-                    Text("Profile")
-                        .font(.system(size: 24))
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 244 / 255, green: 248 / 255, blue: 255 / 255),
+                    .white
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            
+            .ignoresSafeArea()
+            VStack(spacing: 10) {
+                if viewModel.isLoading && viewModel.profile == nil {
+                    ProgressView()
+                } else if let userProfile = viewModel.profile {
+                    VStack(spacing: 10) {
+                        Text("Profile")
+                            .font(.system(size: 24))
+                            .fontWeight(.bold)
+                            .tracking(1.1)
+                            .padding(.bottom, 20)
+                        
+                        AsyncImage(url: URL(string: userProfile.image)) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            case .failure:
+                                Image(getImageProfile(userProfile.gender))
+                                    .resizable()
+                                    .scaledToFill()
+                            case .empty:
+                                ProgressView()
+                            @unknown default:
+                                Image(getImageProfile(userProfile.gender))
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        }
+                        .frame(width: 120, height: 120)
+                        .clipShape(Circle())
+                        .overlay(alignment: .bottom) {
+                            // (Badge)
+                            ZStack {
+                                Circle()
+                                    .fill(Color.indigo)
+                                
+                                Image(systemName: "pencil")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(.white)
+                            }
+                            .frame(width: 38, height: 38)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.white, lineWidth: 3)
+                            )
+                            .offset(y: 15)
+                        }
+                    }
+                    .padding([.horizontal, .bottom])
+                    
+                    // name
+                    Text(userProfile.firstName)
+                        .font(.title)
                         .fontWeight(.bold)
-                        .tracking(1.1)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 1)
                     
-                    AsyncImage(url: URL(string: userProfile.image)) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                        case .failure:
-                            Image(getImageProfile(userProfile.gender))
-                                .resizable()
-                                .scaledToFill()
-                        case .empty:
-                            ProgressView()
-                        @unknown default:
-                            Image(getImageProfile(userProfile.gender))
-                                .resizable()
-                                .scaledToFill()
-                        }
-                    }
-                    .frame(width: 120, height: 120)
-                    .clipShape(Circle())
-                    .overlay(alignment: .bottom) {
-                        // (Badge)
-                        ZStack {
-                            Circle()
-                                .fill(Color.indigo)
-                            
-                            Image(systemName: "pencil")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundStyle(.white)
-                        }
-                        .frame(width: 38, height: 38)
-                        .overlay(
-                            Circle()
-                                .stroke(Color.white, lineWidth: 3)
+                    // MAIL
+                    Text(verbatim: userProfile.email)
+                        .font(.body)
+                        .fontWeight(.light)
+                        .foregroundStyle(.gray)
+                        .padding(.bottom, 10)
+                    
+                    HStack(spacing: 20) {
+                        ProfileInfo(
+                            icon: "calendar",
+                            value: "\(userProfile.age)",
+                            title: "Age",
+                            tint: .red
                         )
-                        .offset(y: 15)
+                        
+                        ProfileInfo(
+                            icon: "ruler",
+                            value: "\(userProfile.height)",
+                            title: "Height",
+                            tint: .yellow
+                        )
+                        
+                        ProfileInfo(
+                            icon: "scalemass.fill",
+                            value: "\(userProfile.weight)",
+                            title: "Weight",
+                            tint: .green
+                        )
                     }
-                }
-                .padding([.horizontal, .bottom])
-                
-                // name
-                Text(userProfile.firstName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 1)
-                
-                // MAIL
-                Text(verbatim: userProfile.email)
-                    .font(.body)
-                    .fontWeight(.light)
-                    .foregroundStyle(.gray)
-                    .padding(.bottom, 10)
-                
-                HStack(spacing: 20) {
-                    ProfileInfo(
-                        icon: "calendar",
-                        value: "\(userProfile.age)",
-                        title: "Age",
-                        tint: .red
-                    )
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
                     
-                    ProfileInfo(
-                        icon: "ruler",
-                        value: "178",
-                        title: "Height",
-                        tint: .yellow
-                    )
+                    HStack(spacing: 16) {
+                        ProfileCards(
+                            icon: "drop.fill",
+                            value: userProfile.bloodGroup,
+                            title: "Blood",
+                            tint: .red
+                        )
+                        ProfileCards(
+                            icon: "eye",
+                            value: userProfile.eyeColor,
+                            title: "Eye",
+                            tint: eyeColor(userProfile.eyeColor)
+                        )
+                    }
+                    .padding(.horizontal)
                     
-                    ProfileInfo(
-                        icon: "scalemass.fill",
-                        value: "70",
-                        title: "Weight",
-                        tint: .green
-                    )
+                    Spacer()
+                    
+                    Button(action: {
+                        onLogout()
+                    }, label: {
+                        Text("Log Out")
+                            .frame(maxWidth: .infinity, maxHeight: 40)
+                    })
+                    .buttonStyle(.glassProminent)
+                    .tint(.indigo)
+                    .padding(.horizontal)
+                    .padding(.bottom, 30)
+                } else {
+                    Text("No profile loaded")
+                        .foregroundStyle(.secondary)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 20)
+
                 
-                HStack(spacing: 16) {
-                    ProfileCards(
-                        icon: "drop.fill",
-                        value: userProfile.bloodGroup,
-                        title: "Blood",
-                        tint: .red
-                    )
-                    ProfileCards(
-                        icon: "eye",
-                        value: userProfile.eyeColor,
-                        title: "Eye",
-                        tint: eyeColor(userProfile.eyeColor)
-                    )
-                }
-                .padding(.horizontal)
-                
-                Spacer()
-                
-                Button(action: {
-                    onLogout()
-                }, label: {
-                    Text("Log Out")
-                        .frame(maxWidth: .infinity, maxHeight: 40)
-                })
-                .buttonStyle(.glassProminent)
-                .tint(.indigo)
-                .padding(.horizontal)
-                .padding(.bottom, 30)
-                
-                //                Image(systemName: "person.crop.circle.fill")
-                //                    .resizable()
-                //                    .frame(width: 80, height: 80)
-                //                    .foregroundStyle(.gray)
-                //
-                //                Text("\(user.firstName) \(user.lastName)")
-                //                    .font(.title2.bold())
-                //
-                //                Text(user.email)
-                //                    .foregroundStyle(.secondary)
-            } else {
-                Text("No profile loaded")
-                    .foregroundStyle(.secondary)
             }
-            
-            //            if let errorMessage = viewModel.errorMessage {
-            //                .alert("Heads Up!", isPresented: $showAlert) {
-            //                    Button("OK", role: .cancel) { }
-            //                } message: {
-            //                    Text("This is a simple alert message.")
-            //                }
-            //            }
-            
+            .padding([.horizontal, .bottom])
         }
-        .padding([.horizontal, .bottom])
         
         .task {
             await viewModel.loadProfile()
@@ -171,10 +165,8 @@ struct ProfileView: View {
     }
     
     private func eyeColor(_ eyeColor: String) -> Color {
-        print("before cleaning the eye color word: \(eyeColor)")
         let cleanColor = eyeColor.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        print("after cleaning the eye color word: \(cleanColor)")
-
+        
         switch cleanColor {
         case "green":
             return .green
@@ -184,15 +176,21 @@ struct ProfileView: View {
             return .blue
         case "gray", "grey":
             return .gray
+        case "red":
+            return .red
+        case "hazel":
+            return Color(red: 0.557, green: 0.463, blue: 0.086)
+        case "amber":
+            return Color(red: 1.0, green: 0.749, blue: 0.0)
+        case "violet":
+            return Color(red: 0.541, green: 0.169, blue: 0.886)
         default:
             return .brown
         }
     }
     
     private func getImageProfile(_ gender: String) -> String {
-        print("before cleaning the gender word: \(gender)")
         let cleanGender = gender.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        print("after cleaning the gender word: \(cleanGender)")
         
         switch cleanGender {
         case "male":
@@ -207,73 +205,3 @@ struct ProfileView: View {
 }
 
 
-struct ProfileInfo: View {
-    let icon: String
-    let value: String
-    let title: String
-    let tint: Color
-    
-    var body: some View {
-        VStack(spacing: 8) {
-            ZStack {
-                Circle()
-                    .fill(Color.gray.opacity(0.1))
-                    .frame(width: 55, height: 55)
-                
-                Image(systemName: icon)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(.black)
-            }
-            
-            Text(value)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(.black)
-            
-            Text(title)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-    }
-}
-
-struct ProfileCards: View {
-    let icon: String
-    let value: String
-    let title: String
-    let tint: Color
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(tint.opacity(0.15))
-                    .frame(width: 40, height: 40)
-                
-                Image(systemName: icon)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(tint)
-            }
-            
-            VStack(alignment: .leading, spacing: 2) {
-                Text(value)
-                    .font(.system(size: 23, weight: .bold, design: .rounded))
-                    .foregroundStyle(.primary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 140)
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.gray.opacity(0.08))
-        )
-    }
-}

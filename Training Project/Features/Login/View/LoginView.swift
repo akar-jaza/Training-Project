@@ -3,8 +3,10 @@ import UIKit
 final class LoginView: UIView, ViewCode {
     
     let welcomeImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "welcome"))
-        image.contentMode = .scaleAspectFit
+        let image = UIImageView(image: UIImage(named: "hey"))
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 20
+        image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -12,7 +14,9 @@ final class LoginView: UIView, ViewCode {
     let usernameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Username"
-        textField.backgroundColor = UIColor(named: "loginBgColor")
+//        textField.backgroundColor = UIColor(named: "loginBgColor")
+        textField.backgroundColor = .white
+
         textField.layer.cornerRadius = 12
         // add a border
         textField.layer.borderWidth = 1
@@ -31,7 +35,8 @@ final class LoginView: UIView, ViewCode {
     let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
-        textField.backgroundColor = UIColor(named: "loginBgColor")
+//        textField.backgroundColor = UIColor(named: "loginBgColor")
+        textField.backgroundColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.cornerRadius = 12
@@ -60,7 +65,7 @@ final class LoginView: UIView, ViewCode {
     let hintButton: UIButton = {
         let button = UIButton(type: .system)
         
-        let fullText = "psst... use username: emilys and password: emilyspass or touch me to fill the fields"
+        let fullText = "use username: emilys and password: emilyspass or touch me to fill the fields 🎲"
         let clickableText = "touch me"
         
         let defaultAttributes: [NSAttributedString.Key: Any] = [
@@ -94,7 +99,7 @@ final class LoginView: UIView, ViewCode {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(named: "loginBgColor")
+        backgroundColor = .white
         buildViewCode()
     }
     
@@ -118,9 +123,8 @@ final class LoginView: UIView, ViewCode {
                     .constraint(equalTo: centerXAnchor),
                 welcomeImage.topAnchor
                     .constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-                welcomeImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-                welcomeImage.trailingAnchor.constraint(equalTo: trailingAnchor),
                 welcomeImage.heightAnchor.constraint(equalToConstant: 250),
+                welcomeImage.widthAnchor.constraint(equalToConstant: 250),
                 
                 // Username
                 usernameTextField.centerXAnchor

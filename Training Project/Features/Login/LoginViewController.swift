@@ -9,6 +9,13 @@ final class LoginViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let isLoading = BehaviorSubject<Bool>(value: false)
     
+    // password is always "{username}pass"
+    private let demoUsernames = [
+        "emilys", "michaelw", "sophiab", "jamesd", "emmaj", "oliviaw", "alexanderj",
+        "avat", "ethanm", "isabellad", "liamg", "miar", "noahh", "charlottem", "williamg",
+        "averyp", "evelyns", "logant", "abigailr", "jacksone", "madisonc", "elijahs",
+        "chloem", "mateon", "harpere", "evelyng", "danielc", "lilyb", "henryh", "addisonw"
+    ]
     
     override func loadView() {
         view = loginView
@@ -68,8 +75,10 @@ extension LoginViewController {
         loginView.hintButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             
-            loginView.usernameTextField.text = "emilys"
-            loginView.passwordTextField.text = "emilyspass"
+            let username = demoUsernames.randomElement()!
+
+            loginView.usernameTextField.text = username
+            loginView.passwordTextField.text = "\(username)pass"
         }).disposed(by: disposeBag)
     }
 }
