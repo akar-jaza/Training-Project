@@ -1,10 +1,3 @@
-//
-//  Training_Project_UITests.swift
-//  Training Project UITests
-//
-//  Created by Akar jaza on 9/22/26.
-//
-
 import XCTest
 
 final class Login_Screen_UITests: XCTestCase {
