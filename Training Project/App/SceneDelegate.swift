@@ -13,6 +13,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.overrideUserInterfaceStyle = .light
         
         window = UIWindow(windowScene: windowScene)
+
+        // cleaning the session for UI Testing
+        if CommandLine.arguments.contains("--uitesting") {
+            UserSessionService.shared.clear()
+        }
+    
         if UserSessionService.shared.isLoggedIn {
             switchToMain()
         } else {
