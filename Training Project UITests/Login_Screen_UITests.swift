@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class Training_Project_UITests: XCTestCase {
+final class Login_Screen_UITests: XCTestCase {
     
     func testEmptyFieldsShowsMissingFieldsAlert() {
         let app = XCUIApplication()
