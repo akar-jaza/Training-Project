@@ -14,7 +14,6 @@ final class LoginView: UIView, ViewCode {
     let usernameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Username"
-//        textField.backgroundColor = UIColor(named: "loginBgColor")
         textField.backgroundColor = .white
 
         textField.layer.cornerRadius = 12
@@ -35,7 +34,6 @@ final class LoginView: UIView, ViewCode {
     let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
-//        textField.backgroundColor = UIColor(named: "loginBgColor")
         textField.backgroundColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.lightGray.cgColor
@@ -100,6 +98,7 @@ final class LoginView: UIView, ViewCode {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        
         buildViewCode()
     }
     

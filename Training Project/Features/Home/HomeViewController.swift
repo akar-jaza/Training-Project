@@ -36,14 +36,7 @@ final class HomeViewController: UIViewController, ViewCode {
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.leftBarButtonItem?.hidesSharedBackground = true
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "iphone.and.arrow.right.outward"),
-            style: .plain,
-            target: self,
-            action: #selector(logoutTapped)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = .red
-        
+        navigationItem.backButtonTitle = "Home"
     }
 }
 
