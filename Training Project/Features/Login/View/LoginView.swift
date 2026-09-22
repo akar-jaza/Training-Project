@@ -101,6 +101,7 @@ final class LoginView: UIView, ViewCode {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        accessibilityIdentifier = "loginScreen"
         
         buildViewCode()
     }

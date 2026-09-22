@@ -12,7 +12,7 @@ final class Training_Project_UITests: XCTestCase {
     func testEmptyFieldsShowsMissingFieldsAlert() {
         let app = XCUIApplication()
         app.launchArguments = ["--uitesting"]
-        app.launchEnvironment = ["UIAnimationDragCoefficient": "10"]
+//        app.launchEnvironment = ["UIAnimationDragCoefficient": "10"]
 
         app.launch()
         
@@ -21,6 +21,37 @@ final class Training_Project_UITests: XCTestCase {
         let alert = app.alerts["Missing Fields"]
         XCTAssertTrue(alert.waitForExistence(timeout: 2))
 
+    }
+    
+    func testLogin() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--uitesting"]
+        
+        app.launch()
+        
+        let username = app.textFields["usernameTextField"]
+        let password = app.secureTextFields["passwordTextField"]
+        let loginButton = app.buttons["loginButton"]
+        
+        username.tap()
+        username.typeText("emilys")
+        
+        password.tap()
+        password.typeText("emilyspass")
+        
+        
+        app.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.5, dy: 0.25)
+        ).tap()
+        
+        loginButton.tap()
+        
+        // Home screen
+        let homeWelcome = app.staticTexts["homeWelcomeLabel"]
+        
+        XCTAssertTrue(
+            homeWelcome.waitForExistence(timeout: 10)
+        )
     }
 
 //    override func setUpWithError() throws {
