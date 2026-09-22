@@ -4,7 +4,7 @@ struct ProfileView: View {
     @ObservedObject var viewModel: ProfileViewModel
     @State private var showAlert = false
     
-    var onLogout: () -> Void
+    // var onLogout: () -> Void
     
     var body: some View {
         
@@ -30,19 +30,13 @@ struct ProfileView: View {
                             .tracking(1.1)
                             .padding(.bottom, 20)
                         
-                        AsyncImage(url: URL(string: userProfile.image)) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
+                        //  After creating a group, any modifier you apply to the group affects all of that group’s members.
+                        Group {
+                            if let uiImage = viewModel.profileImage {
+                                Image(uiImage: uiImage)
                                     .resizable()
                                     .scaledToFill()
-                            case .failure:
-                                Image(getImageProfile(userProfile.gender))
-                                    .resizable()
-                                    .scaledToFill()
-                            case .empty:
-                                ProgressView()
-                            @unknown default:
+                            } else {
                                 Image(getImageProfile(userProfile.gender))
                                     .resizable()
                                     .scaledToFill()
@@ -127,7 +121,7 @@ struct ProfileView: View {
                     Spacer()
                     
                     Button(action: {
-                        onLogout()
+                        viewModel.delegate?.didTapLogoutButton()
                     }, label: {
                         Text("Log Out")
                             .frame(maxWidth: .infinity, maxHeight: 40)

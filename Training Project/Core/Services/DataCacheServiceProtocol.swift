@@ -3,6 +3,9 @@ import Foundation
 protocol DataCacheServiceProtocol {
     func save<T: Encodable>(_ value: T, forKey key: String)
     func load<T: Decodable>(_ type: T.Type, forKey key: String) -> T?
+    
+    func saveData(_ data: Data, forkey key: String)
+    func loadData(forKey key: String) -> Data?
 }
 final class DataCacheService: DataCacheServiceProtocol {
 
@@ -33,5 +36,17 @@ final class DataCacheService: DataCacheServiceProtocol {
     func load<T: Decodable>(_ type: T.Type, forKey key: String) -> T? {
         guard let data = try? Data(contentsOf: fileURL(forKey: key)) else { return nil }
         return try? JSONDecoder().decode(T.self, from: data)
+    }
+    
+    func saveData(_ data: Data, forkey key: String) {
+        do {
+            try data.write(to: fileURL(forKey: key))
+        } catch {
+            print("Failed to cache \(key): \(error)")
+        }
+    }
+    
+    func loadData(forKey key: String) -> Data? {
+        try? Data(contentsOf: fileURL(forKey: key))
     }
 }
