@@ -20,6 +20,7 @@ final class ProductViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButton
         navigationItem.rightBarButtonItem?.style = .prominent
         navigationItem.rightBarButtonItem?.tintColor = AppColors.primaryColor
+        
     }
     
     override func loadView() {
@@ -67,7 +68,9 @@ final class ProductViewController: UIViewController {
                     image: UIImage(systemName: "shippingbox.fill")
                 )
                 cell.productImage.tintColor = .gray
-        
+                
+                cell.accessibilityIdentifier = "productCell-\(product.id)"
+                
                 cell.loadImage(from: product.thumbnail)
                 
             }
@@ -129,7 +132,7 @@ extension ProductViewController: UITableViewDelegate {
                 let editAction = UIAction(
                     title: "Edit",
                     image: UIImage(systemName: "pencil"),
-                    identifier: UIAction.Identifier("edit"),
+                    identifier: UIAction.Identifier("Edit"),
                     handler: {
                         [weak self] _ in
                         guard let self = self else { return }
@@ -142,7 +145,8 @@ extension ProductViewController: UITableViewDelegate {
                 let deleteAction = UIAction(
                     title: "Delete",
                     image: UIImage(systemName: "trash"),
-                    identifier: UIAction.Identifier("delete"),
+                    identifier: UIAction.Identifier("Delete"),
+                    
                     attributes: .destructive,
                     handler: {
                         [weak self] _ in

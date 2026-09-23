@@ -14,10 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 
-        // cleaning the session for UI Testing
-        if CommandLine.arguments.contains("--uitesting") {
-            UserSessionService.shared.clear()
-        }
+        uiTestingCommands()
     
         if UserSessionService.shared.isLoggedIn {
             switchToMain()
@@ -58,6 +55,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         } else {
             window.rootViewController = viewController
+        }
+    }
+    
+    fileprivate func uiTestingCommands() {
+        // cleaning the session for UI Testing
+        if CommandLine.arguments.contains("--uitesting") {
+            UserSessionService.shared.clear()
         }
     }
 }

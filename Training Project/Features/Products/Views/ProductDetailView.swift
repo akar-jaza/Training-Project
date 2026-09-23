@@ -20,6 +20,7 @@ final class ProductDetailView: UIView, ViewCode {
         let label = UILabel()
         label.font = .systemFont(ofSize: 24, weight: .bold)
         label.numberOfLines = 2
+        label.accessibilityIdentifier = "productDetailTitle"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

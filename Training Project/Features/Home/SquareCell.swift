@@ -84,10 +84,13 @@ final class SquareCell: UICollectionViewCell, ViewCode {
         switch indexPath.item {
         case 0:
             backgroundImageView.image = UIImage(named: "productsBackground")
+            cellActionButton.accessibilityIdentifier = "productButtonCell"
         case 1:
             backgroundImageView.image = UIImage(named: "rxswiftLogo")
+            cellActionButton.accessibilityIdentifier = "rxSwiftButtonCell"
         case 2:
             backgroundImageView.image = UIImage(named: "recipesBackground")
+            cellActionButton.accessibilityIdentifier = "recipesButtonCell"
             cellActionButton.titleLabel?.textColor = .black
         default:
             cellActionButton.backgroundColor = .gray
