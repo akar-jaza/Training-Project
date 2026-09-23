@@ -36,6 +36,8 @@ final class ProductFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "productFormSheet"
+
         viewModel.delegate = self
 
         configureForMode()
@@ -63,6 +65,7 @@ final class ProductFormViewController: UIViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .add, target: self, action: #selector(saveTapped)
             )
+            navigationItem.rightBarButtonItem?.accessibilityIdentifier = "createProductButton"
             
         case .edit(let product):
             title = "Edit Product"

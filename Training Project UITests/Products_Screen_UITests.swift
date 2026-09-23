@@ -50,4 +50,36 @@ final class Products_Screen_UITests: XCTestCase {
         
         XCTAssertTrue(productCell.waitForNonExistence(timeout: 5))
     }
+    
+    func testUserCanCreateProduct() {
+        app.launch()
+        openProducts()
+        
+        let openFormButton = app.buttons["OpenCreateProductFormButton"]
+        openFormButton.press(forDuration: 0.50)
+        XCTAssertTrue(openFormButton.waitForExistence(timeout: 3))
+        
+        let formSheet = app.otherElements["productFormSheet"]
+        XCTAssertTrue(formSheet.waitForExistence(timeout: 3))
+        
+        let titleFormField = app.textFields["titleFormField"]
+        let descriptionFormField = app.textFields["descriptionFormField"]
+        let priceFormField = app.textFields["priceFormField"]
+        
+        titleFormField.tap()
+        titleFormField.typeText("Product 1")
+        
+        descriptionFormField.tap()
+        descriptionFormField.typeText("Descrption")
+        
+        priceFormField.tap()
+        priceFormField.typeText("1213")
+        
+        let createProductButton = app.buttons["createProductButton"]
+        createProductButton.press(forDuration: 0.50)
+        
+        XCTAssertTrue(formSheet.waitForNonExistence(timeout: 3))
+    }
+    
+    
 }

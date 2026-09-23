@@ -20,7 +20,7 @@ final class ProductViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButton
         navigationItem.rightBarButtonItem?.style = .prominent
         navigationItem.rightBarButtonItem?.tintColor = AppColors.primaryColor
-        
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "OpenCreateProductFormButton"
     }
     
     override func loadView() {
