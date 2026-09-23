@@ -35,7 +35,9 @@ final class HomeViewController: UIViewController, ViewCode {
         navigationItem.leftBarButtonItem?.style = .plain
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.leftBarButtonItem?.hidesSharedBackground = true
-        
+
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "homeWelcomeLabel"
+
         navigationItem.backButtonTitle = "Home"
     }
 }

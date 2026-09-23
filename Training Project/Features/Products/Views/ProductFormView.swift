@@ -10,6 +10,8 @@ final class ProductFormView: UIView, ViewCode {
             attributes: [.foregroundColor: UIColor.gray])
         
         field.attributedPlaceholder = placeholder
+        field.accessibilityIdentifier = "titleFormField"
+        field.clearButtonMode = .always
         field.borderStyle = .roundedRect
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
@@ -22,7 +24,9 @@ final class ProductFormView: UIView, ViewCode {
             string: "Description",
             attributes: [.foregroundColor: UIColor.gray])
         
+        field.accessibilityIdentifier = "descriptionFormField"
         field.attributedPlaceholder = placeholder
+        field.clearButtonMode = .always
         field.borderStyle = .roundedRect
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
@@ -35,7 +39,9 @@ final class ProductFormView: UIView, ViewCode {
             string: "Price",
             attributes: [.foregroundColor: UIColor.gray])
         
+        field.accessibilityIdentifier = "priceFormField"
         field.attributedPlaceholder = placeholder
+        field.clearButtonMode = .always
         field.borderStyle = .roundedRect
         field.keyboardType = .decimalPad
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +79,7 @@ final class ProductFormView: UIView, ViewCode {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        
         buildViewCode()
     }
     

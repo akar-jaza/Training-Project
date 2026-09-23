@@ -27,6 +27,7 @@ final class LoginView: UIView, ViewCode {
         textField.leftView = paddingView
         textField.leftViewMode = .always
         
+        textField.accessibilityIdentifier = "usernameTextField"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -44,6 +45,7 @@ final class LoginView: UIView, ViewCode {
         textField.leftView = paddingView
         textField.leftViewMode = .always
         
+        textField.accessibilityIdentifier = "passwordTextField"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -56,6 +58,7 @@ final class LoginView: UIView, ViewCode {
         button.backgroundColor = .black
         button.layer.cornerRadius = 12
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        button.accessibilityIdentifier = "loginButton"
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -98,6 +101,7 @@ final class LoginView: UIView, ViewCode {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        accessibilityIdentifier = "loginScreen"
         
         buildViewCode()
     }
