@@ -76,6 +76,7 @@ final class ProductFormViewController: UIViewController {
                     saveTapped
                 )
             )
+            navigationItem.rightBarButtonItem?.accessibilityIdentifier = "updateProductButton"
             
             productFormView.titleField.text = product.title
             productFormView.descriptionField.text = product.description

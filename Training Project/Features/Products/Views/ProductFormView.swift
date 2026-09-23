@@ -11,6 +11,7 @@ final class ProductFormView: UIView, ViewCode {
         
         field.attributedPlaceholder = placeholder
         field.accessibilityIdentifier = "titleFormField"
+        field.clearButtonMode = .always
         field.borderStyle = .roundedRect
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
@@ -25,6 +26,7 @@ final class ProductFormView: UIView, ViewCode {
         
         field.accessibilityIdentifier = "descriptionFormField"
         field.attributedPlaceholder = placeholder
+        field.clearButtonMode = .always
         field.borderStyle = .roundedRect
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
@@ -39,6 +41,7 @@ final class ProductFormView: UIView, ViewCode {
         
         field.accessibilityIdentifier = "priceFormField"
         field.attributedPlaceholder = placeholder
+        field.clearButtonMode = .always
         field.borderStyle = .roundedRect
         field.keyboardType = .decimalPad
         field.translatesAutoresizingMaskIntoConstraints = false

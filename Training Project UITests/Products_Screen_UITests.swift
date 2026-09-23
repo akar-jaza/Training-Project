@@ -81,5 +81,51 @@ final class Products_Screen_UITests: XCTestCase {
         XCTAssertTrue(formSheet.waitForNonExistence(timeout: 3))
     }
     
-    
+
+    func testUserCanUpdateProduct() {
+        app.launch()
+        openProducts()
+        
+        let productCell = app.tables.cells["productCell-1"]
+        XCTAssertTrue(productCell.waitForExistence(timeout: 10))
+        
+        productCell.press(forDuration: 1.0)
+        
+        let editButton = app.buttons["Edit"]
+        editButton.press(forDuration: 1)
+        
+        let formSheet = app.otherElements["productFormSheet"]
+        XCTAssertTrue(formSheet.waitForExistence(timeout: 3))
+        
+        let titleFormField = app.textFields["titleFormField"]
+        let descriptionFormField = app.textFields["descriptionFormField"]
+        let priceFormField = app.textFields["priceFormField"]
+        
+        
+        let clearTitleFormField = titleFormField.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.94, dy: 0.5)
+        )
+        clearTitleFormField.tap()
+        titleFormField.typeText("New Product")
+
+        descriptionFormField.tap()
+        let clearDescriptionFormField = descriptionFormField.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.94, dy: 0.5)
+        )
+        clearDescriptionFormField.tap()
+        descriptionFormField.typeText("New Description")
+        
+        priceFormField.tap()
+        let clearPriceFormField = priceFormField.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.94, dy: 0.5)
+        )
+        clearPriceFormField.tap()
+        priceFormField.typeText("1234")
+
+        
+        let createProductButton = app.buttons["updateProductButton"]
+        createProductButton.press(forDuration: 0.50)
+        
+        XCTAssertTrue(formSheet.waitForNonExistence(timeout: 3))
+    }
 }
