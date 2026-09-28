@@ -46,7 +46,7 @@ final class ImageLoader {
         }
         
         networkService
-            .requestData(url: url, method: .get)
+            .requestData(url: url)
             .subscribe(
                 onNext: { [weak self] data in
                     guard let self = self else { return }

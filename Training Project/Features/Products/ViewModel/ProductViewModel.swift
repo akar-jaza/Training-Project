@@ -50,7 +50,7 @@ final class ProductViewModel {
     func deleteProduct(_ product: Product, at index: Int) {
         guard let url = URL(string: "https://dummyjson.com/products/\(product.id)") else { return }
         
-        networkService.requestData(url: url, method: .delete).subscribe(onNext: { [weak self] _ in
+        networkService.request(url: url, method: .delete).subscribe(onNext: { [weak self] (data: Data) in
             guard let self else {return}
             DispatchQueue.main.async {
                 guard self.currentProducts.indices.contains(index) else {
