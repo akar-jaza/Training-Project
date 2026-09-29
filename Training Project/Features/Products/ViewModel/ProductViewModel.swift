@@ -20,11 +20,20 @@ final class ProductViewModel {
     }
     
     weak var delegate: ProductsViewModelDelegate?
-    var networkService: NetworkServiceProtocol = NetworkService.shared
-    var cacheService: DataCacheServiceProtocol = DataCacheService.shared
+    private let networkService: NetworkServiceProtocol
+    private let cacheService: DataCacheServiceProtocol
+    
     var disposeBag = DisposeBag()
     
     private let cacheKey = "cached_products"
+    
+    init(
+        networkService: NetworkServiceProtocol = NetworkService.shared,
+        cacheService: DataCacheServiceProtocol = DataCacheService.shared
+    ) {
+        self.networkService = networkService
+        self.cacheService = cacheService
+    }
     
     func fetchProducts() {
         if let cached = cacheService.load([Product].self, forKey: cacheKey) {
@@ -50,7 +59,9 @@ final class ProductViewModel {
     func deleteProduct(_ product: Product, at index: Int) {
         guard let url = URL(string: "https://dummyjson.com/products/\(product.id)") else { return }
         
-        networkService.request(url: url, method: .delete).subscribe(onNext: { [weak self] (data: Data) in
+        networkService
+            .requestData(url: url, method: .delete)
+            .subscribe(onNext: { [weak self] _ in
             guard let self else {return}
             DispatchQueue.main.async {
                 guard self.currentProducts.indices.contains(index) else {
@@ -62,7 +73,7 @@ final class ProductViewModel {
                 self.cacheService.save(updatedProducts, forKey: self.cacheKey)
             }
         }, onError: { [weak self] error in
-            guard let self else {return}
+            guard let self else { return }
             DispatchQueue.main.async {
                 self.delegate?.didErrorOccurr(error: error)
             }
