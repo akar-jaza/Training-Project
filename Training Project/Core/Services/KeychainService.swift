@@ -1,6 +1,12 @@
 import Foundation
 import Security
 
+protocol KeychainServiceProtocol {
+    func save(_ data: Data, forKey key: String)
+    func get(forKey key: String) -> Data?
+    func delete(forKey key: String)
+}
+
 final class KeychainService {
   // I just added these comments to make it easier to understand keychain service.
     static let shared = KeychainService()

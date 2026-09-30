@@ -15,13 +15,26 @@ final class ProfileViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var profileImage: UIImage?
     
-    private let cacheService: DataCacheServiceProtocol = DataCacheService.shared
-    private let networkService: NetworkService = NetworkService.shared
+//    private let cacheService: DataCacheServiceProtocol = DataCacheService.shared
+//    private let networkService: NetworkService = NetworkService.shared
+    
+    private var cacheService: DataCacheServiceProtocol
+    private var networkService: NetworkServiceProtocol
+    let localUser: UserSessionServiceProtocol
+    
+    init(
+        networkService: NetworkServiceProtocol = NetworkService.shared,
+        cacheService: DataCacheServiceProtocol = DataCacheService.shared,
+        localUser: UserSessionServiceProtocol = UserSessionService.shared
+    ) {
+        self.networkService = networkService
+        self.cacheService = cacheService
+        self.localUser = localUser
+    }
     
     
     func loadProfile() async {
-        let localUser = UserSessionService.shared.getCurrentUser()
-        //        user = localUser
+        let localUser = localUser.getCurrentUser()
         
         guard let localUser,
               let url = URL(string: "https://dummyjson.com/users/\(localUser.id)") else {

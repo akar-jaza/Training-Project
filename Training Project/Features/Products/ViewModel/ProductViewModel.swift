@@ -62,22 +62,19 @@ final class ProductViewModel {
         networkService
             .requestData(url: url, method: .delete)
             .subscribe(onNext: { [weak self] _ in
-            guard let self else {return}
-            DispatchQueue.main.async {
-                guard self.currentProducts.indices.contains(index) else {
-                    return
-                }
+                guard let self else { return }
+                guard self.currentProducts.indices.contains(index) else { return }
+                
                 var updatedProducts = self.productsRelay.value
                 updatedProducts.remove(at: index)
                 self.productsRelay.accept(updatedProducts)
                 self.cacheService.save(updatedProducts, forKey: self.cacheKey)
-            }
-        }, onError: { [weak self] error in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.delegate?.didErrorOccurr(error: error)
-            }
-        }).disposed(by: disposeBag)
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    self.delegate?.didErrorOccurr(error: error)
+                }
+            }).disposed(by: disposeBag)
     }
     
     func addProduct(_ product: Product) {
