@@ -4,6 +4,7 @@ import Foundation
 final class MockDataCacheService: DataCacheServiceProtocol {
     
     private var storage: [String: Any] = [:]
+    private(set) var lastLoadedKey: String?
     
     func save<T: Encodable>(_ value: T, forKey key: String) {
         storage[key] = value
@@ -18,6 +19,7 @@ final class MockDataCacheService: DataCacheServiceProtocol {
     }
     
     func loadData(forKey key: String) -> Data? {
-        storage[key] as? Data
+        lastLoadedKey = key
+        return storage[key] as? Data
     }
 }
