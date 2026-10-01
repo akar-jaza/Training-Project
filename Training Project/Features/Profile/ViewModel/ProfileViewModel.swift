@@ -15,12 +15,26 @@ final class ProfileViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var profileImage: UIImage?
     
-    private let cacheService: DataCacheServiceProtocol = DataCacheService.shared
-
+//    private let cacheService: DataCacheServiceProtocol = DataCacheService.shared
+//    private let networkService: NetworkService = NetworkService.shared
+    
+    private var cacheService: DataCacheServiceProtocol
+    private var networkService: NetworkServiceProtocol
+    let localUser: UserSessionServiceProtocol
+    
+    init(
+        networkService: NetworkServiceProtocol = NetworkService.shared,
+        cacheService: DataCacheServiceProtocol = DataCacheService.shared,
+        localUser: UserSessionServiceProtocol = UserSessionService.shared
+    ) {
+        self.networkService = networkService
+        self.cacheService = cacheService
+        self.localUser = localUser
+    }
+    
     
     func loadProfile() async {
-        let localUser = UserSessionService.shared.getCurrentUser()
-//        user = localUser
+        let localUser = localUser.getCurrentUser()
         
         guard let localUser,
               let url = URL(string: "https://dummyjson.com/users/\(localUser.id)") else {
@@ -31,24 +45,24 @@ final class ProfileViewModel: ObservableObject {
         defer { isLoading = false }
         
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let details = try JSONDecoder().decode(Profile.self, from: data)
+            let details: Profile = try await networkService.requestAsync(url: url, method: .get)
+            
             profile = details
             await loadProfileImage(from: details.image)
-
-//            profile = Profile(
-//                id: details.id,
-//                username: details.username,
-//                email: details.email,
-//                firstName: details.firstName,
-//                lastName: details.lastName,
-//                gender: details.gender,
-//                image: details.image,
-//                bloodGroup: details.bloodGroup,
-//                height: details.height,
-//                weight: details.weight,
-//                eyeColor: details.eyeColor,
-//            )
+            
+            //            profile = Profile(
+            //                id: details.id,
+            //                username: details.username,
+            //                email: details.email,
+            //                firstName: details.firstName,
+            //                lastName: details.lastName,
+            //                gender: details.gender,
+            //                image: details.image,
+            //                bloodGroup: details.bloodGroup,
+            //                height: details.height,
+            //                weight: details.weight,
+            //                eyeColor: details.eyeColor,
+            //            )
         }
         catch {
             print("Couldn't refresh profile: \(error)")
@@ -68,7 +82,8 @@ final class ProfileViewModel: ObservableObject {
         guard let url = URL(string: urlString) else { return }
         
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let data = try await networkService.requestDataAsync(url: url)
             guard let image = UIImage(data: data) else { return }
             
             profileImage = image
@@ -88,5 +103,5 @@ final class ProfileViewModel: ObservableObject {
             .replacingOccurrences(of: "/", with: "_")
             .replacingOccurrences(of: ":", with: "_")
     }
-
+    
 }

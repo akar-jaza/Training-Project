@@ -5,6 +5,7 @@ protocol HomeCoordinatorProtocol: AnyObject {
     func showRxSwiftPage()
     func showRecipesScreen()
     func showLoginScreen()
+    func showPermissionsScreen()
 }
 
 
@@ -14,7 +15,8 @@ final class HomeCoordinator: Coordinator {
     private var recipeCoordinator: RecipeCoordinator?
     private var rxSwiftCoordinator: RxSwiftCoordinator?
     private var productsCoordinator: ProductCoordinator?
-
+    private var permissionsCoordinator: PermissionsCoordinator?
+    
     init(navigationController: UINavigationController, appCoordinator: AppCoordinator) {
         self.navigationController = navigationController
         self.appCoordinator = appCoordinator
@@ -58,5 +60,13 @@ extension HomeCoordinator: HomeCoordinatorProtocol {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = scene.delegate as? SceneDelegate else { return }
         sceneDelegate.switchToLogin()
+    }
+    
+    func showPermissionsScreen() {
+        let coordinator = PermissionsCoordinator(
+            navigationController: navigationController
+        )
+        self.permissionsCoordinator = coordinator
+        coordinator.start()
     }
 }

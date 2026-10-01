@@ -64,6 +64,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
                 self.coordinator?.showRxSwiftPage()
             case "Recipes":
                 self.coordinator?.showRecipesScreen()
+            case "Permissions":
+                self.coordinator?.showPermissionsScreen()
             default: break
             }
         }

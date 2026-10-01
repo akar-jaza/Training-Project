@@ -9,7 +9,12 @@ protocol LoginViewModelDelegate: AnyObject {
 final class LoginViewModel {
     
     weak var delegate: LoginViewModelDelegate?
-    var networkService: NetworkServiceProtocol = NetworkService.shared
+    private let networkService: NetworkServiceProtocol
+
+    init(networkService: NetworkServiceProtocol = NetworkService.shared) {
+        self.networkService = networkService
+    }
+    
     var disposeBag = DisposeBag()
     
     func authenticateUser(username: String, password: String) {

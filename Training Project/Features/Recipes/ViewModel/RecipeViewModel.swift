@@ -2,32 +2,17 @@ import Foundation
 import RxSwift
 
 final class RecipeViewModel {
-    var networkService: NetworkServiceProtocol = NetworkService.shared
-    var disposeBag = DisposeBag()
+    var networkService: NetworkServiceProtocol    
+    var cacheService: DataCacheServiceProtocol
     
-//    let items = PublishSubject<[Recipe]>()
+    init(
+        networkService: NetworkServiceProtocol = NetworkService.shared,
+        cacheService: DataCacheServiceProtocol = DataCacheService.shared
+    ) {
+        self.networkService = networkService
+        self.cacheService = cacheService
+    }
     
-    // We didn't nead this part anymore, I still keep it here for reference
-//    func fetchRecipes() {
-//        guard let url = URL(string: "https://dummyjson.com/recipes") else { return }
-//        
-//        URLSession.shared.dataTask(with: url) { data, _, error in
-//            guard let data = data, error == nil else { return }
-//            
-//            
-//            do {
-//                let decoded  = try JSONDecoder().decode(RecipesResponse.self, from: data)
-//                DispatchQueue.main.async {
-//                    self.items.onNext(decoded.recipes)
-//                }
-//            } catch {
-//                print("Decode error:", error)
-//            }
-//            
-//        }.resume()
-//    }
-    
-    var cacheService: DataCacheServiceProtocol = DataCacheService.shared
     private let cacheKey = "cached_recipes"
 
     

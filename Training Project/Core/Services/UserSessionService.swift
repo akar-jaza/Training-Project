@@ -37,6 +37,4 @@ final class UserSessionService: UserSessionServiceProtocol {
     func clear() {
         keychain.delete(forKey: userKey) // deletes data from keychain
     }
-
-    
 }

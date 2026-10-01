@@ -12,6 +12,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1FCC488E306BAB40007B7516 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F8FB72F30420798002E631D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F8FB73630420798002E631D;
+			remoteInfo = "Training Project";
+		};
 		1FE5DA353062C003005272E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1F8FB72F30420798002E631D /* Project object */;
@@ -23,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		1F8FB73730420798002E631D /* Training Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Training Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FCC488A306BAB40007B7516 /* Training Project Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Training Project Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE5DA313062C003005272E1 /* Training Project UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Training Project UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -45,6 +53,11 @@
 			path = "Training Project";
 			sourceTree = "<group>";
 		};
+		1FCC488B306BAB40007B7516 /* Training Project Unit Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Training Project Unit Tests";
+			sourceTree = "<group>";
+		};
 		1FE5DA323062C003005272E1 /* Training Project UITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Training Project UITests";
@@ -59,6 +72,13 @@
 			files = (
 				1F74BCFA304F48C20045C966 /* RxSwift in Frameworks */,
 				1F74BCF8304F48C20045C966 /* RxCocoa in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCC4887306BAB40007B7516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +97,7 @@
 			children = (
 				1F8FB73930420798002E631D /* Training Project */,
 				1FE5DA323062C003005272E1 /* Training Project UITests */,
+				1FCC488B306BAB40007B7516 /* Training Project Unit Tests */,
 				1F8FB73830420798002E631D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,6 +107,7 @@
 			children = (
 				1F8FB73730420798002E631D /* Training Project.app */,
 				1FE5DA313062C003005272E1 /* Training Project UITests.xctest */,
+				1FCC488A306BAB40007B7516 /* Training Project Unit Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +138,29 @@
 			productName = "Training Project";
 			productReference = 1F8FB73730420798002E631D /* Training Project.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1FCC4889306BAB40007B7516 /* Training Project Unit Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FCC4892306BAB40007B7516 /* Build configuration list for PBXNativeTarget "Training Project Unit Tests" */;
+			buildPhases = (
+				1FCC4886306BAB40007B7516 /* Sources */,
+				1FCC4887306BAB40007B7516 /* Frameworks */,
+				1FCC4888306BAB40007B7516 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FCC488F306BAB40007B7516 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1FCC488B306BAB40007B7516 /* Training Project Unit Tests */,
+			);
+			name = "Training Project Unit Tests";
+			packageProductDependencies = (
+			);
+			productName = "Training Project Unit Tests";
+			productReference = 1FCC488A306BAB40007B7516 /* Training Project Unit Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		1FE5DA303062C003005272E1 /* Training Project UITests */ = {
 			isa = PBXNativeTarget;
@@ -153,6 +198,10 @@
 					1F8FB73630420798002E631D = {
 						CreatedOnToolsVersion = 26.6;
 					};
+					1FCC4889306BAB40007B7516 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 1F8FB73630420798002E631D;
+					};
 					1FE5DA303062C003005272E1 = {
 						CreatedOnToolsVersion = 27.0;
 						TestTargetID = 1F8FB73630420798002E631D;
@@ -178,12 +227,20 @@
 			targets = (
 				1F8FB73630420798002E631D /* Training Project */,
 				1FE5DA303062C003005272E1 /* Training Project UITests */,
+				1FCC4889306BAB40007B7516 /* Training Project Unit Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1F8FB73530420798002E631D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCC4888306BAB40007B7516 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -207,6 +264,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1FCC4886306BAB40007B7516 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1FE5DA2D3062C003005272E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +281,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1FCC488F306BAB40007B7516 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F8FB73630420798002E631D /* Training Project */;
+			targetProxy = 1FCC488E306BAB40007B7516 /* PBXContainerItemProxy */;
+		};
 		1FE5DA363062C003005272E1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1F8FB73630420798002E631D /* Training Project */;
@@ -235,6 +304,7 @@
 				DEVELOPMENT_TEAM = 8M94F2WL46;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Training Project/Resources/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to provide location-based features.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -265,6 +335,7 @@
 				DEVELOPMENT_TEAM = 8M94F2WL46;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Training Project/Resources/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to provide location-based features.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -404,6 +475,50 @@
 			};
 			name = Release;
 		};
+		1FCC4890306BAB40007B7516 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8M94F2WL46;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akarApplications.Training-Project-Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Training Project.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Training Project";
+			};
+			name = Debug;
+		};
+		1FCC4891306BAB40007B7516 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8M94F2WL46;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akarApplications.Training-Project-Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Training Project.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Training Project";
+			};
+			name = Release;
+		};
 		1FE5DA383062C003005272E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -463,6 +578,15 @@
 			buildConfigurations = (
 				1F8FB74B3042079A002E631D /* Debug */,
 				1F8FB74C3042079A002E631D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FCC4892306BAB40007B7516 /* Build configuration list for PBXNativeTarget "Training Project Unit Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FCC4890306BAB40007B7516 /* Debug */,
+				1FCC4891306BAB40007B7516 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
