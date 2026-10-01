@@ -6,7 +6,7 @@ final class HomeViewController: UIViewController, ViewCode {
     let uiCollectionViewFlowLayout = UICollectionViewFlowLayout()
     let itemsPerRow: CGFloat = 2
     let spacing: CGFloat = 10
-    let buttonTitles = ["Products", "RxSwift", "Recipes", "Item 4"]
+    let buttonTitles = ["Products", "RxSwift", "Recipes", "Permissions"]
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: uiCollectionViewFlowLayout)
@@ -14,32 +14,16 @@ final class HomeViewController: UIViewController, ViewCode {
         return cv
     }()
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        label.text = "Home"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupNavigationBarItem()
+        title = "Home"
         
         buildViewCode()
     }
     
-    private func setupNavigationBarItem() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
-        navigationItem.leftBarButtonItem?.style = .plain
-        navigationItem.leftBarButtonItem?.tintColor = .black
-        navigationItem.leftBarButtonItem?.hidesSharedBackground = true
 
-        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "homeWelcomeLabel"
-
-        navigationItem.backButtonTitle = "Home"
-    }
 }
 
 // MARK: - Action Buttons

@@ -91,7 +91,9 @@ final class SquareCell: UICollectionViewCell, ViewCode {
         case 2:
             backgroundImageView.image = UIImage(named: "recipesBackground")
             cellActionButton.accessibilityIdentifier = "recipesButtonCell"
-            cellActionButton.titleLabel?.textColor = .black
+        case 3:
+            backgroundImageView.image = UIImage(named: "permissions_background")
+            cellActionButton.accessibilityIdentifier = "permissionsButtonCell"
         default:
             cellActionButton.backgroundColor = .gray
         }

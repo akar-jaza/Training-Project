@@ -5,6 +5,7 @@ import RxSwift
 final class MockNetworkService: NetworkServiceProtocol {
     var result: Result<Any, Error> = .failure(NetworkError.noData)
     var imageResult: Result<Data, Error> = .failure(NetworkError.noData)
+    
     private(set) var lastRequestedURL: URL?
     
     func requestAsync<T>(url: URL, method: Training_Project.HTTPMethod, body: [String : Any]?) async throws -> T where T : Decodable {
