@@ -62,20 +62,27 @@ enum PermissionType: String {
 }
 
 struct PermissionsView: View {
-    @State private var showLocationSheet = false
-    @StateObject private var viewModel =
+    @StateObject var locationViewModel =
     LocationPermissionViewModel()
+    
+    @StateObject var notificationViewModel =
+    NotificationPermissionViewModel()
+    
+    @State private var showLocationSheet = false
+    
+    @State private var showNotificationSheet = false
+    
     
     var permissions: [PermissionItem] {
         [
             PermissionItem(
                 type: .location,
-                isEnabled: viewModel.isEnabled
+                isEnabled: locationViewModel.isEnabled
             ),
             
             PermissionItem(
                 type: .notifications,
-                isEnabled: false
+                isEnabled: notificationViewModel.isEnabled
             ),
             
             PermissionItem(
@@ -112,18 +119,30 @@ struct PermissionsView: View {
                     PermissionRow(permission: permission)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            if permission.type.rawValue == PermissionType.location.rawValue {
+                            switch permission.type {
+                            case .location:
                                 showLocationSheet = true
+                            case .notifications:
+                                showNotificationSheet = true
+                            default:
+                                break
                             }
                         }
                 }
-                .listStyle(.insetGrouped)
-                .navigationTitle("Permissions")
             }
-        }
-        .sheet(isPresented: $showLocationSheet) {
-            LocationPermissionSheetView(viewModel: viewModel)
-                .presentationDetents([.medium])
+            .listStyle(.insetGrouped)
+            .navigationTitle("Permissions")
+            .sheet(isPresented: $showLocationSheet) {
+                LocationPermissionSheetView(viewModel: locationViewModel)
+                    .presentationDetents([.medium])
+            }
+            .sheet(isPresented: $showNotificationSheet) {
+                NotificationPermissionSheetView(viewModel: notificationViewModel)
+                    .presentationDetents([.medium])
+            }
+            .task {
+                await notificationViewModel.refreshStatus()
+            }
         }
     }
     

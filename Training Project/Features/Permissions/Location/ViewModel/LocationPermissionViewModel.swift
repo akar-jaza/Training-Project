@@ -54,8 +54,8 @@ final class LocationPermissionViewModel:
     
     // Called when iOS tells LocationService that the location permission has changed.
     nonisolated func locationServiceDidChangeAuthorization() {
-        
-        Task { @MainActor [weak self] in
+        Task {
+            @MainActor [weak self] in
             self?.refreshStatus()
         }
     }
