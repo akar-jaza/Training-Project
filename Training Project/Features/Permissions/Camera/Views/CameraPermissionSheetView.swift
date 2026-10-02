@@ -136,7 +136,7 @@ struct CameraPermissionSheetView: View {
                     Button {
                         viewModel.toggleCameraPosition()
                     } label: {
-                        Image(systemName: "arrow.trianglehead")
+                        Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
                             .font(.headline)
                             .foregroundStyle(.white)
                             .padding(12)
