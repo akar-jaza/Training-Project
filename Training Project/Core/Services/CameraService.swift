@@ -86,7 +86,7 @@ final class CameraService {
         } catch {
             print(
                 "Camera configuration error:",
-                error.localizedDescription
+                error
             )
         }
     }
@@ -136,7 +136,7 @@ final class CameraService {
             } catch {
                 print(
                     "Failed to switch camera:",
-                    error.localizedDescription
+                    error
                 )
             }
         }
