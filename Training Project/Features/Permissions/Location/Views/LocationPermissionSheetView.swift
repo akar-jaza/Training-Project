@@ -50,6 +50,7 @@ struct LocationPermissionSheetView: View {
                 
                 Button {
                     viewModel.enableLocation()
+                    print(viewModel.enableLocation())
                 } label: {
                     
                     Text("Enable Location")

@@ -1,5 +1,10 @@
 import SwiftUI
 
+// MARK: Xalla Makwan
+// Live camera preview needs a real iPhone.
+// The Simulator will just show a bright white screen, Just like your future, bright, successful, and way less pixelated, inshallah.
+// One day he’ll look back at this comment and laugh, right after he hired me.
+
 enum PermissionType: String {
     
     case location = "Location Services"
@@ -68,9 +73,16 @@ struct PermissionsView: View {
     @StateObject var notificationViewModel =
     NotificationPermissionViewModel()
     
+    @StateObject private var cameraViewModel =
+    CameraPermissionViewModel()
+    
+    @State private var showCameraSheet = false
+    
     @State private var showLocationSheet = false
     
     @State private var showNotificationSheet = false
+    
+    @State private var showPhotoPickerSheet = false
     
     
     var permissions: [PermissionItem] {
@@ -87,7 +99,7 @@ struct PermissionsView: View {
             
             PermissionItem(
                 type: .camera,
-                isEnabled: false
+                isEnabled: cameraViewModel.isEnabled
             ),
             
             PermissionItem(
@@ -97,7 +109,7 @@ struct PermissionsView: View {
             
             PermissionItem(
                 type: .photos,
-                isEnabled: false
+                isEnabled: true
             ),
             
             PermissionItem(
@@ -124,6 +136,10 @@ struct PermissionsView: View {
                                 showLocationSheet = true
                             case .notifications:
                                 showNotificationSheet = true
+                            case .photos:
+                                showPhotoPickerSheet = true
+                            case .camera:
+                                showCameraSheet = true
                             default:
                                 break
                             }
@@ -140,7 +156,18 @@ struct PermissionsView: View {
                 NotificationPermissionSheetView(viewModel: notificationViewModel)
                     .presentationDetents([.medium])
             }
+            .sheet(isPresented: $showPhotoPickerSheet) {
+                PhotosSheetView()
+                    .presentationDetents([.medium, .large])
+            }
+            .sheet(isPresented: $showCameraSheet) {
+                CameraPermissionSheetView(
+                    viewModel: cameraViewModel
+                )
+                .presentationDetents([.medium, .large])
+            }
             .task {
+                cameraViewModel.refreshStatus()
                 await notificationViewModel.refreshStatus()
             }
         }
@@ -183,3 +210,6 @@ struct PermissionsView: View {
     }
 }
 
+#Preview {
+    PermissionsView()
+}
