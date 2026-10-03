@@ -304,6 +304,7 @@
 				DEVELOPMENT_TEAM = 8M94F2WL46;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Training Project/Resources/Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs Bluetooth access to scan for and connect to nearby devices.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to take photos to add to our app.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to provide location-based features.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to access your photos to add them to our app.";
@@ -337,6 +338,7 @@
 				DEVELOPMENT_TEAM = 8M94F2WL46;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Training Project/Resources/Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs Bluetooth access to scan for and connect to nearby devices.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to take photos to add to our app.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to provide location-based features.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to access your photos to add them to our app.";

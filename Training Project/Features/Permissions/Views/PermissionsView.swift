@@ -76,13 +76,13 @@ struct PermissionsView: View {
     @StateObject private var cameraViewModel =
     CameraPermissionViewModel()
     
+    @StateObject private var bleManager = BLEManager()
+    
     @State private var showCameraSheet = false
-    
     @State private var showLocationSheet = false
-    
     @State private var showNotificationSheet = false
-    
     @State private var showPhotoPickerSheet = false
+    @State private var showBluetoothSheet = false
     
     
     var permissions: [PermissionItem] {
@@ -114,7 +114,7 @@ struct PermissionsView: View {
             
             PermissionItem(
                 type: .bluetooth,
-                isEnabled: false
+                isEnabled: bleManager.isSwitchedon
             ),
             
             PermissionItem(
@@ -136,10 +136,12 @@ struct PermissionsView: View {
                                 showLocationSheet = true
                             case .notifications:
                                 showNotificationSheet = true
-                            case .photos:
-                                showPhotoPickerSheet = true
                             case .camera:
                                 showCameraSheet = true
+                            case .photos:
+                                showPhotoPickerSheet = true
+                            case .bluetooth:
+                                showBluetoothSheet = true
                             default:
                                 break
                             }
@@ -166,10 +168,16 @@ struct PermissionsView: View {
                 )
                 .presentationDetents([.medium, .large])
             }
+            .sheet(isPresented: $showBluetoothSheet) {
+                BluetoothDevicesView()
+                .presentationDetents([.large])
+            }
             .task {
                 cameraViewModel.refreshStatus()
+                bleManager.refreshStatus()
                 await notificationViewModel.refreshStatus()
             }
+            
         }
     }
     
