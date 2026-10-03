@@ -306,6 +306,7 @@
 				INFOPLIST_FILE = "Training Project/Resources/Info.plist";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs Bluetooth access to scan for and connect to nearby devices.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to take photos to add to our app.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to securely unlock the login screen and protect your account.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to provide location-based features.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to access your photos to add them to our app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -340,6 +341,7 @@
 				INFOPLIST_FILE = "Training Project/Resources/Info.plist";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs Bluetooth access to scan for and connect to nearby devices.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to take photos to add to our app.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to securely unlock the login screen and protect your account.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to provide location-based features.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to access your photos to add them to our app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

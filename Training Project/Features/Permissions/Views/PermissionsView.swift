@@ -78,12 +78,15 @@ struct PermissionsView: View {
     
     @StateObject private var bleManager = BLEManager()
     
+    @StateObject private var faceIDViewModel = FaceIDViewModel()
+    
+    
     @State private var showCameraSheet = false
     @State private var showLocationSheet = false
     @State private var showNotificationSheet = false
     @State private var showPhotoPickerSheet = false
     @State private var showBluetoothSheet = false
-    
+    @State private var showFaceIDSheet = false
     
     var permissions: [PermissionItem] {
         [
@@ -103,11 +106,6 @@ struct PermissionsView: View {
             ),
             
             PermissionItem(
-                type: .microphone,
-                isEnabled: false
-            ),
-            
-            PermissionItem(
                 type: .photos,
                 isEnabled: true
             ),
@@ -119,8 +117,15 @@ struct PermissionsView: View {
             
             PermissionItem(
                 type: .faceID,
+                isEnabled: faceIDViewModel.isEnrolled
+            ),
+            
+            PermissionItem(
+                type: .microphone,
                 isEnabled: false
-            )
+            ),
+            
+            
         ]
     }
     
@@ -142,6 +147,8 @@ struct PermissionsView: View {
                                 showPhotoPickerSheet = true
                             case .bluetooth:
                                 showBluetoothSheet = true
+                            case .faceID:
+                                showFaceIDSheet = true
                             default:
                                 break
                             }
@@ -170,12 +177,18 @@ struct PermissionsView: View {
                 .presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $showBluetoothSheet) {
-                BluetoothDevicesView()
+                BluetoothDevicesView(bleManager: bleManager)
                     .presentationDetents([.medium, .large])
             }
+            .sheet(isPresented: $showFaceIDSheet) {
+                FaceIDVideoSheetView()
+                    .presentationDetents([.medium, .large])
+            }
+            
             .task {
                 cameraViewModel.refreshStatus()
                 bleManager.refreshStatus()
+                faceIDViewModel.refreshStatus()
                 await notificationViewModel.refreshStatus()
             }
             
@@ -200,19 +213,30 @@ struct PermissionsView: View {
                 
                 Spacer()
                 
-                Text(permission.isEnabled ? "Enabled" : "Disabled")
-                    .font(.caption)
-                    .foregroundStyle(
-                        permission.isEnabled ? .blue : .red
-                    )
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(
-                        permission.isEnabled
-                        ? Color.blue.opacity(0.10)
-                        : Color.red.opacity(0.10)
-                    )
-                    .clipShape(Capsule())
+                Text(
+                    permission.type == .microphone
+                    ? "Soon"
+                    : permission.type == .faceID
+                    ? (permission.isEnabled ? "Enrolled" : "Unenrolled")
+                    : (permission.isEnabled ? "Enabled" : "Disabled")
+                )
+                .font(.caption)
+                .foregroundStyle(
+                    permission.type == .microphone
+                    ? .orange
+                    : (permission.isEnabled ? .blue : .red)
+                )
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    permission.type == .microphone
+                    ? Color.orange.opacity(0.10)
+                    : (permission.isEnabled
+                       ? Color.blue.opacity(0.10)
+                       : Color.red.opacity(0.10)
+                      )
+                )
+                .clipShape(Capsule())
             }
             .padding(.vertical, 6)
         }

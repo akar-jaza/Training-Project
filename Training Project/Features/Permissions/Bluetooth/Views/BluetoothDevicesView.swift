@@ -3,7 +3,7 @@ import SwiftUI
 import CoreBluetooth
 
 struct BluetoothDevicesView: View {
-    @StateObject var bleManager = BLEManager()
+    @ObservedObject var bleManager: BLEManager
     
     var body: some View {
         NavigationStack {
