@@ -148,6 +148,7 @@ struct PermissionsView: View {
                         }
                 }
             }
+            .padding(.top, 15)
             .listStyle(.insetGrouped)
             .navigationTitle("Permissions")
             .sheet(isPresented: $showLocationSheet) {
@@ -170,7 +171,7 @@ struct PermissionsView: View {
             }
             .sheet(isPresented: $showBluetoothSheet) {
                 BluetoothDevicesView()
-                .presentationDetents([.large])
+                    .presentationDetents([.medium, .large])
             }
             .task {
                 cameraViewModel.refreshStatus()
