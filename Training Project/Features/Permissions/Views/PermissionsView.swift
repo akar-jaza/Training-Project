@@ -155,7 +155,6 @@ struct PermissionsView: View {
                         }
                 }
             }
-            .padding(.top, 15)
             .listStyle(.insetGrouped)
             .navigationTitle("Permissions")
             .sheet(isPresented: $showLocationSheet) {

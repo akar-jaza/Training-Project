@@ -32,7 +32,7 @@ final class FaceIDViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-
+            
             let success =
                 try await faceIDService.authenticate()
 
@@ -41,7 +41,6 @@ final class FaceIDViewModel: ObservableObject {
             }
 
         } catch {
-
             errorMessage = error.localizedDescription
         }
     }

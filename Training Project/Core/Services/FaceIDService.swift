@@ -17,7 +17,7 @@ final class FaceIDService {
         var error: NSError?
 
         guard context.canEvaluatePolicy(
-            .deviceOwnerAuthenticationWithBiometrics, // tells iOS to authenticate using enrolled biometrics. On a Face ID iPhone, that's Face ID.
+            .deviceOwnerAuthenticationWithBiometrics, // It tells iOS to authenticate using enrolled biometrics. On a Face ID iPhone, that's Face ID.
             error: &error
         ) else {
             throw error ?? LAError(
