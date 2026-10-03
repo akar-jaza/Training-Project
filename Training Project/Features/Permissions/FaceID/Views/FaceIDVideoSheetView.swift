@@ -80,7 +80,7 @@ struct FaceIDVideoSheetView: View {
             }
             
             Spacer()
-            
+  
             Button("Done") {
                 dismiss()
             }
