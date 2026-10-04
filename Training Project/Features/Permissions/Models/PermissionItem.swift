@@ -1,7 +1,7 @@
 import Foundation
 
 struct PermissionItem: Identifiable {
-    let id = UUID()
+    var id: PermissionType { type }
     let type: PermissionType
     let isEnabled: Bool
 }

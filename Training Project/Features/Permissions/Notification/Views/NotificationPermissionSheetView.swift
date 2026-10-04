@@ -1,59 +1,70 @@
 import SwiftUI
 
-struct LocationPermissionSheetView: View {
-    
-    @ObservedObject var viewModel: LocationPermissionViewModel
-    
-    @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.dismiss) private var dismiss
-    
+struct NotificationPermissionSheetView: View {
+
+    @ObservedObject var viewModel:
+        NotificationPermissionViewModel
+
+    @Environment(\.scenePhase)
+    private var scenePhase
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @State private var didRequestPermission = false
+
     var body: some View {
-        
+
         VStack(spacing: 24) {
-            
+
             Spacer()
-            
+
             Image(
                 systemName: viewModel.isEnabled
-                ? "location.fill"
-                : "location.slash.fill"
+                    ? "bell.fill"
+                    : "bell.slash.fill"
             )
             .font(.system(size: 50))
             .foregroundStyle(
                 viewModel.isEnabled
-                ? .blue
-                : .secondary
+                    ? .orange
+                    : .secondary
             )
-            
+
             VStack(spacing: 8) {
-                
+
                 Text(
                     viewModel.isEnabled
-                    ? "Location Enabled"
-                    : "Location Disabled"
+                        ? "Notifications Enabled"
+                        : "Notifications Disabled"
                 )
                 .font(.title2)
                 .fontWeight(.semibold)
-                
+
                 Text(
                     viewModel.isEnabled
-                    ? "Location Services are enabled for this app."
-                    : "Location Services are currently disabled."
+                        ? "Notifications are enabled for this app."
+                        : "Notifications are currently disabled."
                 )
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 30)
             }
-            
+
             if !viewModel.isEnabled {
-                
+
                 Button {
-                    viewModel.enableLocation()
-                    print(viewModel.enableLocation())
+
+                    didRequestPermission = true
+
+                    Task {
+                        await viewModel.enableNotifications()
+                    }
+
                 } label: {
-                    
-                    Text("Enable Location")
+
+                    Text("Enable Notifications")
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -61,9 +72,9 @@ struct LocationPermissionSheetView: View {
                 .buttonStyle(.borderedProminent)
                 .padding(.horizontal, 30)
             }
-            
+
             Spacer()
-            
+
             Button("Done") {
                 dismiss()
             }
@@ -71,22 +82,25 @@ struct LocationPermissionSheetView: View {
             .padding(.bottom, 10)
         }
         .padding()
-        
-        .onAppear {
-            viewModel.refreshStatus()
+
+        .task {
+            await viewModel.refreshStatus()
         }
-        
-        .onChange(of: viewModel.isEnabled) { _, newValue in
-            
-            if newValue {
-                dismiss()
+
+        .onChange(of: scenePhase) { _, newPhase in
+
+            if newPhase == .active {
+
+                Task {
+                    await viewModel.refreshStatus()
+                }
             }
         }
-        
-        .onChange(of: scenePhase) { _, newPhase in
-            
-            if newPhase == .active {
-                viewModel.refreshStatus()
+
+        .onChange(of: viewModel.isEnabled) { _, newValue in
+
+            if newValue && didRequestPermission {
+                dismiss()
             }
         }
     }
