@@ -19,13 +19,13 @@ struct ProfileCards: View {
             }
             
             VStack(alignment: .leading, spacing: 2) {
-                Text(value)
+                Text(LocalizedStringKey(value))
                     .font(.system(size: 23, weight: .bold, design: .rounded))
                     .foregroundStyle(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                 
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

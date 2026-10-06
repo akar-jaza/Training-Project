@@ -18,12 +18,12 @@ struct ProfileInfo: View {
                     .foregroundStyle(.black)
             }
             
-            Text(value)
+            Text(LocalizedStringKey(value))
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundStyle(.black)
             
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
