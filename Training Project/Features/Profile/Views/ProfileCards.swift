@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ProfileCards: View {
     let icon: String
-    let value: String
+    let value: LocalizedStringKey
     let title: String
     let tint: Color
     
@@ -19,7 +19,7 @@ struct ProfileCards: View {
             }
             
             VStack(alignment: .leading, spacing: 2) {
-                Text(LocalizedStringKey(value))
+                Text(value)
                     .font(.system(size: 23, weight: .bold, design: .rounded))
                     .foregroundStyle(.primary)
                     .lineLimit(1)

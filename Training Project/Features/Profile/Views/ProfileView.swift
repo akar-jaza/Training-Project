@@ -85,6 +85,7 @@ struct ProfileView: View {
                             icon: "calendar",
                             value: "\(userProfile.age)",
                             title: "profile.age",
+                            unit: "",
                             tint: .red
                         )
                         
@@ -92,6 +93,7 @@ struct ProfileView: View {
                             icon: "ruler",
                             value: "\(userProfile.height)",
                             title: "profile.height",
+                            unit: "CM",
                             tint: .yellow
                         )
                         
@@ -99,6 +101,7 @@ struct ProfileView: View {
                             icon: "scalemass.fill",
                             value: "\(userProfile.weight)",
                             title: "profile.weight",
+                            unit: "KG",
                             tint: .green
                         )
                     }
@@ -108,14 +111,14 @@ struct ProfileView: View {
                     HStack(spacing: 16) {
                         ProfileCards(
                             icon: "drop.fill",
-                            value: userProfile.bloodGroup,
+                            value: LocalizedStringKey(userProfile.bloodGroup),
                             title: "profile.blood",
                             tint: .red
                         )
                         ProfileCards(
                             icon: "eye",
-                            value: userProfile.eyeColor,
-                            title: "profile.eye",
+                            value: LocalizedStringKey(userProfile.eyeColor.lowercased()),
+                            title: "profile.eyeColor",
                             tint: eyeColor(userProfile.eyeColor)
                         )
                     }
@@ -213,6 +216,8 @@ struct ProfileView: View {
             return "male_avatar"
         }
     }
+    
+    
     
 }
 

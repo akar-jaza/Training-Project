@@ -3,7 +3,8 @@ import SwiftUI
 struct ProfileInfo: View {
     let icon: String
     let value: String
-    let title: String
+    let title: LocalizedStringKey
+    let unit: String?
     let tint: Color
     
     var body: some View {
@@ -18,12 +19,18 @@ struct ProfileInfo: View {
                     .foregroundStyle(.black)
             }
             
-            Text(LocalizedStringKey(value))
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(.black)
+            HStack(alignment: .firstTextBaseline, spacing: 3) {
+                Text(value)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                
+                Text(unit ?? "")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.gray)
+                    .fontWeight(.bold)
+            }
             
-            Text(LocalizedStringKey(title))
+            Text(title)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }

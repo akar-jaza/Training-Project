@@ -2,6 +2,8 @@ import SwiftUI
 
 struct LanguageView: View {
 
+    @State private var showKurdishAlert = false
+
     @AppStorage("language")
     private var language = "en-GB"
 
@@ -24,12 +26,19 @@ struct LanguageView: View {
 
                 Button {
                     language = "en-GB"
-                    dismiss()
+                    showKurdishAlert = true
                 } label: {
                     languageRow(
                         title: "کوردی",
                         code: "en-GB"
                     )
+                }
+                .alert("Kurdish Language", isPresented: $showKurdishAlert) {
+                    Button("OK", role: .cancel) {
+                        dismiss()
+                    }
+                } message: {
+                    Text(LocalizedStringKey("kurdishLanguageAlert"))
                 }
             }
             .navigationTitle("Language")
