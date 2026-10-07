@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ProfileCards: View {
     let icon: String
-    let value: String
+    let value: LocalizedStringKey
     let title: String
     let tint: Color
     
@@ -25,7 +25,7 @@ struct ProfileCards: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                 
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

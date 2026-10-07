@@ -3,6 +3,9 @@ import SwiftUI
 struct ProfileView: View {
     @ObservedObject var viewModel: ProfileViewModel
     @State private var showAlert = false
+    @State private var showLanguageSheet = false
+    
+    @AppStorage("language") private var language = "en-GB"
     
     // var onLogout: () -> Void
     
@@ -24,10 +27,10 @@ struct ProfileView: View {
                     ProgressView()
                 } else if let userProfile = viewModel.profile {
                     VStack(spacing: 10) {
-                        Text("Profile")
+                        Text("profile.title")
                             .font(.system(size: 24))
                             .fontWeight(.bold)
-                            .tracking(1.1)
+                            .tracking(language == "en" ? 1.1 : 0)
                             .padding(.bottom, 20)
                         
                         //  After creating a group, any modifier you apply to the group affects all of that group’s members.
@@ -81,21 +84,24 @@ struct ProfileView: View {
                         ProfileInfo(
                             icon: "calendar",
                             value: "\(userProfile.age)",
-                            title: "Age",
+                            title: "profile.age",
+                            unit: "",
                             tint: .red
                         )
                         
                         ProfileInfo(
                             icon: "ruler",
                             value: "\(userProfile.height)",
-                            title: "Height",
+                            title: "profile.height",
+                            unit: "CM",
                             tint: .yellow
                         )
                         
                         ProfileInfo(
                             icon: "scalemass.fill",
                             value: "\(userProfile.weight)",
-                            title: "Weight",
+                            title: "profile.weight",
+                            unit: "KG",
                             tint: .green
                         )
                     }
@@ -105,14 +111,14 @@ struct ProfileView: View {
                     HStack(spacing: 16) {
                         ProfileCards(
                             icon: "drop.fill",
-                            value: userProfile.bloodGroup,
-                            title: "Blood",
+                            value: LocalizedStringKey(userProfile.bloodGroup),
+                            title: "profile.blood",
                             tint: .red
                         )
                         ProfileCards(
                             icon: "eye",
-                            value: userProfile.eyeColor,
-                            title: "Eye",
+                            value: LocalizedStringKey(userProfile.eyeColor.lowercased()),
+                            title: "profile.eyeColor",
                             tint: eyeColor(userProfile.eyeColor)
                         )
                     }
@@ -123,7 +129,7 @@ struct ProfileView: View {
                     Button(action: {
                         viewModel.delegate?.didTapLogoutButton()
                     }, label: {
-                        Text("Log Out")
+                        Text(LocalizedStringKey("profile.logout"))
                             .frame(maxWidth: .infinity, maxHeight: 40)
                     })
                     .buttonStyle(.glassProminent)
@@ -131,7 +137,7 @@ struct ProfileView: View {
                     .padding(.horizontal)
                     .padding(.bottom, 30)
                 } else {
-                    Text("No profile loaded")
+                    Text(LocalizedStringKey("profile.noProfileLoaded"))
                         .foregroundStyle(.secondary)
                 }
 
@@ -139,11 +145,25 @@ struct ProfileView: View {
             }
             .padding([.horizontal, .bottom])
         }
-        
+        .toolbar {
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showLanguageSheet = true
+                } label: {
+                    Image(systemName: "globe")
+                }
+                .accessibilityLabel("Change Language")
+            }
+        }
+        .sheet(isPresented: $showLanguageSheet) {
+            LanguageView()
+                .presentationDetents([.fraction(1/3)])
+        }
         .task {
             await viewModel.loadProfile()
         }
-        .onChange(of: viewModel.errorMessage) { newValue in
+        .onChange(of: viewModel.errorMessage) { _, newValue in
             if newValue != nil {
                 showAlert = true
             }
@@ -156,6 +176,7 @@ struct ProfileView: View {
         } message: {
             Text(viewModel.errorMessage ?? "An unknown error occurred.")
         }
+        .environment(\.locale, Locale(identifier: language))
     }
     
     private func eyeColor(_ eyeColor: String) -> Color {
@@ -196,6 +217,7 @@ struct ProfileView: View {
         }
     }
     
+    
+    
 }
-
 
